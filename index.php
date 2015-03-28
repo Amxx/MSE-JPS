@@ -62,7 +62,7 @@ Twig_Autoloader::register();
 
 $loader = new Twig_Loader_Filesystem('ressources/templates');
 $twig   = new Twig_Environment($loader, array(
-	// 'cache' => 'buffer', // local gives error, write permission ?
+	'cache' => 'buffer', // local gives error, write permission ?
 ));
 
 # Load template

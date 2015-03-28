@@ -18,7 +18,7 @@
 	{% endfor %}
 
 	<div id='copyright'>
-		Powered by <a href='#' target='_blank'>MSE-JSP</a><br/>
+		Powered by <a href='https://github.com/Amxx/MSE-JPS' target='_blank'>MSE-JSP</a><br/>
 		Developped by Hadrien Croubois
 	</div>
 </aside>
