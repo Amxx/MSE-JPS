@@ -23,7 +23,7 @@
 	<span id='mininav'>
 		{% for page in website.sections.pages.list %}
 			<li>
-				<a id={{ page.id }} href='?page={{ page.title }}'> {{ page.title }} </a>
+				<a id={{ page.id }} href='?page={{ page.title }}'>{{ page.title }}</a>
 			</li>
 		{% endfor %}
 		<a class='quietest' href='#' onclick='slideTop(); return false;'>

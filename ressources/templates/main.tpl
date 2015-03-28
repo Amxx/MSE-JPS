@@ -37,7 +37,7 @@
 		{{ include ('footer.tpl',  {'website': website }) }}
 		
 		{# Error block #}
-		<div id='error'></div>
+		<div id='error' style='display: none;'></div>
 
 		{# Initialize javascript #}
 		<script type="text/javascript" src="ressources/engine.js"></script>

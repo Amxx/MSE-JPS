@@ -15,7 +15,7 @@
 	</a>
 </h2>
 
-<article id={{ article.id }} {% if article.archived %} style="display: none;" {% endif %} >
+<article id={{ article.id }} {% if article.archived %} style='display: none;' {% endif %} >
 
 	{{ article.text | raw }}
 
@@ -35,7 +35,7 @@
 			{% endfor %}
 
 			{% if reference.bibtex or reference.abstract %}
-				<a href="#" onclick='$(".bibtray[id={{ reference.id }}]").slideToggle("slow", function () { $(this).trigger("launch") }); return false;'>
+				<a href='#' onclick='$(".bibtray[id={{ reference.id }}]").slideToggle("slow", function () { $(this).trigger("launch") }); return false;'>
 				[{% if reference.bibtex %}Bibtex{% endif %}
 				{% if reference.bibtex and reference.abstract%}/{% endif %}
 				{% if reference.abstract %}Abstract{% endif %}]
@@ -44,7 +44,7 @@
 		</div>
 
 		{% if reference.bibtex or reference.abstract %}
-			<div class='bibtray' id={{ reference.id }} style="display: none;">
+			<div class='bibtray' id={{ reference.id }} style='display: none;'>
 				{% if reference.abstract %}
 					<div class='bibabstract {% if reference.bibtex %}cohexist_left{% endif %}'>{{ reference.abstract }}</div>
 				{% endif %}
