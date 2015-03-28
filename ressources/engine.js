@@ -128,7 +128,7 @@ function buildNav()
 {
 	$('#nav, #mininav').find('a').each(function(){
 		if ($(this).attr('id'))
-			$(this).attr('href','#'+$(this).text());
+			$(this).attr('href','#'+$(this).text().replace(' ',''));
 	});
 }
 
