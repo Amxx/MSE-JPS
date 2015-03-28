@@ -1,0 +1,358 @@
+/******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                         Version 1.0.1 : 27/03/2015                         *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
+* {
+	-webkit-box-sizing:			border-box;
+	-moz-box-sizing:				border-box;
+	box-sizing:							border-box;
+}
+
+body {
+	margin:									0 auto;
+	width:									1000px;	
+	font: 									normal 75% OpenSansRegular;
+	line-height:						1.5;
+	color:									#444;
+}
+
+/******************************************************************************
+ *                                    MAIN                                    *
+ ******************************************************************************/
+
+a {
+	color:									#456;
+	text-decoration:				none;
+}
+
+a:hover {
+	color:									#002;
+}
+
+p {
+	text-align:							justify;
+	text-indent:						1em;
+	margin:									0;
+}
+
+p.noindent {
+	text-indent:						0;	
+}
+
+ul {
+	list-style-type:				disc;
+	padding-left:						0;
+	margin:									0 0 1.5em 1.5em;
+}
+
+.quiet {
+	color:									#999;
+}
+
+.bordered {
+	border-left-width:			4px;
+	border-left-style:			solid;	
+	padding-left:						10px;
+}
+
+.label-orange { 
+	border-left-color:			#FA8F6F;
+}
+
+.label-green {
+	border-left-color:			#B7D897;
+}
+
+.label-blue {
+	border-left-color:			#55AADA;
+}
+
+.label-purple { 
+	border-left-color:			#666699;
+}
+
+/******************************************************************************
+ *                                   HEADER                                   *
+ ******************************************************************************/
+
+header {
+	position:								fixed;
+	top:										0px;
+	z-index:								100000;
+	width:									1000px;
+	padding:								20px;
+	
+	border-bottom:					1px solid #DDD;	
+	background: 						#FFF;
+}
+
+#name {
+	display: 								block;
+	float:									left;
+	height:									70px;
+	width:									calc(100% - 100px);
+	font-size:							36px;
+}
+
+#picture {
+	display:								block;
+	float:									right;
+	height:									100px;
+	width:									100px;
+}
+
+/******************************************************************************
+ *                                 NAVIGATION                                 *
+ ******************************************************************************/
+
+#nav {
+	overflow:								hidden;
+	display:								block;
+	float:									left;
+	height:									30px;
+	width:									calc(100% - 100px);
+}
+
+#nav a {
+	font-size:							20px;
+	color:									#888;
+	text-decoration:				none;
+}
+
+#nav li {
+	margin-right:						20px;
+	list-style:							none;
+	float:									left;
+}
+
+#nav li.current a {
+	color:									#333;
+	border-bottom:					2px solid #94CC5F;
+}
+
+/******************************************************************************
+ *                              SECTION & ASIDE                               *
+ ******************************************************************************/
+
+section, aside {
+	display:								block;
+	margin-top:							140px;
+	margin-bottom:					50px;
+	z-index:								0;
+	padding:								20px;
+}
+
+section {
+	width:									75%;
+	float:									left;
+}
+
+section page {
+	width:									100%;
+}
+
+section article {
+	padding-bottom:					20px;
+}
+
+section h2 {
+	margin:									0 0 10px 0;
+	font-weight:						normal;
+	font-size:							24px;
+}
+
+section h5 {
+	margin:									0;
+	font-weight:						normal;
+}
+
+aside {
+	width:									25%;
+	float:									right;
+	border-left:						1px solid #DDD;
+}
+
+aside article {
+	padding-bottom:					10px;
+}
+
+aside h2 {
+	margin:									0 0 10px 0;
+	font-weight:						normal;
+	font-size:							24px;
+}
+
+#copyright {
+	border-top:							1px solid #EEE;
+	padding-top: 						8px;
+	text-align:							center;
+	font-size:							10px;
+	color:									#AAA;
+}
+
+#copyright a {
+	color:									#99C;
+}
+
+/******************************************************************************
+ *                                   BIBLIO                                   *
+ ******************************************************************************/
+
+.bibtitle {
+	display:								block;
+	font-weight:						bold;
+}
+
+.bibauthor {
+	display:								block;
+}
+
+.bibref {
+	display:								block;
+	padding-bottom:					5px;
+	font-style:							italic;
+	color:									#888;
+	/*font-size: 80%;*/
+}
+
+.bibref a {
+	margin-left:						5px;
+	color:									#88F;
+	/*font-size: 80%;*/
+}
+
+.bibtray {
+	border-bottom:					1px solid #BBB;
+	border-right:						1px solid #BBB;
+	border-top:							1px solid #EEE;
+	border-left:						1px solid #EEE;
+	padding:								5px 5px 5px 10px;
+}
+
+.bibabstract {
+	text-align:							justify;
+  color:									#444;
+}
+
+.bibtex {
+	font-size:							80%;
+	white-space:						pre-wrap;
+	color:									#888;
+}
+
+.cohexist_left {
+	display:								inline-block;
+	width:									60%;
+	vertical-align:					top;
+	clear:									left;
+	
+	padding-right: 					5px;
+}
+
+.cohexist_right {
+	display:								inline-block;
+	width:									calc(40% - 4px);
+	vertical-align:					top;
+	clear:									right;
+
+	border-left:						1px solid #DDD;
+	padding-left: 					5px;
+}
+
+/******************************************************************************
+ *                                   FOOTER                                   *
+ ******************************************************************************/
+
+footer {
+	position:								fixed;
+	bottom:									0px;
+	z-index:								100000;
+	width:									1000px;
+	padding: 								15px 20px 15px 20px;
+	border-top:							1px solid #DDD;	
+	background:							#FFF;
+}
+
+#social {
+	display: 								inline;
+	float:									left;
+	min-width:							100px;
+}
+
+#social li {
+	margin-right:						6px;
+	list-style:             none;
+	float:                 	left;
+}
+
+#social img {
+	margin-right:						3px;
+	vertical-align:					middle;
+	display:								inline-block;
+	height:									18px;
+}
+
+#mininav {
+	display:								inline;
+	float:									right;
+	min-width:							100px;
+}
+
+#mininav li {
+	display:								inline;
+	margin-right:						6px;
+	padding-right:					6px;
+	border-right:						1px solid #DDD;
+	list-style:							none;
+}
+
+#mininav pagetop {
+	display:								inline;
+	color:									#999;
+}
+
+/******************************************************************************
+ *                                   ERROR                                    *
+ ******************************************************************************/
+
+#error {
+	position:								fixed;
+	z-index:								100000;
+
+	width:									1000px;
+	left:										calc(50% - 600px); 
+	height:									100px;
+	top:										calc(50% - 50px);
+
+	background:							rgba(8,8,8,0.8);
+	color:									#EEE;
+	padding:								20px;
+	
+	text-align:							center;
+	font-size:							32px;
+	cursor:									pointer;
+}
+
+/******************************************************************************
+ *                                  FEATURES                                  *
+ ******************************************************************************/
+
+.map {
+	margin:									10px 0 10px 0;
+	border:									0;
+	background:							#DDD;
+}
+
+#timeline {
+	width:									100px;
+	height:									380px;
+}
+
+
