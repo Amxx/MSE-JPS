@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                         Version 1.0.1 : 27/03/2015                         *
+ *                        Version 1.0.1-2 : 28/03/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -12,6 +12,11 @@
 // =========================== Hash change listener ============================
 
 $(window).bind('hashchange', function() {
+	hashHandler(true);
+});
+
+function hashHandler(smooth)
+{
 	var hash	= window.location.hash.substring(1);
 	var error	= 404;
 
@@ -28,7 +33,7 @@ $(window).bind('hashchange', function() {
 		var id    = hash2id(hash);
 		var title = $('#nav-a-'+id).text();
 
-		showPage(id);
+		showPage(id, smooth);
 		showError();
 		updateTitle(title);
 	}
@@ -41,8 +46,7 @@ $(window).bind('hashchange', function() {
 		showError(error);
 		updateTitle(errorText(error));
 	}
-
-});
+}
 
 // ============================ Hash & id operators ============================
 
@@ -77,13 +81,21 @@ function hash2id(hash)
 
 // ================================== Display ==================================
 
-function showPage(id)
+function showPage(id, smooth)
 {
 	var cid = getCurrentId();
 	if (id != cid)
 	{
-		$('#section-'+id ).slideDown('slow');
-		$('#section-'+cid).slideUp('slow');
+		if (smooth)
+		{
+			$('#section-'+id ).slideDown('slow');
+			$('#section-'+cid).slideUp('slow');
+		}
+		else
+		{
+			$('#section-'+id ).show();
+			$('#section-'+cid).hide();
+		}
 		$('#nav-li-' +id ).addClass('current');
 		$('#nav-li-' +cid).removeClass();
 	}
@@ -154,6 +166,7 @@ function buildError()
 $(function(){
 	buildNav();
 	buildError();
-	$(window).trigger('hashchange');
+	// $(window).trigger('hashchange');
+	hashHandler(false);
 });
 
