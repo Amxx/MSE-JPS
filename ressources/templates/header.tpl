@@ -10,13 +10,13 @@
  ##############################################################################}
 
 <header>
-	<div id='name'> {{ website.header.name }} </div>
-	<img id='picture' src='{{ website.header.picture }}'/>
-	<div id='nav'>
-		{% for page in website.sections.pages.list %}
-			<li id={{ page.id }} {% if page.title == website.current %} class='current' {% endif %}>
-				<a id={{ page.id }} href='?page={{ page.title }}'>{{ page.title }}</a>
+	<div id='name'> {{website.header.name}} </div>
+	<img id='picture' src='{{website.header.picture}}' alt='Profile picture'/>
+	<ul id='nav'>
+		{% for page in website.page.sections.list %}
+			<li id='nav-li-{{page.id}}' {% if page.title == website.current %} class='current' {% endif %}>
+				<a id='nav-a-{{page.id}}' href='?page={{page.title}}'>{{ page.title }}</a>
 			</li>
 		{% endfor %}
-	</div>
+	</ul>
 </header>

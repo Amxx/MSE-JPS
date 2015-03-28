@@ -1,4 +1,4 @@
-<?php 
+<?php
 /******************************************************************************
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
@@ -10,20 +10,24 @@
  *                                                                            *
  ******************************************************************************/
 
-include_once 'page.php';
+include_once 'entry.php';
+include_once 'article.php';
 
-class Sections
+class Section extends Entry
 {
-	public function __construct()
+	public function __construct($input)
 	{
-		$this->pages = new Catalog();
+		parent::__construct($input['Page_ID']);
+		$this->title    = $input['Page_Title'];
+		$this->default  = $input['Page_Default'];
+		$this->articles = new Catalog();
 	}
 	public function parse($input)
 	{
 		try {
-			$page = new Page($input);
-			$this->pages->insert($page);
-			$page->parse($input);
+			$article = new Article($input);
+			$this->articles->insert($article);
+			$article->parse($input);
 		} catch(Exception $e) {}
 	}
 }

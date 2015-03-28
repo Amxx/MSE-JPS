@@ -10,7 +10,7 @@
  *                                                                            *
  ******************************************************************************/
 
-include_once 'section.php';
+include_once 'page.php';
 include_once 'link.php';
 include_once 'social.php';
 
@@ -28,7 +28,7 @@ class WebSite
 	function __construct()
 	{
 		$this->header   = new Header();
-		$this->sections = new Sections();
+		$this->page     = new Page();
 		$this->links    = new Links();
 		$this->socials  = new Socials();
 		$this->current  = null;
@@ -68,7 +68,7 @@ class WebSite
 				citations.Citation_Order IS NULL,
 				citations.Citation_Order ASC'
 		);
-		while ($line = $query_results->fetch()) $this->sections->parse($line);
+		while ($line = $query_results->fetch()) $this->page->parse($line);
 		$query_results->closeCursor();
 
 		# ==========================================================================
@@ -88,9 +88,9 @@ class WebSite
 
 	function setEnv()
 	{
-		foreach ($this->sections->pages->list as $page)
-			if ((isset($_GET['page']) && $_GET['page'] == $page->title) || (is_null($this->current) && $page->default))
-				$this->current = $page->title;
+		foreach ($this->page->sections->list as $section)
+			if ((isset($_GET['page']) && $_GET['page'] == $section->title) || (is_null($this->current) && $section->default))
+			$this->current = $section->title;
 	}
 
 }

@@ -10,24 +10,26 @@
  ##############################################################################}
 
 <footer>
-	<span id='social'>
+	<ul id='social'>
 		{% for social in website.socials.list %}
 			<li>
 				<a href='{{social.url}}' target='_blank'>
-					<img src='{{social.img}}'>
+					<img src='{{social.img}}' alt='{{social.title}}'>
 					{{social.title}}
 				</a>
 			</li>
 		{% endfor %}
-	</span>
-	<span id='mininav'>
-		{% for page in website.sections.pages.list %}
+	</ul>
+	<ul id='mininav'>
+		{% for page in website.page.sections.list %}
 			<li>
-				<a id={{page.id}} href='?page={{page.title}}'>{{page.title}}</a>
+				<a id='mininav-a-{{page.id}}' href='?page={{page.title}}'>{{page.title}}</a>
 			</li>
 		{% endfor %}
-		<a class='quietest' href='#' onclick='slideTop(); return false;'>
-			Page Top &#8593;
-		</a>
-	</span>
+		<li class='top'>
+			<a class='quietest' href='#' onclick='slideTop(); return false;'>
+				Page Top &#8593;
+			</a>
+		</li>
+	</ul>
 </footer>

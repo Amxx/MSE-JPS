@@ -13,13 +13,12 @@
 
 $(window).bind('hashchange', function() {
 	var hash	= window.location.hash.substring(1);
-		var error	= 404;
+	var error	= 404;
 
 	// Set hash if empty
 	if (hash == '')
 	{
-		var cid = getCurrentId();
-		window.location.hash = id2hash(cid);
+		window.location.hash = getCurrentHash();
 		return;
 	}
 		
@@ -27,7 +26,7 @@ $(window).bind('hashchange', function() {
 	try
 	{
 		var id    = hash2id(hash);
-		var title = $("#nav").find('a[id='+id+']').text();
+		var title = $('#nav-a-'+id).text();
 
 		showPage(id);
 		showError();
@@ -38,7 +37,7 @@ $(window).bind('hashchange', function() {
 	{
 		if (new RegExp("[0-9]{3}error").test(hash))
 			error = parseInt(hash.substring(0,3));
-
+		
 		showError(error);
 		updateTitle(errorText(error));
 	}
@@ -49,12 +48,12 @@ $(window).bind('hashchange', function() {
 
 function getCurrentId()
 {
-	return $('page:visible').attr('id');
+	return parseInt($('section').filter(visibleFilter).attr('id').substring(8));
 }
 
 function id2hash(id)
 {
-	return $('#nav').find('a[id='+id+']').text();
+	return $('#nav-a-'+id).text();
 }
 
 function hash2id(hash)
@@ -65,9 +64,9 @@ function hash2id(hash)
 	$('#nav').find('a').each(function(){
 		if (!found && $(this).text() == hash)
 		{
-			found = true;
-			id    = $(this).attr('id');
-		}
+ 			found = true;
+ 			id    = parseInt($(this).attr('id').substring(6));
+ 		}
 	});
 	
 	if (!found)
@@ -83,10 +82,10 @@ function showPage(id)
 	var cid = getCurrentId();
 	if (id != cid)
 	{
-		$('page[id='+id +']').slideDown('slow');
-		$('page[id='+cid+']').slideUp('slow');
-		$(  'li[id='+id +']').addClass('current');
-		$(  'li[id='+cid+']').removeClass();
+		$('#section-'+id ).slideDown('slow');
+		$('#section-'+cid).slideUp('slow');
+		$('#nav-li-' +id ).addClass('current');
+		$('#nav-li-' +cid).removeClass();
 	}
 }
 
@@ -122,13 +121,23 @@ function errorText(error)
 	}
 }
 
+function visibleFilter(){
+	return $(this).css('display') != 'none';
+}
+
 // ================================ Page build =================================
 
 function buildNav()
 {
 	$('#nav, #mininav').find('a').each(function(){
 		if ($(this).attr('id'))
-			$(this).attr('href','#'+$(this).text().replace(' ',''));
+		{
+			$(this).attr('href', '#');
+			$(this).click(function(){
+				window.location.hash = $(this).text();
+				return false;
+			});
+		}
 	});
 }
 
@@ -136,9 +145,7 @@ function buildError()
 {
 	$('#error').click(function(){
 		$(this).hide();
-
-		var cid = getCurrentId();
-		window.location.hash = id2hash(cid);
+		window.location.hash = id2hash(getCurrentId());
 	});
 }
 

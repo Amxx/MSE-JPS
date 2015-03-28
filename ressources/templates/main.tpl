@@ -32,7 +32,7 @@
 
 		{# Build page #}
 		{{ include ('header.tpl',  {'website': website }) }}
-		{{ include ('section.tpl', {'website': website }) }}
+		{{ include ('content.tpl', {'website': website }) }}
 		{{ include ('aside.tpl',   {'website': website }) }}
 		{{ include ('footer.tpl',  {'website': website }) }}
 		

@@ -9,12 +9,12 @@
  #                                                                            #
  ##############################################################################}
 
-<section>
-	{% for page in website.sections.pages.list %}
-		<page id={{ page.id }} {% if page.title != website.current %} style="display: none;" {% endif %}>
-			{% for article in page.articles.list %}
+<main>
+	{% for section in website.page.sections.list %}
+		<section id='section-{{section.id}}' {% if section.title != website.current %} style="display: none;" {% endif %}>
+			{% for article in section.articles.list %}
 				{{ include('article.tpl', {'article': article}) }}
 			{% endfor %}
-		</page>
+		</section>
 	{% endfor %}
-</section>
+</main>
