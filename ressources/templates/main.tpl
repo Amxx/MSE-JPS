@@ -17,6 +17,8 @@
 
 		<title> {{ website.header.name }} | {{ website.current }}</title>
 
+		<link rel="icon" type="image/png" href="ressources/img/favicon.png" />
+
 		<link rel="stylesheet" href="ressources/style.css" type="text/css"/>
 		<link rel="stylesheet" href="ressources/font/OpenSans.css" type="text/css"/>
 		<link rel="stylesheet" href="ressources/libs/leaflet-0.7.3/leaflet.css" type="text/css"/>

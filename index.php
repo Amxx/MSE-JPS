@@ -10,7 +10,7 @@
  *                                                                            *
  ******************************************************************************/
 
-include_once 'config/sql_config.php';
+include_once 'config/config.php';
 
 include_once 'ressources/libs/MSE/connection.php';
 include_once 'ressources/libs/MSE/container/catalog.php';
@@ -28,6 +28,7 @@ $website->setEnv();
 
 # Make environment
 Twig_Autoloader::register();
+
 $loader = new Twig_Loader_Filesystem('ressources/templates');
 $twig   = new Twig_Environment($loader, array(
 	// 'cache' => 'buffer', // local gives error, write permission ?

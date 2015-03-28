@@ -1,1 +1,3 @@
 config/sql_config.php
+config/local.php
+config/ens.php
