@@ -11,7 +11,7 @@
 
 <main>
 	{% for section in website.page.sections.list %}
-		<section id='section-{{section.id}}' {% if section.title != website.current %} style="display: none;" {% endif %}>
+		<section id='section-{{section.id}}' {% if section.id != website.current %} style="display: none;" {% endif %}>
 			{% for article in section.articles.list %}
 				{{ include('article.tpl', {'article': article}) }}
 			{% endfor %}

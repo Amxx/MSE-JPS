@@ -18,31 +18,27 @@ $(window).bind('hashchange', function() {
 function hashHandler(smooth)
 {
 	var hash	= window.location.hash.substring(1);
-	var error	= 404;
 
 	// Set hash if empty
 	if (hash == '')
 	{
-		window.location.hash = getCurrentHash();
+		window.location.hash = id2hash(getCurrentId());
 		return;
 	}
 		
 	// Try get page id from hash
 	try
 	{
-		var id    = hash2id(hash);
-		var title = $('#nav-a-'+id).text();
-
+		var id = hash2id(hash);
 		showPage(id, smooth);
 		showError();
-		updateTitle(title);
+		updateTitle(id2hash(id));
 	}
-	// Error
 	catch(err)
 	{
+		var error	= 404; // default error
 		if (new RegExp("[0-9]{3}error").test(hash))
-			error = parseInt(hash.substring(0,3));
-		
+			error = parseInt(hash.substring(0,3));	
 		showError(error);
 		updateTitle(errorText(error));
 	}
@@ -62,21 +58,7 @@ function id2hash(id)
 
 function hash2id(hash)
 {
-	var id    = 0;
-	var found = false;
-
-	$('#nav').find('a').each(function(){
-		if (!found && $(this).text() == hash)
-		{
- 			found = true;
- 			id    = parseInt($(this).attr('id').substring(6));
- 		}
-	});
-	
-	if (!found)
-		throw -1;
-	
-	return id
+	return parseInt($('#nav').find('a').filter(function(){ return $(this).text() == hash; }).attr('id').substring(6));
 }
 
 // ================================== Display ==================================
@@ -141,24 +123,25 @@ function visibleFilter(){
 
 function buildNav()
 {
-	$('#nav, #mininav').find('a').each(function(){
-		if ($(this).attr('id'))
-		{
+	$('#nav, #mininav')
+		.find('a')
+		.filter(function(){ return $(this).attr('id'); })
+		.each(function(){
 			$(this).attr('href', '#');
 			$(this).click(function(){
 				window.location.hash = $(this).text();
 				return false;
 			});
-		}
-	});
+		});
 }
 
 function buildError()
 {
-	$('#error').click(function(){
-		$(this).hide();
-		window.location.hash = id2hash(getCurrentId());
-	});
+	$('#error')
+		.click(function(){
+			$(this).hide();
+			window.location.hash = id2hash(getCurrentId());
+		});
 }
 
 // ============================== Initialisation ===============================
@@ -166,7 +149,6 @@ function buildError()
 $(function(){
 	buildNav();
 	buildError();
-	// $(window).trigger('hashchange');
 	hashHandler(false);
 });
 

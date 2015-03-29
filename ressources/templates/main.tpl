@@ -15,7 +15,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title> {{ website.header.name }} | {{ website.current }}</title>
+		<title> {{ website.header.name }} | {{ website.page.sections[website.current].title }}</title>
 
 		<link rel="icon" type="image/png" href="ressources/img/favicon.png" />
 
