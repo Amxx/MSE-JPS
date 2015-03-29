@@ -46,7 +46,7 @@
 		<script type="text/javascript">
 		$(function(){
 			// Record visibility
-			var id = $('section').filter(visibleFilter).attr('id');
+			var id = $('section').filter(function(){ return $(this).css('display') != 'none'; }).attr('id');
 
 			// Set visibility for javascript
 			$('section').show();
