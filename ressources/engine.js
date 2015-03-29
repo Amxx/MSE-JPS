@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.0.1-4 : 28/03/2015                        *
+ *                        Version 1.0.1-5 : 28/03/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -25,11 +25,11 @@ function hashHandler(smooth)
 		window.location.hash = id2hash(getCurrentId());
 		return;
 	}
-		
+	
 	// Try get page id from hash
 	try
 	{
-		var id = hash2id(hash);
+		var id = hash2id(hash); // triger exception if hash unfound
 		showPage(id, smooth);
 		showError();
 		updateTitle(id2hash(id));
@@ -48,7 +48,7 @@ function hashHandler(smooth)
 
 function getCurrentId()
 {
-	return parseInt($('section').filter(visibleFilter).attr('id').substring(8));
+	return parseInt($('section').filter(function(){ return $(this).css('display') != 'none'; }).attr('id').substring(8));
 }
 
 function id2hash(id)
@@ -113,10 +113,6 @@ function errorText(error)
 		case 502: return '502 Bad Gateway';
 		default:	return 'Undocumented error ('+error+')';
 	}
-}
-
-function visibleFilter(){
-	return $(this).css('display') != 'none';
 }
 
 // ================================ Page build =================================
