@@ -1,6 +1,6 @@
 <?php
 // phpFastCache Library
-require_once(dirname(__FILE__) . "/phpfastcache/3.0.0/phpfastcache.php");
+require_once(dirname(__FILE__) . "/3.0.0/phpfastcache.php");
 
 // OK, setup your cache
 phpFastCache::$config = array(

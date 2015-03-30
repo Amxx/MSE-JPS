@@ -3,7 +3,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                         Version 1.0.1 : 27/03/2015                         *
+ *                        Version 1.1.0-5 : 30/03/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -33,55 +33,55 @@ class WebSite
 		$this->socials  = new Socials();
 		$this->current  = null;
 	}
-	function readDB($socket)
+	function readDB($socket, $prefix)
 	{
 		# ==========================================================================
 		$query_results = $socket->query(
-			'SELECT
-				`pages`.Page_ID,
-				`pages`.Page_Title,
-				`pages`.Page_Block,
-				`pages`.Page_Order,
-				`pages`.Page_Default,
-				`articles`.Article_ID,
-				`articles`.Article_Title,
-				`articles`.Article_Text,
-				`articles`.Article_Javascript,
-				`articles`.Article_Archived,
-				`references`.Reference_ID,
-				`references`.Reference_Title,
-				`references`.Reference_Authors,
-				`references`.Reference_Ref,
-				`references`.Reference_Abstract,
-				`references`.Reference_Bibtex,
-				`referencesources`.Referencesource_ID,
-				`referencesources`.Referencesource_Name,
-				`referencesources`.Referencesource_Url
-			FROM `pages`
-			LEFT OUTER JOIN `articles`         ON `pages`.Page_ID           = `articles`.Page_ID
-			LEFT OUTER JOIN `citations`        ON `articles`.Article_ID     = `citations`.Article_ID
-			LEFT OUTER JOIN `references`       ON `citations`.Reference_ID  = `references`.Reference_ID
-			LEFT OUTER JOIN `referencesources` ON `references`.Reference_ID = `referencesources`.Reference_ID
+			"SELECT
+				`{$prefix}pages`.Page_ID,
+				`{$prefix}pages`.Page_Title,
+				`{$prefix}pages`.Page_Block,
+				`{$prefix}pages`.Page_Order,
+				`{$prefix}pages`.Page_Default,
+				`{$prefix}articles`.Article_ID,
+				`{$prefix}articles`.Article_Title,
+				`{$prefix}articles`.Article_Text,
+				`{$prefix}articles`.Article_Javascript,
+				`{$prefix}articles`.Article_Archived,
+				`{$prefix}references`.Reference_ID,
+				`{$prefix}references`.Reference_Title,
+				`{$prefix}references`.Reference_Authors,
+				`{$prefix}references`.Reference_Ref,
+				`{$prefix}references`.Reference_Abstract,
+				`{$prefix}references`.Reference_Bibtex,
+				`{$prefix}referencesources`.Referencesource_ID,
+				`{$prefix}referencesources`.Referencesource_Name,
+				`{$prefix}referencesources`.Referencesource_Url
+			FROM `{$prefix}pages`
+			LEFT OUTER JOIN `{$prefix}articles`         ON `{$prefix}pages`.Page_ID           = `{$prefix}articles`.Page_ID
+			LEFT OUTER JOIN `{$prefix}citations`        ON `{$prefix}articles`.Article_ID     = `{$prefix}citations`.Article_ID
+			LEFT OUTER JOIN `{$prefix}references`       ON `{$prefix}citations`.Reference_ID  = `{$prefix}references`.Reference_ID
+			LEFT OUTER JOIN `{$prefix}referencesources` ON `{$prefix}references`.Reference_ID = `{$prefix}referencesources`.Reference_ID
 			ORDER BY
-				pages.Page_Order IS NULL,
-				pages.Page_Order ASC,
-				articles.Article_Timestamp DESC,
-				citations.Citation_Order IS NULL,
-				citations.Citation_Order ASC'
+				{$prefix}pages.Page_Order IS NULL,
+				{$prefix}pages.Page_Order ASC,
+				{$prefix}articles.Article_Timestamp DESC,
+				{$prefix}citations.Citation_Order IS NULL,
+				{$prefix}citations.Citation_Order ASC"
 		);
 		while ($line = $query_results->fetch()) $this->page->parse($line);
 		$query_results->closeCursor();
 
 		# ==========================================================================
 		$query_results = $socket->query(
-			'SELECT * FROM `socials` ORDER BY `socials`.Social_Timestamp ASC'
+			"SELECT * FROM `{$prefix}socials` ORDER BY `{$prefix}socials`.Social_Timestamp ASC"
 		);
 		while ($line = $query_results->fetch()) $this->socials->parse($line);
 		$query_results->closeCursor();
 
 		# ==========================================================================
 		$query_results = $socket->query(
-			'SELECT * FROM `links` ORDER BY `links`.Link_Timestamp ASC'
+			"SELECT * FROM `{$prefix}links` ORDER BY `{$prefix}links`.Link_Timestamp ASC"
 		);
 		while ($line = $query_results->fetch()) $this->links->parse($line);
 		$query_results->closeCursor();
