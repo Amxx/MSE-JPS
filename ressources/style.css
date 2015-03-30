@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.1.0-1 : 29/03/2015                        *
+ *                        Version 1.1.0-2 : 30/03/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -48,7 +48,7 @@ p.noindent {
 ul
 {
 	list-style-type:				disc;
-	padding-left:						1.5em;
+	padding-left:						0.5em;
 	margin:									0 0 1.5em 1.5em;
 }
 .quiet
@@ -247,7 +247,7 @@ main {
 aside {
 	display:								inline-block;
 	vertical-align:					top;
-	width:									calc(25% - 3px);
+	width:									calc(25% - 4px);
 	
 	padding-top:						20px;
 	padding-bottom:					10px;
@@ -262,13 +262,18 @@ aside {
 /******************************************************************************
  *                            M a i n   B l o c k                             *
  ******************************************************************************/
-.block                         { width: 100.000%; }
-.block.quarter                 { width:  25.000%; }
-.block.third                   { width:  33.333%; }
-.block.half                    { width:  50.000%; }
-.block.twothird                { width:  66.666%; }
-.block.treequarter             { width:  75.000%; }
-.block.full                    { width: 100.000%; }
+.block
+{
+	display:								inline-block;
+	vertical-align:					top;
+	width:									100.000%;
+}
+.block.quarter                 { width: calc( 25.000% - 3px); }
+.block.third                   { width: calc( 33.333% - 3px); }
+.block.half                    { width: calc( 50.000% - 3px); }
+.block.twothird                { width: calc( 66.666% - 3px); }
+.block.treequarter             { width: calc( 75.000% - 3px); }
+.block.full                    { width: calc(100.000% - 3px); }
 
 .block:not(.expanded) .content { display:       none; }
 .block.expanded       .content { display:    visible; }
@@ -320,6 +325,8 @@ main article h5
 main article .content
 {
 	margin-top:							10px;
+	overflow:								hidden;
+	text-overflow:					ellipsis;
 }
 
 /******************************************************************************

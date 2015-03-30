@@ -71,13 +71,17 @@ function showPage(id, smooth)
 		if (smooth)
 		{
 			$('#section-'+cid).slideUp("slow");
-			$('#section-'+id ).slideDown("slow");
+			$('#section-'+id ).slideDown("slow", function(){
+				// Sanity
+				$('#section-'+id ).masonry();
+			});
 		}
 		else
 		{
 			$('#section-'+id ).show();
 			$('#section-'+cid).hide();
 		}
+		$('#section-'+id ).show();
 		$('#nav-li-' +id ).addClass('current');
 		$('#nav-li-' +cid).removeClass();
 	}

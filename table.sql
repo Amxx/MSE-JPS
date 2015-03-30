@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS `links` (
 CREATE TABLE IF NOT EXISTS `pages` (
   `Page_ID` int(10) NOT NULL,
   `Page_Title` varchar(256) DEFAULT NULL,
+  `Page_Block` varchar(256) DEFAULT NULL,
   `Page_Order` int(10) DEFAULT NULL,
   `Page_Default` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
