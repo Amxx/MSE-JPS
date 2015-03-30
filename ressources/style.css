@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.0.1-2 : 28/03/2015                        *
+ *                        Version 1.1.0-1 : 29/03/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -15,106 +15,95 @@
 	box-sizing:							border-box;
 }
 
-body {
+body
+{
+	width:									100%;	
 	margin:									0 auto;
-	width:									1000px;	
 	font: 									normal 75% OpenSansRegular;
 	line-height:						1.5;
 	color:									#444;
 }
 
 /******************************************************************************
- *                                    MAIN                                    *
+ *                               G e n e r a l                                *
  ******************************************************************************/
-
-a {
+a
+{
 	color:									#456;
 	text-decoration:				none;
 }
-
-a:hover {
+a:hover
+{
 	color:									#002;
 }
-
-p {
+p
+{
 	text-align:							justify;
 	text-indent:						1em;
 	margin:									0;
 }
-
 p.noindent {
 	text-indent:						0;	
 }
-
-ul {
+ul
+{
 	list-style-type:				disc;
-	padding-left:						0;
+	padding-left:						1.5em;
 	margin:									0 0 1.5em 1.5em;
 }
-
-.quiet {
+.quiet
+{
 	color:									#999;
 }
-
 .bordered {
 	border-left-width:			4px;
 	border-left-style:			solid;	
 	padding-left:						10px;
 }
-
-.label-orange { 
-	border-left-color:			#FA8F6F;
-}
-
-.label-green {
-	border-left-color:			#B7D897;
-}
-
-.label-blue {
-	border-left-color:			#55AADA;
-}
-
-.label-purple { 
-	border-left-color:			#666699;
-}
-
-.green {
-	color: #32CD32;
-}
-.blue {
-	color: #4169E1;
-}
-.orange {
-	color: #FF8C00;
-}
-.red {
-	color: #FF0000;
-}
+.label-orange	{ border-left-color:	#FA8F6F; }
+.label-green	{ border-left-color:	#B7D897; }
+.label-blue		{ border-left-color:	#55AADA; }
+.label-purple	{ border-left-color:	#666699; }
+.green				{ color:							#32CD32; }
+.blue					{ color:							#4169E1; }
+.orange				{ color:							#FF8C00; }
+.red					{	color:							#FF0000; }
 
 /******************************************************************************
- *                                   HEADER                                   *
+ *                                H e a d e r                                 *
  ******************************************************************************/
-
-header {
+header
+{
 	position:								fixed;
 	top:										0px;
 	z-index:								100000;
-	width:									1000px;
-	padding:								20px;
 	
-	border-bottom:					1px solid #DDD;	
-	background: 						#FFF;
-}
+	width:									100%;
+	padding-left:						calc((100% - 860px) / 2);
+	padding-right:					calc((100% - 860px) / 2);
 
-#name {
+	padding-top:						20px;
+	padding-bottom:					20px;
+
+	border-bottom:					1px solid #DDD;	
+	background: 						#FFFFFF;
+}
+header.dark
+{
+	border-bottom:					0px;	
+	color:									#FFFFFF;
+	background:							#4D4D4D;
+}
+header #name
+{
 	display: 								block;
 	float:									left;
 	height:									70px;
 	width:									calc(100% - 100px);
 	font-size:							36px;
 }
-
-#picture {
+header #picture
+{
 	display:								block;
 	float:									right;
 	height:									100px;
@@ -122,10 +111,10 @@ header {
 }
 
 /******************************************************************************
- *                                 NAVIGATION                                 *
+ *                     H e a d e r   N a v i g a t i o n                      *
  ******************************************************************************/
-
-#nav {
+header #nav
+{
 	overflow:								hidden;
 	display:								block;
 	margin:									0px;
@@ -134,136 +123,252 @@ header {
 	height:									30px;
 	width:									calc(100% - 100px);
 }
-
-#nav li {
+header #nav li
+{
 	margin-right:						20px;
 	list-style:							none;
 	float:									left;
 }
-
-#nav li.current a {
+header #nav li.current a
+{
 	color:									#333;
 	border-bottom:					2px solid #94CC5F;
 }
-
-#nav a {
+header.dark #nav li.current a
+{
+	color:									#DDD;
+}
+header #nav a
+{
 	font-size:							20px;
 	color:									#888;
 	text-decoration:				none;
 }
+header.dark #nav a
+{
+	color:									#BBB;
+}
 
 /******************************************************************************
- *                              SECTION & ASIDE                               *
+ *                                F o o t e r                                 *
  ******************************************************************************/
+footer
+{
+	position:								fixed;
+	bottom:									0px;
+	z-index:								100000;
+	
+	width:									100%;
+	padding-left:						calc((100% - 860px) / 2);
+	padding-right:					calc((100% - 860px) / 2);
+	padding-top:						8px;
+	padding-bottom:					8px;
 
-main, aside {
-	display:								block;
-	margin-top:							140px;
-	margin-bottom:					50px;
-	z-index:								0;
-	padding:								20px;
+	border-top:							1px solid #DDD;	
+	background: 						#FFFFFF;
 }
 
-main {
-	width:									75%;
+/******************************************************************************
+ *                         F o o t e r   S o c i a l                          *
+ ******************************************************************************/
+footer #social {
+	display: 								inline;
 	float:									left;
+	min-width:							100px;
+	margin:									0px;
+	padding:								0px;
+}
+footer #social li
+{
+	margin-right:						6px;
+	list-style:             none;
+	float:                 	left;
+}
+footer #social img
+{
+	margin-right:						3px;
+	vertical-align:					middle;
+	display:								inline-block;
+	height:									16px;
 }
 
-main section {
+/******************************************************************************
+ *                     F o o t e r   N a v i g a t i o n                      *
+ ******************************************************************************/
+footer #mininav
+{
+	display:								inline;
+	float:									right;
+	min-width:							100px;
+	margin:									0px;
+	padding:								0px;
+}
+footer #mininav li
+{
+	display:								inline;
+	margin-right:						6px;
+	padding-right:					6px;
+	border-right:						1px solid #DDD;
+	list-style:							none;
+}
+footer #mininav .top
+{
+	margin-right:						0px;
+	padding-right:					0px;
+	border-right:						0px;
+}
+footer #mininav .top a
+{
+	color:									#999;
+}
+
+/******************************************************************************
+ *                               W r a p p e r                                *
+ ******************************************************************************/
+#wrapper
+{
+	margin-left:						calc((100% - 860px) / 2);
+	margin-right:						calc((100% - 860px) / 2);
+	margin-top:							calc(100px + 40px);
+	margin-bottom:					calc(16px  + 16px);
+}
+main {
+	display:								inline-block;
+	vertical-align:					top;
+	width:									75%;
+	
+	padding-top:						15px;
+	padding-bottom:					10px;
+	padding-right: 					 5px;
+
+	z-index:								10;
+	background: 						#FFFFFF;
+}
+aside {
+	display:								inline-block;
+	vertical-align:					top;
+	width:									calc(25% - 3px);
+	
+	padding-top:						20px;
+	padding-bottom:					10px;
+	padding-left:						10px;
+
+	border-left:						1px solid #DDD;
+
+	z-index:								100;
+	background: 						#FFFFFF;
+}
+
+/******************************************************************************
+ *                            M a i n   B l o c k                             *
+ ******************************************************************************/
+.block                         { width: 100.000%; }
+.block.quarter                 { width:  25.000%; }
+.block.third                   { width:  33.333%; }
+.block.half                    { width:  50.000%; }
+.block.twothird                { width:  66.666%; }
+.block.treequarter             { width:  75.000%; }
+.block.full                    { width: 100.000%; }
+
+.block:not(.expanded) .content { display:       none; }
+.block.expanded       .content { display:    visible; }
+
+.block.half.expanded,
+.block.twothird.expanded,
+.block.treequarter.expanded
+{
 	width:									100%;
 }
 
-main article {
-	padding-bottom:					20px;
+/******************************************************************************
+ *                          M a i n   A r t i c l e                           *
+ ******************************************************************************/
+main article
+{
+	margin:									5px;
+	padding:								8px;
 }
-
-main h2 {
-	margin:									0 0 10px 0;
+main .block.quarter     article,
+main .block.third       article,
+main .block.half        article,
+main .block.twothird    article,
+main .block.treequarter article,
+main .block.full        article
+{
+	background:							#FFFFFF;
+	border-top:							1px solid #EEE;
+	border-left:						1px solid #EEE;
+	border-bottom:					1px solid #BBB;
+	border-right:						1px solid #BBB;
+}
+main article h1
+{
+	margin:									0px;
 	font-weight:						normal;
-	font-size:							24px;
-}
+	font-size:							22px;	
 
-main h5 {
+	white-space:						nowrap;
+	overflow:								hidden;
+	text-overflow:					ellipsis;
+}
+main article h5
+{
 	margin:									0;
 	font-weight:						normal;
 	text-align: 						right;
 }
-
-aside {
-	width:									25%;
-	float:									right;
-	border-left:						1px solid #DDD;
-}
-
-aside article {
-	padding-bottom:					10px;
-}
-
-aside h2 {
-	margin:									0 0 10px 0;
-	font-weight:						normal;
-	font-size:							24px;
-}
-
-#copyright {
-	border-top:							1px solid #EEE;
-	padding-top: 						8px;
-	text-align:							center;
-	font-size:							10px;
-	color:									#AAA;
-}
-
-#copyright a {
-	color:									#99C;
+main article .content
+{
+	margin-top:							10px;
 }
 
 /******************************************************************************
- *                                   BIBLIO                                   *
+ *                   M a i n   A r t i c l e   B i b l i o                    *
  ******************************************************************************/
-
-.bibtitle {
+main article .bibtitle
+{
 	display:								block;
 	font-weight:						bold;
 }
-
-.bibauthor {
+main article .bibauthor
+{
 	display:								block;
 }
-
-.bibref {
+main article .bibref
+{
 	display:								block;
 	padding-bottom:					5px;
 	font-style:							italic;
 	color:									#888;
 	/*font-size: 80%;*/
 }
-
-.bibref a {
+main article .bibref a
+{
 	margin-left:						5px;
 	color:									#88F;
 	/*font-size: 80%;*/
 }
-
-.bibtray {
+main article .bibtray
+{
 	border-bottom:					1px solid #BBB;
 	border-right:						1px solid #BBB;
 	border-top:							1px solid #EEE;
 	border-left:						1px solid #EEE;
 	padding:								5px 5px 5px 10px;
 }
-
-.bibabstract {
+main article .bibabstract
+{
 	text-align:							justify;
   color:									#444;
 }
-
-.bibtex {
+main article .bibtex
+{
 	font-size:							80%;
 	white-space:						pre-wrap;
 	color:									#888;
 }
-
-.cohexist_left {
+main article .cohexist_left
+{
 	display:								inline-block;
 	width:									60%;
 	vertical-align:					top;
@@ -271,8 +376,8 @@ aside h2 {
 	
 	padding-right: 					5px;
 }
-
-.cohexist_right {
+main article .cohexist_right
+{
 	display:								inline-block;
 	width:									calc(40% - 4px);
 	vertical-align:					top;
@@ -283,100 +388,60 @@ aside h2 {
 }
 
 /******************************************************************************
- *                                   FOOTER                                   *
+ *                                 A s i d e                                  *
  ******************************************************************************/
-
-footer {
-	position:								fixed;
-	bottom:									0px;
-	z-index:								100000;
-	width:									1000px;
-	padding: 								8px 20px 8px 20px;
-	border-top:							1px solid #DDD;	
-	background:							#FFF;
+aside article
+{
+	padding-bottom:					10px;
 }
-
-#social {
-	display: 								inline;
-	float:									left;
-	min-width:							100px;
-	margin:									0px;
-	padding:								0px;
+aside h1
+{
+	margin:									0 0 10px 0;
+	font-weight:						normal;
+	font-size:							24px;
 }
-
-#social li {
-	margin-right:						6px;
-	list-style:             none;
-	float:                 	left;
+#copyright
+{
+	border-top:							1px solid #EEE;
+	padding-top: 						8px;
+	text-align:							center;
+	font-size:							10px;
+	color:									#AAA;
 }
-
-#social img {
-	margin-right:						3px;
-	vertical-align:					middle;
-	display:								inline-block;
-	height:									18px;
-}
-
-#mininav {
-	display:								inline;
-	float:									right;
-	min-width:							100px;
-	margin:									0px;
-	padding:								0px;
-}
-
-#mininav li {
-	display:								inline;
-	margin-right:						6px;
-	padding-right:					6px;
-	border-right:						1px solid #DDD;
-	list-style:							none;
-}
-
-#mininav .top {
-	margin-right:						0px;
-	padding-right:					0px;
-	border-right:						0px;
-}
-#mininav .top a {
-	color:									#999;
+#copyright a
+{
+	color:									#99C;
 }
 
 /******************************************************************************
- *                                   ERROR                                    *
+ *                                 E r r o r                                  *
  ******************************************************************************/
-
-#error {
+#error
+{
 	position:								fixed;
 	z-index:								100000;
 
 	width:									1000px;
-	left:										calc(50% - 600px); 
-	height:									100px;
+	left:										calc(50% - 500px); 
 	top:										calc(50% - 50px);
 
 	background:							rgba(8,8,8,0.8);
-	color:									#EEE;
-	padding:								20px;
+	color:									#EEEEEE;
 	
+	padding:								20px;
+	padding-top:						auto;
+  padding-bottom:					auto;
+
 	text-align:							center;
 	font-size:							32px;
 	cursor:									pointer;
 }
 
-/******************************************************************************
- *                                  FEATURES                                  *
- ******************************************************************************/
 
-.map {
-	margin:									10px 0 10px 0;
-	border:									0;
-	background:							#DDD;
-}
 
-#timeline {
-	width:									100px;
-	height:									380px;
-}
+
+
+
+
 
 

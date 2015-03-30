@@ -19,6 +19,7 @@ class Section extends Entry
 	{
 		parent::__construct($input['Page_ID']);
 		$this->title    = $input['Page_Title'];
+		$this->block    = $input['Page_Block'];
 		$this->default  = $input['Page_Default'];
 		$this->articles = new Catalog();
 	}

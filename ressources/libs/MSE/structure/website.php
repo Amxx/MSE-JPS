@@ -40,6 +40,7 @@ class WebSite
 			'SELECT
 				`pages`.Page_ID,
 				`pages`.Page_Title,
+				`pages`.Page_Block,
 				`pages`.Page_Order,
 				`pages`.Page_Default,
 				`articles`.Article_ID,

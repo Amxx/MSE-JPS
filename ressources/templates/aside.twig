@@ -2,21 +2,22 @@
  #                                  MSE-JPS                                   #
  #                 Mini Site Engine - Javascript / PHP / SQL                  #
  #                                                                            #
- #                        Version 1.0.1-4 : 28/03/2015                        #
+ #                        Version 1.1.0-1 : 29/03/2015                        #
  #                                                                            #
  #                      Developped by Hadrien Croubois :                      #
  #                         hadrien.croubois@gmail.com                         #
  #                                                                            #
  ##############################################################################}
 
-<header>
-	<div id='name'> {{website.header.name}} </div>
-	<img id='picture' src='{{website.header.picture}}' alt='Profile picture'/>
-	<ul id='nav'>
-		{% for page in website.page.sections.list %}
-			<li id='nav-li-{{page.id}}' {% if page.id == website.current %} class='current' {% endif %}>
-				<a id='nav-a-{{page.id}}' href='?page={{page.title}}'>{{ page.title }}</a>
-			</li>
-		{% endfor %}
-	</ul>
-</header>
+<aside>
+	{% for link in website.links.list %}
+		<article>
+			<h1 class='bordered label-orange'>{{link.title}}</h1>
+			{{ link.content | raw }}
+		</article>
+	{% endfor %}
+	<div id='copyright'>
+		Powered by <a href='https://github.com/Amxx/MSE-JPS' target='_blank'>MSE-JSP</a><br/>
+		Developped by Hadrien Croubois
+	</div>
+</aside>

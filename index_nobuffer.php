@@ -66,7 +66,7 @@ $twig   = new Twig_Environment($loader, array(
 ));
 
 # Load template
-$template = $twig->loadTemplate('main.tpl');
+$template = $twig->loadTemplate('index.twig');
 echo $template->render(array('website' => $website));
 
 ?>
