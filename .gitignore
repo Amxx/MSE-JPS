@@ -1,3 +1,4 @@
-config/sql_config.php
-config/local.php
-config/ens.php
+config/*
+!config/sample_config
+
+buffer/*
