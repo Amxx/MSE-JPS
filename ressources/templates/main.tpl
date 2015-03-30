@@ -17,7 +17,8 @@
 
 		<title> {{ website.header.name }} | {{ website.page.sections[website.current].title }}</title>
 
-		<link rel="icon" type="image/png" href="ressources/img/favicon.png" />
+		<link rel="icon" type="image/png" href="{{website.header.picture}}" />
+		<!-- <link rel="icon" type="image/png" href="ressources/img/favicon.png" /> -->
 
 		<link rel="stylesheet" href="ressources/style.css" type="text/css"/>
 		<link rel="stylesheet" href="ressources/font/OpenSans.css" type="text/css"/>
