@@ -2,7 +2,7 @@
  #                                  MSE-JPS                                   #
  #                 Mini Site Engine - Javascript / PHP / SQL                  #
  #                                                                            #
- #                        Version 1.1.0-1 : 29/03/2015                        #
+ #                        Version 1.1.0-6 : 30/03/2015                        #
  #                                                                            #
  #                      Developped by Hadrien Croubois :                      #
  #                         hadrien.croubois@gmail.com                         #
@@ -71,6 +71,7 @@
 		
 		{# Piwik tracking #}
 		<script type="text/javascript">
+			// Default script provided by piwik
 		  var _paq = _paq || [];
 		  _paq.push(['trackPageView']);
 		  _paq.push(['enableLinkTracking']);
@@ -81,7 +82,6 @@
 		    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
 		    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
 		  })();
-
 			// Added to track javascript page change
 			$(window).on("hashchange", function() { _paq.push(['trackPageView', document.URL]); });
 		</script>
