@@ -38,7 +38,7 @@
 		{# Error block #}
 		<div id='error' style='display:none'></div>
 
-		{# Initialize javascript #}
+		{# Main javascript #}
 		<script type="text/javascript" src="ressources/engine.js"></script>
 		<script type="text/javascript">
 		
@@ -68,8 +68,25 @@
 			$('section').filter(function(){ return $(this).attr('id') != id; }).hide()
 		});
 		</script>
+		
+		{# Piwik tracking #}
+		<script type="text/javascript">
+		  var _paq = _paq || [];
+		  _paq.push(['trackPageView']);
+		  _paq.push(['enableLinkTracking']);
+		  (function() {
+		    var u="//perso.ens-lyon.fr/hadrien.croubois/piwik/";
+		    _paq.push(['setTrackerUrl',    u+'piwik.php']);
+		    _paq.push(['setSiteId',        1]);
+		    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+		    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+		  })();
+
+			// Added to track javascript page change
+			$(window).on("hashchange", function() { _paq.push(['trackPageView', document.URL]); });
+		</script>
+		<noscript><p><img src="//perso.ens-lyon.fr/hadrien.croubois/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
 
 	</body>
-	 
-</html>
 
+</html>
