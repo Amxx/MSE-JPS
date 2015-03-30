@@ -1,0 +1,13 @@
+<Files .htaccess>
+	order allow,deny
+	deny from all
+</Files>
+
+DirectoryIndex index.php
+
+ErrorDocument 400 http://perso.ens-lyon.fr/hadrien.croubois/index.php#400error
+ErrorDocument 401 http://perso.ens-lyon.fr/hadrien.croubois/index.php#401error
+ErrorDocument 403 http://perso.ens-lyon.fr/hadrien.croubois/index.php#403error
+ErrorDocument 404 http://perso.ens-lyon.fr/hadrien.croubois/index.php#404error
+ErrorDocument 502 http://perso.ens-lyon.fr/hadrien.croubois/index.php#502error
+

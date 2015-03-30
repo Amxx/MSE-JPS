@@ -268,12 +268,12 @@ aside {
 	vertical-align:					top;
 	width:									100.000%;
 }
-.block.quarter                 { width: calc( 25.000% - 3px); }
-.block.third                   { width: calc( 33.333% - 3px); }
-.block.half                    { width: calc( 50.000% - 3px); }
-.block.twothird                { width: calc( 66.666% - 3px); }
-.block.treequarter             { width: calc( 75.000% - 3px); }
-.block.full                    { width: calc(100.000% - 3px); }
+.block.quarter                 { width:  25.000%; }
+.block.third                   { width:  33.333%; }
+.block.half                    { width:  50.000%; }
+.block.twothird                { width:  66.666%; }
+.block.treequarter             { width:  75.000%; }
+.block.full                    { width: 100.000%; }
 
 .block:not(.expanded) .content { display:       none; }
 .block.expanded       .content { display:    visible; }

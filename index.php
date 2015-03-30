@@ -3,13 +3,13 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                         Version 1.0.1 : 27/03/2015                         *
+ *                         Version 1.1.4 : 30/03/2015                         *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************
- * Copyright Hadrien Croubois (27/03/2015)                                    *
+ * Copyright Hadrien Croubois (30/03/2015)                                    *
  * hadrien.croubois@gmail.com                                                 *
  *                                                                            *
  * This software is a computer program whose purpose is to generate           *
@@ -48,25 +48,39 @@ include_once 'ressources/libs/MSE/container/catalog.php';
 include_once 'ressources/libs/MSE/structure/website.php';
 require_once 'ressources/libs/Twig/Autoloader.php';
 
-# Connect to DB
-$sqlsocket = new Connection();
-$sqlsocket->open($host, $user, $psswd);
+include_once 'ressources/libs/phpfastcache.php';
 
-# Build website
-$website = new WebSite();
-$website->readDB($sqlsocket);
-$website->setEnv();
+$cache = phpFastCache();
+$hash  = md5($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
+$html  = __c('files')->get($hash);
 
-# Make environment
-Twig_Autoloader::register();
+if ($html == null)
+{
+	# Connect to DB
+	$sqlsocket = new Connection();
+	$sqlsocket->open($host, $user, $psswd);
 
-$loader = new Twig_Loader_Filesystem('ressources/templates');
-$twig   = new Twig_Environment($loader, array(
-	// 'cache' => 'buffer', // local gives error, write permission ?
-));
+	# Build website
+	$website = new WebSite();
+	$website->readDB($sqlsocket);
+	$website->setEnv();
 
-# Load template
-$template = $twig->loadTemplate('index.twig');
-echo $template->render(array('website' => $website));
+	# Make environment
+	Twig_Autoloader::register();
+
+	$loader = new Twig_Loader_Filesystem('ressources/templates');
+	$twig   = new Twig_Environment($loader, array(
+		// 'cache' => 'buffer', // local gives error, write permission ?
+	));
+
+	# Load template
+	$template = $twig->loadTemplate('index.twig');
+	// echo $template->render(array('website' => $website));
+	$html = $template->render(array('website' => $website));
+
+	__c("files")->set($hash, $html, 600);
+}
+
+echo $html;
 
 ?>
