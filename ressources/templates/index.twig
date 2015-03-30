@@ -83,7 +83,11 @@
 		    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
 		  })();
 			// Added to track javascript page change
-			$(window).on("hashchange", function() { _paq.push(['trackPageView', document.URL]); });
+			$(window).on("hashchange", function() {
+				_paq.push(['setCustomUrl',     document.URL  ]);
+				_paq.push(['setDocumentTitle', document.title]);
+				_paq.push(['trackPageView',    document.title]);
+			});
 		</script>
 		<noscript><p><img src="//perso.ens-lyon.fr/hadrien.croubois/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
 
