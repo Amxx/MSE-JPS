@@ -91,7 +91,7 @@ class WebSite
 	{
 		foreach ($this->page->sections->list as $section)
 			if ((isset($_GET['page']) && $_GET['page'] == $section->title) || (is_null($this->current) && $section->default))
-			$this->current = $section->id();
+				$this->current = $section->id();
 	}
 
 }

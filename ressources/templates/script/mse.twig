@@ -1,0 +1,39 @@
+{##############################################################################
+ #                                  MSE-JPS                                   #
+ #                 Mini Site Engine - Javascript / PHP / SQL                  #
+ #                                                                            #
+ #                        Version 1.1.0-7 : 31/03/2015                        #
+ #                                                                            #
+ #                      Developped by Hadrien Croubois :                      #
+ #                         hadrien.croubois@gmail.com                         #
+ #                                                                            #
+ ##############################################################################}
+
+{# Main javascript #}
+<script type="text/javascript" src="ressources/engine.js"></script>
+<script type="text/javascript">
+	$(function(){
+		// Record visibility
+		var id = $('section').filter(function(){ return $(this).css('display') != 'none'; }).attr('id');
+		// Set visibility for javascript
+		$('section').show();
+			
+		// make tiles
+		$('section').masonry({
+			'columnWidth' : 1,
+			'itemSelector': '.block'
+		});
+
+		// Run javascript
+		{% for page in website.page.sections.list %}
+		{% for article in page.articles.list %}
+		{% if article.javascript %}
+			{{ article.javascript | raw }}
+		{% endif %}
+		{% endfor %}
+		{% endfor %}
+			
+		// Reset vicibility
+		$('section').filter(function(){ return $(this).attr('id') != id; }).hide()
+	});
+</script>

@@ -1,0 +1,44 @@
+{##############################################################################
+ #                                  MSE-JPS                                   #
+ #                 Mini Site Engine - Javascript / PHP / SQL                  #
+ #                                                                            #
+ #                        Version 1.1.1-0 : 31/03/2015                        #
+ #                                                                            #
+ #                      Developped by Hadrien Croubois :                      #
+ #                         hadrien.croubois@gmail.com                         #
+ #                                                                            #
+ ##############################################################################}
+
+<!-- Piwik -->
+<script type="text/javascript">
+	var _paq = _paq || [];
+	_paq.push(['trackPageView']);
+	_paq.push(['enableLinkTracking']);
+
+	{% if module.cookieDomain %}
+		_paq.push(["setCookieDomain", "{{ module.cookieDomain }}"]);
+	{% endif %}
+	{% if module.outlinkDomain %}
+		_paq.push(["setDomains", ["{{ module.outlinkDomain | join('","') | raw }}"]]);
+	{% endif %}
+
+	(function() {
+		var u="//{{ module.url }}";
+		_paq.push(['setTrackerUrl', u+'/piwik.php']);
+		_paq.push(['setSiteId', {{ module.id }}]);
+		var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+		g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/piwik.js'; s.parentNode.insertBefore(g,s);
+	})();
+
+	// Added to track javascript page change
+	$(window).on("hashchange", function(){
+		_paq.push(['trackPageView',    document.title]);
+		_paq.push(['setDocumentTitle', document.title]);
+		_paq.push(['setCustomUrl',     document.URL  ]);
+	});
+</script>
+
+<!-- Piwik Image Tracker-->
+<noscript>
+	<img src="//{{ module.url }}/piwik.php?idsite={{ module.id }}&rec=1&action_name={{ [website.header.name,website.page.sections.map[website.current].title] | join(' | ')  | url_encode }}" style="border:0" alt="" />
+</noscript>

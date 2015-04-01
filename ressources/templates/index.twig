@@ -2,7 +2,7 @@
  #                                  MSE-JPS                                   #
  #                 Mini Site Engine - Javascript / PHP / SQL                  #
  #                                                                            #
- #                        Version 1.1.0-6 : 30/03/2015                        #
+ #                        Version 1.1.1-0 : 31/03/2015                        #
  #                                                                            #
  #                      Developped by Hadrien Croubois :                      #
  #                         hadrien.croubois@gmail.com                         #
@@ -15,7 +15,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title> {{ website.header.name }} | {{ website.page.sections[website.current].title }}</title>
+		<title>{{ website.header.name }} | {{ website.page.sections.map[website.current].title }}</title>
 
 		<link rel="icon" type="image/png" href="{{website.header.picture}}" />
 		
@@ -31,65 +31,18 @@
 	<body>
 
 		{# Build page #}
-		{{ include ('header.twig',  {'website': website }) }}
-		{{ include ('wrapper.twig', {'website': website }) }}
-		{{ include ('footer.twig',  {'website': website }) }}
+		{% include 'structure/100_header.twig'  %}
+		{% include 'structure/200_wrapper.twig' %}
+		{% include 'structure/300_footer.twig'  %}
 
 		{# Error block #}
 		<div id='error' style='display:none'></div>
 
-		{# Main javascript #}
-		<script type="text/javascript" src="ressources/engine.js"></script>
-		<script type="text/javascript">
-		
-		$(function(){
-			// Record visibility
-			var id = $('section').filter(function(){ return $(this).css('display') != 'none'; }).attr('id');
+		{# Javascript #}
+		{% include 'script/mse.twig' %}
 
-			// Set visibility for javascript
-			$('section').show();
-			
-			// make tiles
-			$('section').masonry({
-				'columnWidth' : 1,
-				'itemSelector': '.block'
-			});
-
-			// Run javascript
-			{% for page in website.page.sections.list %}
-			{% for article in page.articles.list %}
-			{% if article.javascript %}
-				{{ article.javascript | raw }}
-			{% endif %}
-			{% endfor %}
-			{% endfor %}
-			
-			// Reset vicibility
-			$('section').filter(function(){ return $(this).attr('id') != id; }).hide()
-		});
-		</script>
-		
-		{# Piwik tracking #}
-		<script type="text/javascript">
-			// Default script provided by piwik
-		  var _paq = _paq || [];
-		  _paq.push(['trackPageView']);
-		  _paq.push(['enableLinkTracking']);
-		  (function() {
-		    var u="//perso.ens-lyon.fr/hadrien.croubois/piwik/";
-		    _paq.push(['setTrackerUrl',    u+'piwik.php']);
-		    _paq.push(['setSiteId',        1]);
-		    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-		    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-		  })();
-			// Added to track javascript page change
-			$(window).on("hashchange", function() {
-				_paq.push(['setCustomUrl',     document.URL  ]);
-				_paq.push(['setDocumentTitle', document.title]);
-				_paq.push(['trackPageView',    document.title]);
-			});
-		</script>
-		<noscript><p><img src="//perso.ens-lyon.fr/hadrien.croubois/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+		{# Modules #}
+		{% include 'modules.twig' %}
 
 	</body>
 

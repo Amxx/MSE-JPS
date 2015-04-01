@@ -3,7 +3,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                         Version 1.1.5 : 30/03/2015                         *
+ *                        Version 1.1.1-0 : 31/03/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -51,7 +51,8 @@ include_once 'ressources/libs/phpfastcache/phpfastcache.php';
 
 $cache = phpFastCache();
 $hash  = md5($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
-$html  = __c('files')->get($hash);
+// $html  = __c('files')->get($hash);
+$html  = null;
 
 if ($html == null)
 {
@@ -74,7 +75,7 @@ if ($html == null)
 
 	# Load template
 	$template = $twig->loadTemplate('index.twig');
-	$html     = $template->render(array('website' => $website));
+	$html     = $template->render(array('website' => $website, 'modules' => $modules));
 
 	__c("files")->set($hash, $html, 600);
 }
