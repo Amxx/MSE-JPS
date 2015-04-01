@@ -232,26 +232,26 @@ footer #mininav .top a
 	margin-top:							calc(100px + 40px);
 	margin-bottom:					calc(16px  + 16px);
 }
-main {
+main
+{
 	display:								inline-block;
 	vertical-align:					top;
 	width:									75%;
 	
-	padding-top:						15px;
-	padding-bottom:					10px;
-	padding-right: 					 5px;
+	padding:								5px 5px 15px 0px;
+	margin:									0px;
 
 	z-index:								10;
 	background: 						#FFFFFF;
 }
-aside {
+aside
+{
 	display:								inline-block;
 	vertical-align:					top;
-	width:									calc(25% - 4px);
+	width:									25%;
 	
-	padding-top:						20px;
-	padding-bottom:					10px;
-	padding-left:						10px;
+	padding:								15px 0px 15px 15px;
+	margin:									0px;
 
 	border-left:						1px solid #DDD;
 
@@ -291,7 +291,7 @@ aside {
 main article
 {
 	margin:									5px;
-	padding:								8px;
+	padding:								6px;
 }
 main .block.quarter     article,
 main .block.third       article,
