@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.1.0-1 : 29/03/2015                        *
+ *                        Version 1.1.1-2 : 31/03/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -20,11 +20,7 @@ function hashHandler(smooth)
 	var hash	= window.location.hash.substring(1);
 
 	// Set hash if empty
-	if (hash == '')
-	{
-		window.location.hash = id2hash(getCurrentId());
-		return;
-	}
+	if (hash == '') hash = id2hash(getCurrentId());
 	
 	// Try get page id from hash
 	try
