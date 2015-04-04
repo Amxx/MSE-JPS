@@ -2,7 +2,7 @@
  #                                  MSE-JPS                                   #
  #                 Mini Site Engine - Javascript / PHP / SQL                  #
  #                                                                            #
- #                        Version 1.1.1-0 : 31/03/2015                        #
+ #                        Version 1.1.2-0 : 04/04/2015                        #
  #                                                                            #
  #                      Developped by Hadrien Croubois :                      #
  #                         hadrien.croubois@gmail.com                         #
@@ -11,12 +11,10 @@
  
 <main>
 	{% for section in website.page.sections.list %}
-		<section id='section-{{section.id}}' {% if section.id != website.current %} style="display: none;" {% endif %}>
-			<!--
+		<section id='section-{{section.id}}' class='flex-wrapper' {% if section.id != website.current %} style="display: none;" {% endif %}>
 			{% for article in section.articles.list %}
 				{% include 'structure/211_block.twig' %}
 			{% endfor %}
-			-->
 		</section>
 	{% endfor %}
-</main><!--
+</main>

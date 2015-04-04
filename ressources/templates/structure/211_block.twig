@@ -2,15 +2,15 @@
  #                                  MSE-JPS                                   #
  #                 Mini Site Engine - Javascript / PHP / SQL                  #
  #                                                                            #
- #                        Version 1.1.1-0 : 31/03/2015                        #
+ #                        Version 1.1.2-0 : 04/04/2015                        #
  #                                                                            #
  #                      Developped by Hadrien Croubois :                      #
  #                         hadrien.croubois@gmail.com                         #
  #                                                                            #
  ##############################################################################}
---><div class='block {{section.block}} {% if not article.archived %}expanded{% endif %}'>
+<div class='block {{section.block}} {% if not article.archived %}expanded{% endif %}'>
 	<article>
-		<h1 class='bordered label-blue'><a href='#' onclick='toggleBlock(this); return false;'>{{article.title}}</a></h1>
+		<h1 class='label label-blue'><a href='#' onclick='toggleBlock(this); return false;'>{{article.title}}</a></h1>
 		<div class='content'>
 			{{ article.text | raw }}
 			{% for reference in article.citations.list %}
@@ -18,4 +18,4 @@
 			{% endfor %}							
 		</div>
 	</article>
-</div><!--
+</div>

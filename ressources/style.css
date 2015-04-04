@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.1.0-2 : 30/03/2015                        *
+ *                        Version 1.1.2-0 : 04/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -10,8 +10,9 @@
  ******************************************************************************/
 
 * {
-	-webkit-box-sizing:			border-box;
-	-moz-box-sizing:				border-box;
+	/* DEPRECATED ? */
+	/*-webkit-box-sizing:			border-box;*/
+	/*-moz-box-sizing:				border-box;*/ 
 	box-sizing:							border-box;
 }
 
@@ -55,7 +56,7 @@ ul
 {
 	color:									#999;
 }
-.bordered {
+.label {
 	border-left-width:			4px;
 	border-left-style:			solid;	
 	padding-left:						10px;
@@ -223,9 +224,9 @@ footer #mininav .top a
 }
 
 /******************************************************************************
- *                               W r a p p e r                                *
+ *                         F l e x   -  W r a p p e r                         *
  ******************************************************************************/
-#wrapper
+#page
 {
 	margin-left:						calc((100% - 860px) / 2);
 	margin-right:						calc((100% - 860px) / 2);
@@ -234,71 +235,54 @@ footer #mininav .top a
 }
 main
 {
-	display:								inline-block;
-	vertical-align:					top;
-	width:									75%;
-	
-	padding:								5px 5px 15px 0px;
-	margin:									0px;
-
-	z-index:								10;
-	background: 						#FFFFFF;
+	flex:										1 75%;
+	padding:								5px 10px 5px 0px;
 }
 aside
 {
-	display:								inline-block;
-	vertical-align:					top;
-	width:									25%;
-	
+	flex:										1 25%;
 	padding:								15px 0px 15px 15px;
-	margin:									0px;
-
 	border-left:						1px solid #DDD;
-
-	z-index:								100;
-	background: 						#FFFFFF;
 }
 
 /******************************************************************************
- *                            M a i n   B l o c k                             *
+ *                           M a i n   B l o c k s                            *
  ******************************************************************************/
-.block
+.flex-wrapper
 {
-	display:								inline-block;
-	vertical-align:					top;
-	width:									100.000%;
+	display:								flex;
+	flex-wrap:							wrap;
 }
-.block.quarter                 { width:  25.000%; }
-.block.third                   { width:  33.333%; }
-.block.half                    { width:  50.000%; }
-.block.twothird                { width:  66.666%; }
-.block.treequarter             { width:  75.000%; }
-.block.full                    { width: 100.000%; }
 
-.block:not(.expanded) .content { display:       none; }
-.block.expanded       .content { display:    visible; }
+.block							{	width: 100.000%; }
+.block.quarter			{ width:  25.000%; }
+.block.third				{ width:  33.333%; }
+.block.half					{ width:  50.000%; }
+.block.twothird			{ width:  66.666%; }
+.block.treequarter	{ width:  75.000%; }
+.block.full					{ width: 100.000%; }
 
-.block.half.expanded,
-.block.twothird.expanded,
-.block.treequarter.expanded
+.block.expandable.expanded
 {
 	width:									100%;
 }
 
+.block.expanded       .content { display: block; }
+.block:not(.expanded) .content { display:  none; }
+
 /******************************************************************************
  *                          M a i n   A r t i c l e                           *
  ******************************************************************************/
+main section
+{
+	width: 100%;
+}
 main article
 {
 	margin:									5px;
 	padding:								6px;
 }
-main .block.quarter     article,
-main .block.third       article,
-main .block.half        article,
-main .block.twothird    article,
-main .block.treequarter article,
-main .block.full        article
+main .block.bordered article
 {
 	background:							#FFFFFF;
 	border-top:							1px solid #EEE;
@@ -357,41 +341,36 @@ main article .bibref a
 }
 main article .bibtray
 {
+	display:								flex;
 	border-bottom:					1px solid #BBB;
 	border-right:						1px solid #BBB;
 	border-top:							1px solid #EEE;
 	border-left:						1px solid #EEE;
 	padding:								5px 5px 5px 10px;
 }
+
+main article .bibtray div:not(:first-child)
+{
+	padding-left: 					5px;
+}
+main article .bibtray div:not(:last-child)
+{
+	padding-right: 					5px;
+	border-right:						1px solid #DDD;
+}
+
 main article .bibabstract
 {
 	text-align:							justify;
   color:									#444;
+  flex:										1 60%;
 }
 main article .bibtex
 {
 	font-size:							80%;
 	white-space:						pre-wrap;
 	color:									#888;
-}
-main article .cohexist_left
-{
-	display:								inline-block;
-	width:									60%;
-	vertical-align:					top;
-	clear:									left;
-	
-	padding-right: 					5px;
-}
-main article .cohexist_right
-{
-	display:								inline-block;
-	width:									calc(40% - 4px);
-	vertical-align:					top;
-	clear:									right;
-
-	border-left:						1px solid #DDD;
-	padding-left: 					5px;
+  flex:										1 40%;
 }
 
 /******************************************************************************
@@ -432,16 +411,18 @@ aside h1
 	left:										calc(50% - 500px); 
 	top:										calc(50% - 50px);
 
-	background:							rgba(8,8,8,0.8);
-	color:									#EEEEEE;
-	
 	padding:								20px;
-	padding-top:						auto;
-  padding-bottom:					auto;
 
+	border-radius:					6px;
+	border:									0;
+
+	color:									#FFFFFF;
+	background:							rgba(45, 45, 45, 0.95);
+	box-shadow:							0 10px 20px #2D2D2D;
+
+	cursor:									pointer;
 	text-align:							center;
 	font-size:							32px;
-	cursor:									pointer;
 }
 
 
