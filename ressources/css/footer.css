@@ -1,0 +1,69 @@
+/******************************************************************************
+ *                                F o o t e r                                 *
+ ******************************************************************************/
+footer
+{
+	position:								fixed;
+	bottom:									0px;
+	z-index:								100000;
+	
+	width:									100%;
+	padding:								8px calc((100% - 1000px) / 2);
+	
+	border-top:							1px solid #DDD;	
+	background: 						#FFFFFF;
+}
+
+/******************************************************************************
+ *                         F o o t e r   S o c i a l                          *
+ ******************************************************************************/
+footer #social {
+	display: 								inline;
+	float:									left;
+	min-width:							100px;
+	margin:									0px;
+	padding:								0px;
+}
+footer #social li
+{
+	margin-right:						6px;
+	list-style:             none;
+	float:                 	left;
+}
+footer #social img
+{
+	margin-right:						3px;
+	vertical-align:					middle;
+	display:								inline-block;
+	height:									16px;
+}
+
+/******************************************************************************
+ *                     F o o t e r   N a v i g a t i o n                      *
+ ******************************************************************************/
+footer #mininav
+{
+	display:								inline;
+	float:									right;
+	min-width:							100px;
+	margin:									0px;
+	padding:								0px;
+}
+footer #mininav li
+{
+	display:								inline;
+	margin-right:						6px;
+	padding-right:					6px;
+	border-right:						1px solid #DDD;
+	list-style:							none;
+}
+footer #mininav .top
+{
+	margin-right:						0px;
+	padding-right:					0px;
+	border-right:						0px;
+}
+footer #mininav .top a
+{
+	color:									#999;
+}

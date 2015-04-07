@@ -1,0 +1,58 @@
+/******************************************************************************
+ *                                 P o p u p                                  *
+ ******************************************************************************/
+.popup
+{
+	min-width:							1000px;
+	border-radius:					6px;
+	border:									0;
+	color:									#FFFFFF;
+	background:							rgba(45, 45, 45, 0.95);
+	box-shadow:							0 10px 20px #2D2D2D;
+	text-align:							center;
+	font-size:							18px;
+}
+.popup h4
+{
+	margin:									10px;
+}
+
+/******************************************************************************
+ *                                B u t t o n                                 *
+ ******************************************************************************/
+.popup button
+{
+	display:								inline-block;
+	width:									100px;
+	padding:								6px;
+	margin:									6px;
+	border:									1px solid #4C4C4C;
+	border-radius:					5px;
+	color:									#FFFFFF;
+	background:							#424242;
+	font-size:							22px;
+	font-weight: 						bold;
+}
+.popup button:hover
+{
+	border:									1px solid #626262;
+	background:							#575757;
+}
+.popup button:active
+{
+	border:									1px solid #4C4C4C;
+	background:							#282828;
+}
+
+/******************************************************************************
+ *                            I n p u t   t e x t                             *
+ ******************************************************************************/
+.popup input[type='text']
+{
+	padding:								5px 10px 5px 10px;
+	width:									40%;
+	border:									1px solid #696969;
+	color:									#FFFFFF;
+	background:							#626262;
+	font-size:							22px;
+}

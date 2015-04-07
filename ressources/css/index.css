@@ -1,0 +1,152 @@
+/******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 1.1.0-2 : 30/03/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
+*
+{
+	box-sizing:							border-box;
+}
+
+html, body
+{
+	height:									100%;
+}
+body
+{
+	width:									100%;	
+	margin:									0 auto;
+	font: 									normal 75% OpenSansRegular;
+	line-height:						1.5;
+	color:									#444;
+}
+
+/******************************************************************************
+ *                               G e n e r a l                                *
+ ******************************************************************************/
+a
+{
+	cursor:									pointer;
+ 	text-decoration:				none;
+	color:									#3079AB;
+}
+a.button
+{
+	display:								inline-block;
+	margin:									6px;
+	padding:								6px;
+	border:									1px solid #4C4C4C;
+	box-shadow:							0 0 5px #2C2C2C;
+	background:							rgba(66, 66, 66, 0.8);
+	border-radius:					5px;
+	color:									#FFFFFF;
+	font-size:							16px;
+	font-weight: 						bold;
+	text-align:							center;
+}
+a.button:hover
+{
+	border:									1px solid #626262;
+	box-shadow:							0 0 5px #626262;
+	background:							rgba(87, 87, 87, 0.8);
+	
+}
+a.button:active
+{
+	border:									1px solid #4C4C4C;
+	box-shadow:							0 0 5px #4C4C4C;
+	background:							rgba(40, 40, 40, 0.8);
+}
+p
+{
+	text-align:							justify;
+	text-indent:						1em;
+	margin:									0;
+}
+p.noindent
+{
+	text-indent:						0;	
+}
+
+/******************************************************************************
+ *                                    Flex                                    *
+ ******************************************************************************/
+.flex								{ display:				flex;					}
+.flex.column				{ flex-direction:	column;				}
+.flex.row						{ flex-direction:	row;					}
+.flex.nowrap				{ flex-wrap:			nowrap;				}
+.flex.wrap					{ flex-wrap:			wrap;					}
+.flex.wrap-reverse	{ flex-wrap:			wrap-reverse;	}
+.isflex							{ flex:						1;						}
+.isnoflex						{ flex:						0;						}
+.nooverflow					{	overflow:				hidden;				}
+
+/******************************************************************************
+ *                                  P a g e                                   *
+ ******************************************************************************/
+#page
+{
+	min-height:							100%;
+	padding-left:						calc((100% - 1000px) / 2);
+	padding-right:					calc((100% - 1000px) / 2);
+}
+#page.padding-header
+{
+	padding-top:						calc(100px + 40px);
+}
+#page.padding-footer
+{
+	padding-bottom:					calc(16px  + 16px);
+}
+
+/******************************************************************************
+ *                               C o n t e n t                                *
+ ******************************************************************************/
+main
+{
+	flex:										75%;
+}
+aside
+{
+	flex:										25%;
+}
+
+main:not(:last-child)
+{
+	padding:								5px 10px 5px 0px;
+}
+aside:not(:first-child)
+{
+	padding:								15px 0 15px 15px;
+	border-left:						1px solid #DDD;
+}
+
+.tab
+{
+	height:									100%;
+}
+
+/******************************************************************************
+ *                         R e s h a p e   b l o c k                          *
+ ******************************************************************************/
+/*
+.reshape
+{
+	display:								inline-block;
+	width:									100px;
+	height:									100px;
+	border-radius:					50px;
+	background:							#444;
+	transition:							all .1s;
+}
+.reshape:hover
+{
+	border-radius:					5px;
+}
+*/

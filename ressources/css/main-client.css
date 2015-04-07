@@ -1,0 +1,184 @@
+
+/******************************************************************************
+ *                               G e n e r a l                                *
+ ******************************************************************************/
+ ul
+{
+	list-style-type:				disc;
+	padding-left:						0.5em;
+	margin:									0 0 1.5em 1.5em;
+}
+
+/* Label */
+.label {
+	border-left-width:			4px;
+	border-left-style:			solid;	
+	padding-left:						10px;
+}
+.label-orange	{ border-left-color:	#FA8F6F; }
+.label-green	{ border-left-color:	#B7D897; }
+.label-blue		{ border-left-color:	#55AADA; }
+.label-purple	{ border-left-color:	#666699; }
+
+/* Color */
+.green				{ color:							#32CD32; }
+.blue					{ color:							#4169E1; }
+.orange				{ color:							#FF8C00; }
+.red					{	color:							#FF0000; }
+
+/******************************************************************************
+ *                                B l o c k s                                 *
+ ******************************************************************************/
+.block							{	width: 100.000%; }
+.block.quarter			{ width:  25.000%; }
+.block.third				{ width:  33.333%; }
+.block.half					{ width:  50.000%; }
+.block.twothird			{ width:  66.666%; }
+.block.treequarter	{ width:  75.000%; }
+.block.full					{ width: 100.000%; }
+
+.block.expandable.expanded
+{
+	width:									100%;
+}
+
+.block.expanded       .content { display: block; }
+.block:not(.expanded) .content { display:  none; }
+
+
+/******************************************************************************
+ *                          M a i n   A r t i c l e                           *
+ ******************************************************************************/
+main section
+{
+	width: 100%;
+}
+main article
+{
+	margin:									5px;
+	padding:								6px;
+}
+main .block.bordered article
+{
+	background:							#FFFFFF;
+	border-top:							1px solid #EEE;
+	border-left:						1px solid #EEE;
+	border-bottom:					1px solid #BBB;
+	border-right:						1px solid #BBB;
+}
+main article h1
+{
+	margin:									0px;
+	font-weight:						normal;
+	font-size:							22px;	
+
+	white-space:						nowrap;
+	overflow:								hidden;
+	text-overflow:					ellipsis;
+}
+main article h5
+{
+	margin:									0;
+	font-weight:						normal;
+	text-align: 						right;
+}
+main article .content
+{
+	margin-top:							10px;
+	overflow:								hidden;
+	text-overflow:					ellipsis;
+}
+
+/******************************************************************************
+ *                   M a i n   A r t i c l e   B i b l i o                    *
+ ******************************************************************************/
+main article .bibtitle
+{
+	display:								block;
+	font-weight:						bold;
+}
+main article .bibauthor
+{
+	display:								block;
+}
+main article .bibref
+{
+	display:								block;
+	padding-bottom:					5px;
+	font-style:							italic;
+	color:									#888;
+	/*font-size: 80%;*/
+}
+main article .bibref a
+{
+	margin-left:						5px;
+	color:									#88F;
+	/*font-size: 80%;*/
+}
+main article .bibtray
+{
+	display:								flex;
+	border-bottom:					1px solid #BBB;
+	border-right:						1px solid #BBB;
+	border-top:							1px solid #EEE;
+	border-left:						1px solid #EEE;
+	padding:								5px 5px 5px 10px;
+}
+
+main article .bibtray div:not(:first-child)
+{
+	padding-left: 					5px;
+}
+main article .bibtray div:not(:last-child)
+{
+	padding-right: 					5px;
+	border-right:						1px solid #DDD;
+}
+
+main article .bibabstract
+{
+	text-align:							justify;
+  color:									#444;
+  flex:										1 60%;
+}
+main article .bibtex
+{
+	font-size:							80%;
+	white-space:						pre-wrap;
+	color:									#888;
+  flex:										1 40%;
+}
+
+/******************************************************************************
+ *                                 A s i d e                                  *
+ ******************************************************************************/
+aside article
+{
+	padding-bottom:					10px;
+}
+aside h1
+{
+	margin:									0 0 10px 0;
+	font-weight:						normal;
+	font-size:							24px;
+}
+#copyright
+{
+	border-top:							1px solid #EEE;
+	padding-top: 						8px;
+	text-align:							center;
+	font-size:							10px;
+	color:									#AAA;
+}
+#copyright a
+{
+	color:									#99C;
+}
+
+
+
+
+
+
+
+

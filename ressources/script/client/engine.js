@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.1.1-3 : 31/03/2015                        *
+ *                        Version 1.2.0-1 : 06/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -27,7 +27,6 @@ function hashHandler(smooth)
 	{
 		var id = hash2id(hash); // triger exception if hash unfound
 		showPage(id, smooth);
-		showError();
 		updateTitle(id2hash(id));
 	}
 	catch(err)
@@ -85,10 +84,9 @@ function showPage(id, smooth)
 
 function showError(error)
 {
-	if (error)
-		$('#error').text(errorText(error)).show();
-	else
-		$('#error').hide();
+	popup_information(errorText(error), function(){
+		window.location.hash = id2hash(getCurrentId());
+	});
 }
 
 function updateTitle(text)
@@ -152,20 +150,10 @@ function buildNav()
 		});
 }
 
-function buildError()
-{
-	$('#error')
-		.click(function(){
-			$(this).hide();
-			window.location.hash = id2hash(getCurrentId());
-		});
-}
-
 // ============================== Initialisation ===============================
 
 $(function(){
 	buildNav();
-	buildError();
 	hashHandler(false);
 });
 

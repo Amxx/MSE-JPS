@@ -1,0 +1,148 @@
+/******************************************************************************
+ *                           Slider & Customization                           *
+ ******************************************************************************/
+section div.slider
+{
+	width:									100%;
+	height: 								100%;
+}
+section div.slider.hidden
+{
+	display:								none;
+}
+
+section.pages				{ flex:	4;	}
+section.articles		{ flex:	10;	}
+section.references	{ flex:	10;	}
+section.links				{ flex:	10;	}
+section.socials			{ flex:	10;	}
+
+/******************************************************************************
+ *                                  Sortable                                  *
+ ******************************************************************************/
+.sortable
+{
+	width:									100%;
+	margin:									0;
+	padding:								0;
+	font-size:							14px;
+	font-weight:						700;
+	overflow:								auto;
+}
+.sortable li
+{
+	list-style:							none;
+	display:								flex;
+	height:									32px;
+	margin:									8px 6px;
+	padding:								3px 6px;
+	font-size: 							14px;
+	line-height:						26px;
+	border-radius:					3px;
+	background:							rgba(255, 255, 255, 0.66);
+}
+.sortable li a
+{
+	white-space:						nowrap;
+	overflow:								hidden;
+	text-overflow:					ellipsis;
+}
+.sortable li .handle
+{
+	cursor:									move;
+	padding-right:					10px;
+}
+.sortable li .title
+{
+}
+.sortable li .pointer
+{
+	flex:										1;
+	padding-left: 					10px;
+	text-align:							right;
+}
+
+/******************************************************************************
+ *                                  Section                                   *
+ ******************************************************************************/
+section
+{
+	margin:									5px;
+	padding:								0;
+	border-radius:					6px;
+	background:							#9999FF;
+}
+/*section:not(:last-child) { margin-right: 10px; }*/
+
+/******************************************************************************
+ *                               Section pages                                *
+ ******************************************************************************/
+section.pages
+{
+	background:							#7EB2E6;
+}
+section.pages .sortable li,
+section.pages .sortable li a
+{
+	color:									#053566;
+
+}
+section.pages .sortable li
+{
+	transition:							box-shadow 1s;
+}
+section.pages .sortable li.expanded
+{
+	box-shadow:							0px 0px 5px 2px #053566;
+}
+
+/******************************************************************************
+ *                              Section article                               *
+ ******************************************************************************/
+ section.articles
+{
+	background:							#BFDFFF;
+}
+section.articles .sortable li,
+section.articles .sortable li a
+{
+	color:									#204F80;
+}
+
+/******************************************************************************
+ *                             Section references                             *
+ ******************************************************************************/
+section.references
+{
+	background:							#B2E67E;
+}
+section.references .sortable li,
+section.references .sortable li a
+{
+	color:									#346605;
+}
+/******************************************************************************
+ *                               Section links                                *
+ ******************************************************************************/
+section.links
+{
+	background:							#9999FF;
+}
+section.links .sortable li,
+section.links .sortable li a
+{
+	color:									#0C0C80;
+}
+
+/******************************************************************************
+ *                               Section social                               *
+ ******************************************************************************/
+section.socials
+{
+	background:							#CE99FF;
+}
+section.socials .sortable li,
+section.socials .sortable li a
+{
+	color:									#460C80;
+}

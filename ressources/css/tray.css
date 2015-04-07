@@ -1,0 +1,290 @@
+/******************************************************************************
+ *                                  T r a y                                   *
+ ******************************************************************************/
+.tray
+{
+	position:								fixed;
+	display:								flex;
+	overflow:								hidden;
+	height:									40%;
+	width:									80%;
+	bottom:									0;
+	left:										50%;
+	box-shadow:							0 10px 20px #2D2D2D;
+	transform:							translateX(-50%);
+	transition:							all .6s;
+}
+.tray:not(.expanded)
+{
+	bottom:									-100%;
+}
+
+/******************************************************************************
+ *                           T r a y   -   M e n u                            *
+ ******************************************************************************/
+.tray .menu
+{
+	overflow:								auto;
+	flex:										1 15%;
+	height:									100%;
+	border-radius:					6px 0 0 0;
+	border:									1px solid #222;
+	background:							#111;
+	background:							linear-gradient(#444, #111);
+}
+.tray .menu ul
+{
+	margin:									0;
+	padding:								0;
+}
+.tray .menu li
+{
+	position:								relative;
+	border-bottom:					1px solid #222;
+	box-shadow:							0 1px 0 #444;
+	text-align:							center;
+}		
+.tray .menu li a
+{
+	display:								inline-block;
+	width:									100%;
+	padding:								8px;
+	color:									#ACACAC;
+	font-size:							18px;	
+
+}
+.tray .menu li:hover a
+{
+	background:							#0186BA;
+	background:							linear-gradient(#04ACEC, #0186BA);
+	color:									#FAFAFA;
+}
+.tray .menu li a:active
+{
+	background:							#070707;
+	background:							linear-gradient(#292929, #070707);
+}
+.tray .menu li.warning a       { color: #FF3333; }
+.tray .menu li.warning a:hover { color: #FF6666; }
+.tray .menu li.confirm a       { color: #99FF33; }
+.tray .menu li.confirm a:hover { color: #B3FF66; }
+		
+/******************************************************************************
+ *                        T r a y   -   C o n t e n t                         *
+ ******************************************************************************/
+.tray .content
+{
+	overflow:								hidden;
+	flex:										1 85%;
+	height:									100%;
+	padding:								0 20px 15px 20px;
+ 	border-radius:					0 6px 0 0;
+	background:							#CECECE;
+	font-size: 							16px;
+}
+
+.tray .content .tab
+{
+	display:								flex;
+	flex-flow:							column;
+	height:									100%;
+	width:									100%;
+}
+.tray .content h3
+{
+	height:									30px;
+	margin:									15px 10px;
+	color:									#2D2D2D;
+	font-size:							20px;
+}
+.tray .content h3.inline
+{
+	display:								inline;
+	font-size:							16px;
+}
+.tray .content .entry
+{
+	margin:				10px 0;
+}
+.tray .content .entry h4
+{
+	display:			inline;
+	font-weight:	bold;
+}
+.tray .content .entry h4:not(:last-child)
+{
+	margin-right:		15px;
+	padding-right:	15px;
+	border-right:		1px solid #A2A2A2;
+}
+
+/******************************************************************************
+ *                           T r a y   -   F o r m                            *
+ ******************************************************************************/
+.tray .content input[type='text'],
+.tray .content input[type='checkbox'],
+.tray .content select,
+.tray .content textarea
+{
+	padding:								6px;
+	border:									0;
+	border-radius:					3px;
+	color:									#626262;
+	background:							#F0F0F0;
+	font:										18px OpenSansRegular;	
+}
+.tray .content textarea
+{
+	resize:									none;
+	overflow-y:							scroll;
+	flex:										1 100%;
+}
+.tray .content textarea.monospace
+{
+	font:										18px monospace;
+}
+.tray .content .slider
+{
+	position:								relative;
+	display:								inline-block;
+	width:									80px;
+	height:									26px;
+	background:							#333;
+	margin:									5px;
+	border-radius:					13px;
+}
+.tray .content .slider:before
+{
+	position:								absolute;
+	content:								'ON';
+	left:										10px;
+	color:									#00BF00;
+	font:										12px/26px Arial, sans-serif;
+	font-weight:						bold;
+	z-index:								0;
+}
+.tray .content .slider:after
+{
+	position:								absolute;
+	content:								'OFF';
+	right:									10px;
+	color:									#FF0000;
+	font:										12px/26px Arial, sans-serif;
+	font-weight:						bold;
+	z-index:								0;
+}
+.tray .content .slider label
+{
+	position:								absolute;
+	display:								block;
+	top:										3px;
+	left:										3px;
+	width:									34px;
+	height:									20px;
+	border-radius:					10px;
+	background:							#FCFFF4;
+	background:							linear-gradient(#FCFFF4, #B3BEAD);	
+	cursor:									pointer;
+	transition:							all .3s ease;
+	z-index:								1;
+}
+.tray .content .slider input[type=checkbox]
+{
+	visibility: hidden;
+}
+.tray .content .slider input[type=checkbox]:checked + label
+{
+	left: 43px;
+}
+
+/******************************************************************************
+ *                          T r a y   -   C l o s e                           *
+ ******************************************************************************/
+.tray .close
+{
+	position:								absolute;
+	height:									25px;
+	width:									100px;
+	top:										0;
+	left:										50%;
+	transform:							translateX(-50%);
+	color:									#DDDDDD;
+	background:							#444;
+	box-shadow:							0 0 30px #080808;
+	text-align:							center;
+	font-size: 							16px;
+	transition:							all .3s;
+}
+.tray .close:not(:hover)
+{
+	top:										-20px;
+}
+.tray .close:before
+{
+	position:								absolute;
+	content:								'';
+	height:									0;
+	width:									0;
+	top:										0;
+	left:										-10px;
+	border-top:							25px solid #444;
+	border-left:	 					10px solid transparent;
+}
+.tray .close:after
+{
+	position:								absolute;
+	content:								'';
+	height:									0;
+	width:									0;
+	top:										0;
+	right:									-10px;
+	border-top:							25px solid #444;
+	border-right: 					10px solid transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

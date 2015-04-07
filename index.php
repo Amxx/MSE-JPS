@@ -3,7 +3,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.1.1-0 : 31/03/2015                        *
+ *                        Version 1.2.0-1 : 06/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -43,9 +43,9 @@
 
 include_once 'config/config.php';
 
-include_once 'ressources/libs/MSE/connection.php';
-include_once 'ressources/libs/MSE/container/catalog.php';
-include_once 'ressources/libs/MSE/structure/website.php';
+include_once 'ressources/MSE/connection.php';
+include_once 'ressources/MSE/container/catalog.php';
+include_once 'ressources/MSE/structure/website.php';
 require_once 'ressources/libs/Twig/Autoloader.php';
 include_once 'ressources/libs/phpfastcache/phpfastcache.php';
 
