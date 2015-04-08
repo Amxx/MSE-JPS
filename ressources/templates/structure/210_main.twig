@@ -10,9 +10,9 @@
  ##############################################################################}
  
 <main>
-	{% for section in website.page.sections.list %}
-		<section id='section-{{section.id}}' class='flex wrap' {% if section.id != website.current %} style="display: none;" {% endif %}>
-			{% for article in section.articles.list %}
+	{% for page in website.pages.list %}
+		<section id='section-{{page.id}}' class='flex wrap' {% if page.id != website.current %} style="display: none;" {% endif %}>
+			{% for article in page.articles.list %}
 				{% include 'structure/211_block.twig' %}
 			{% endfor %}
 		</section>

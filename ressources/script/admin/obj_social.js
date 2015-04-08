@@ -12,43 +12,52 @@
 // ============================= Object Definition =============================
 function Social()
 {
-	this.id    = -1;
+	this.id    = null;
 	this.title = '';
 	this.img   = '';
 	this.url   = '';
+	this.order = 0;
+}
+function SQL2Social(socialSQL)
+{
+	this.id    = socialSQL.Social_ID;
+	this.title = socialSQL.Social_Title;
+	this.img   = socialSQL.Social_Img;
+	this.url   = socialSQL.Social_Url;
+	this.order = socialSQL.Social_Order;
+}
+
+// ================================== Tray IO ==================================
+function setSocialTray(obj)
+{
+	$('.tray.social #input_social_title').val (obj ? obj.title : 'new social link');
+	$('.tray.social #input_social_img'  ).val (obj ? obj.img   : ''               );
+	$('.tray.social #input_social_url'  ).val (obj ? obj.url   : ''               );
+}
+function getSocialTray(obj)
+{
+	obj.title = $('.tray.social #input_social_title').val();
+	obj.img   = $('.tray.social #input_social_img'  ).val();
+	obj.url   = $('.tray.social #input_social_url'  ).val();
 }
 
 // ============================= Social - Buttons ==============================
 function pressNewSocial()
 {
-	openTray($('.tray.social'), function(){
-		// Set environment
-		ENV.flags     = FLAG_NEW;
-		ENV.editionID = undefined;
-		// Clean tray
-		$('.tray.social #input_social_title').val('new social');
-		$('.tray.social #input_social_img'  ).val('');
-		$('.tray.social #input_social_url'  ).val('');
-	});
+	launchTray($('.tray.social'), undefined, setSocialTray);
 }
 function pressEditSocial(socialID)
 {
-	openTray($('.tray.social'), function(){
-		var socialOBJ = ENV.db_socials.at(socialID);
-		// Set environment
-		ENV.flags     = FLAG_NULL;
-		ENV.editionID = socialID;
-		// Set tray
-		$('.tray.social #input_social_title').val(socialOBJ.title);
-		$('.tray.social #input_social_img'  ).val(socialOBJ.img);
-		$('.tray.social #input_social_url'  ).val(socialOBJ.url);
-	});
+	launchTray($('.tray.social'), ENV.db_socials.at(socialID), setSocialTray);
 }
 function pressCommitSocial()
 {
 	if (ENV.flags)
 	{
-		(ENV.editionID==undefined?newSocial:updateSocial)();
+		if (ENV.editionObject)
+			updateSocial(ENV.editionObject);
+		else
+			newSocial();
 		resetFlags();
 	}
 	closeTray($('.tray.social'));
@@ -66,7 +75,7 @@ function pressDeleteSocial()
 			if (confirm)
 			{
 				if (!(ENV.flags & FLAG_NEW))
-					deleteSocial();
+					deleteSocial(ENV.editionObject);
 				resetFlags();
 				closeTray($('.tray.social'));
 			}
@@ -78,40 +87,55 @@ function pressDeleteSocial()
 function newSocial()
 {
 	var socialOBJ = new Page();
-	// Get tray data
-	socialOBJ.title = $('.tray.social #input_social_title').val();
-	socialOBJ.img   = $('.tray.social #input_social_img'  ).val();
-	socialOBJ.url   = $('.tray.social #input_social_url'  ).val();
-
-	// TMP Set id
-	socialOBJ.id = ENV.db_socials.size();
+	getSocialTray(socialOBJ);
 	// Remote push 
-	// ...
-	// Local push + build
-	newSocialDOM(socialOBJ);
-	ENV.db_socials.insert(socialOBJ);
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "insert_social", object: socialOBJ }, function(data){
+		socialOBJ.id = data.id;
+		// Local push + build
+		newSocialDOM(socialOBJ);
+		ENV.db_socials.insert(socialOBJ);
+		// Close info
+		closePopup(info);
+		// Reorder
+		reorderSocial();
+	}, 'json');	
 }
 
-function updateSocial()
+function updateSocial(socialOBJ)
 {
-	var socialOBJ = ENV.db_socials.at(ENV.editionID);
-	// Update Obj
-	socialOBJ.title = $('.tray.social #input_social_title').val();
-	socialOBJ.img   = $('.tray.social #input_social_img'  ).val();
-	socialOBJ.url   = $('.tray.social #input_social_url'  ).val();
+	getSocialTray(socialOBJ);
 	// Remote update
-	// ...
-	// Local update
-	updateSocialDOM(socialOBJ);
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "update_social", object: socialOBJ }, function(data){
+		// Local update
+		updateSocialDOM(socialOBJ);
+		// Close info
+		closePopup(info);
+	}, 'json');
 }
-function deleteSocial()
+function deleteSocial(socialOBJ)
 {
-	var socialOBJ = ENV.db_socials.at(ENV.editionID);
 	// Remote delete
-	// ...
-	// Local delete
-	deleteSocialDOM(socialOBJ);
-	ENV.db_socials.remove(socialOBJ.id);
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "drop_social", object: socialOBJ }, function(data){
+		// Local delete
+		deleteSocialDOM(socialOBJ);
+		ENV.db_socials.remove(socialOBJ.id);
+		// Close info
+		closePopup(info);
+	}, 'json');
+}
+function reorderSocial()
+{
+	// Get order
+	var order = $('section.socials .sortable li').toArray().map( e => parseInt($(e).attr('id').substring(7)) );
+	// Remote update
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "reorder_social", array: order }, function(data){
+		// Close info
+		closePopup(info);
+	}, 'json');
 }
 
 // ================================ Social DOM =================================

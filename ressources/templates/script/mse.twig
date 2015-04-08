@@ -23,7 +23,7 @@
 		});
 
 		// Run javascript
-		{% for page in website.page.sections.list %}
+		{% for page in website.pages.list %}
 		{% for article in page.articles.list %}
 		{% if article.javascript %}
 			{{ article.javascript | raw }}

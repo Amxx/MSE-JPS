@@ -15,13 +15,13 @@ function openTray(tray, callback)
 		tray.addClass('expanded');
 		if (callback)
 			callback();
+
 	});
 }
 
 function closeTray(tray, callback)
 {
 	var lambda = function(){
-		// (tray?tray:$('.tray')).removeClass('expanded');
 		tray.removeClass('expanded');
 		if (callback)
 			callback();
@@ -35,6 +35,23 @@ function closeTray(tray, callback)
 		lambda();
 }
 
+
+
+
+
+function launchTray(tray, object, callback)
+{
+	openTray(tray, function(){
+		ENV.flags         = object ? FLAG_NULL : FLAG_NEW;
+		ENV.editionObject = object;
+		callback(object);
+	});
+}
+
+
+
+
+
 function viewTab(obj, num)
 {
 	var tab = $(obj).closest('.tray').find('.tab').eq(num);
@@ -43,14 +60,22 @@ function viewTab(obj, num)
 }
 
 
+
+
+
 // Tray listener
 $(function(){
-
-	$('.tray .content *').change(function(){ ENV.flags |= FLAG_EDIT; });
+	$('.tray .content *').bind('change input', function(){
+		ENV.flags |= FLAG_EDIT;
+	});
 	$('.tray a.close').each(function(){
 		$(this).click(function(){
 			closeTray($(this).closest('.tray'), resetFlags);
 		});
+	});
+	$(document).bind('keyup', function(e){
+		if (e.keyCode == 27)
+			closeTray($('.tray.expanded'), resetFlags);
 	});
 
 });

@@ -12,50 +12,58 @@
 // ============================= Object Definition =============================
 function Reference()
 {
-	this.id        = -1;
+	this.id        = null;
 	this.title     = '';
 	this.authors   = '';
 	this.reference = '';
 	this.abstract  = '';
 	this.bibtex    = '';
-	// this.links      = new Map();
+}
+function SQL2Reference(referenceSQL)
+{
+	this.id        = referenceSQL.Reference_ID;
+	this.title     = referenceSQL.Reference_Title;
+	this.authors   = referenceSQL.Reference_Authors;
+	this.reference = referenceSQL.Reference_Ref;
+	this.abstract  = referenceSQL.Reference_Abstract;
+	this.bibtex    = referenceSQL.Reference_Bibtex;
+}
+
+// ================================== Tray IO ==================================
+function setReferenceTray(obj)
+{
+	$('.tray.reference #input_reference_title'    ).val(obj? obj.title     : 'new reference');
+	$('.tray.reference #input_reference_authors'  ).val(obj? obj.authors   : ''             );
+	$('.tray.reference #input_reference_reference').val(obj? obj.reference : ''             );
+	$('.tray.reference #input_reference_abstract' ).val(obj? obj.abstract  : ''             );
+	$('.tray.reference #input_reference_bibtex'   ).val(obj? obj.bibtex    : ''             );
+}
+function getReferenceTray(obj)
+{
+	obj.title     = $('.tray.reference #input_reference_title'    ).val();
+	obj.authors   = $('.tray.reference #input_reference_authors'  ).val();
+	obj.reference = $('.tray.reference #input_reference_reference').val();
+	obj.abstract  = $('.tray.reference #input_reference_abstract' ).val();
+	obj.bibtex    = $('.tray.reference #input_reference_bibtex'   ).val();
 }
 
 // ============================ Reference - Buttons ============================
 function pressNewReference()
 {
-	openTray($('.tray.reference'), function(){
-		// Set environment
-		ENV.flags     = FLAG_NEW;
-		ENV.editionID = undefined;
-		// Clean tray
-		$('.tray.reference #input_reference_title'    ).val('new reference');
-		$('.tray.reference #input_reference_author'   ).val('');
-		$('.tray.reference #input_reference_reference').val('');
-		$('.tray.reference #input_reference_abstract' ).val('');
-		$('.tray.reference #input_reference_bibtex'   ).val('');
-	});
+	launchTray($('.tray.reference'), undefined, setReferenceTray);
 }
 function pressEditReference(referenceID)
 {
-	openTray($('.tray.reference'), function(){
-		var referenceOBJ = ENV.db_references.at(referenceID);
-		// Set environment
-		ENV.flags     = FLAG_NULL;
-		ENV.editionID = referenceID;
-		// Set tray
-		$('.tray.reference #input_reference_title'    ).val(referenceOBJ.title);
-		$('.tray.reference #input_reference_author'   ).val(referenceOBJ.authors);
-		$('.tray.reference #input_reference_reference').val(referenceOBJ.reference);
-		$('.tray.reference #input_reference_abstract' ).val(referenceOBJ.abstract);
-		$('.tray.reference #input_reference_bibtex'   ).val(referenceOBJ.bibtex);
-	});
+	launchTray($('.tray.reference'), ENV.db_references.at(referenceID), setReferenceTray);
 }
 function pressCommitReference()
 {
 	if (ENV.flags)
 	{
-		(ENV.editionID==undefined?newReference:updateReference)();
+		if (ENV.editionObject)
+			updateReference(ENV.editionObject);
+		else
+			newReference()
 		resetFlags();
 	}
 	closeTray($('.tray.reference'));
@@ -73,7 +81,7 @@ function pressDeleteReference()
 			if (confirm)
 			{
 				if (!(ENV.flags & FLAG_NEW))
-					deleteReference();
+					deleteReference(ENV.editionObject);
 				resetFlags();
 				closeTray($('.tray.reference'));
 			}
@@ -85,62 +93,59 @@ function pressDeleteReference()
 function newReference()
 {
 	var referenceOBJ = new Page();
-	// Get tray data
-	referenceOBJ.title     = $('.tray.reference #input_reference_title'    ).val();
-	referenceOBJ.authors   = $('.tray.reference #input_reference_author'   ).val();
-	referenceOBJ.reference = $('.tray.reference #input_reference_reference').val();
-	referenceOBJ.abstract  = $('.tray.reference #input_reference_abstract' ).val();
-	referenceOBJ.bibtex    = $('.tray.reference #input_reference_bibtex'   ).val();
+	getReferenceTray(referenceOBJ);
 
-	// TMP Set id
-	referenceOBJ.id = ENV.db_references.size();
-	// Remote push 
-	// ...
-	// Local push + build
-	newReferenceDOM(referenceOBJ);
-	ENV.db_references.insert(referenceOBJ);
+	// Remote push
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "insert_reference", object: referenceOBJ }, function(data){
+		// Local push + build
+		newReferenceDOM(referenceOBJ, false); // back
+		ENV.db_references.insert(referenceOBJ);
+		// Close info
+		closePopup(info);
+	}, 'json');
 }
 
-function updateReference()
+function updateReference(referenceOBJ)
 {
-	var referenceOBJ = ENV.db_references.at(ENV.editionID);
-	// Update Obj
-	referenceOBJ.title     = $('.tray.reference #input_reference_title'    ).val();
-	referenceOBJ.authors   = $('.tray.reference #input_reference_author'   ).val();
-	referenceOBJ.reference = $('.tray.reference #input_reference_reference').val();
-	referenceOBJ.abstract  = $('.tray.reference #input_reference_abstract' ).val();
-	referenceOBJ.bibtex    = $('.tray.reference #input_reference_bibtex'   ).val();
+	getReferenceTray(referenceOBJ);
+	
 	// Remote update
-	// ...
-	// Local update
-	updateReferenceDOM(referenceOBJ);
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "update_reference", object: referenceOBJ }, function(data){
+		// Local update
+		updateReferenceDOM(referenceOBJ);
+		// Close info
+		closePopup(info);
+	}, 'json');
 }
-function deleteReference()
+function deleteReference(referenceOBJ)
 {
-	var referenceOBJ = ENV.db_references.at(ENV.editionID);
 	// Remote delete
-	// ...
-	// Local delete
-	deleteReferenceDOM(referenceOBJ);
-	ENV.db_references.remove(referenceOBJ.id);
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "drop_reference", object: referenceOBJ }, function(data){
+		// Local delete
+		deleteReferenceDOM(referenceOBJ);
+		ENV.db_references.remove(referenceOBJ.id);
+		// Close info
+		closePopup(info);
+	}, 'json');
 }
 
 // =============================== Reference DOM ===============================
-function newReferenceDOM(referenceOBJ)
+function newReferenceDOM(referenceOBJ, front)
 {
-	$('section.references .sortable')
-		.append($('<li/>')
+	var block = $('<li/>')
 			.attr('id', 'reference_'+referenceOBJ.id)
-			// .append($('<span/>')
-			// 	.addClass('handle')
-			// 	.text('\u2195')
-			// )
 			.append($('<a/>')
 				.addClass('title')
 				.click(function(){ pressEditReference(referenceOBJ.id); })
 				.text(referenceOBJ.title)
-			)
-		);
+			);
+	if (front)
+		$('section.references .sortable').prepend(block);
+	else
+		$('section.references .sortable').append(block);
 }
 function updateReferenceDOM(referenceOBJ)
 {

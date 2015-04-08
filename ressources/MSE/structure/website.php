@@ -3,7 +3,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.1.0-5 : 30/03/2015                        *
+ *                        Version 1.2.0-2 : 07/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -28,60 +28,60 @@ class WebSite
 	function __construct()
 	{
 		$this->header   = new Header();
-		$this->page     = new Page();
+		$this->pages    = new Pages();
 		$this->links    = new Links();
 		$this->socials  = new Socials();
 		$this->current  = null;
 	}
-	function readDB($socket, $prefix)
+	function readDB($socket)
 	{
 		# ==========================================================================
 		$query_results = $socket->query(
 			"SELECT
-				`{$prefix}pages`.Page_ID,
-				`{$prefix}pages`.Page_Title,
-				`{$prefix}pages`.Page_Block,
-				`{$prefix}pages`.Page_Order,
-				`{$prefix}pages`.Page_Default,
-				`{$prefix}articles`.Article_ID,
-				`{$prefix}articles`.Article_Title,
-				`{$prefix}articles`.Article_Text,
-				`{$prefix}articles`.Article_Javascript,
-				`{$prefix}articles`.Article_Archived,
-				`{$prefix}references`.Reference_ID,
-				`{$prefix}references`.Reference_Title,
-				`{$prefix}references`.Reference_Authors,
-				`{$prefix}references`.Reference_Ref,
-				`{$prefix}references`.Reference_Abstract,
-				`{$prefix}references`.Reference_Bibtex,
-				`{$prefix}referencesources`.Referencesource_ID,
-				`{$prefix}referencesources`.Referencesource_Name,
-				`{$prefix}referencesources`.Referencesource_Url
-			FROM `{$prefix}pages`
-			LEFT OUTER JOIN `{$prefix}articles`         ON `{$prefix}pages`.Page_ID           = `{$prefix}articles`.Page_ID
-			LEFT OUTER JOIN `{$prefix}citations`        ON `{$prefix}articles`.Article_ID     = `{$prefix}citations`.Article_ID
-			LEFT OUTER JOIN `{$prefix}references`       ON `{$prefix}citations`.Reference_ID  = `{$prefix}references`.Reference_ID
-			LEFT OUTER JOIN `{$prefix}referencesources` ON `{$prefix}references`.Reference_ID = `{$prefix}referencesources`.Reference_ID
+				`{$GLOBALS['prefix']}pages`.Page_ID,
+				`{$GLOBALS['prefix']}pages`.Page_Title,
+				`{$GLOBALS['prefix']}pages`.Page_Style,
+				`{$GLOBALS['prefix']}pages`.Page_Bordered,
+				`{$GLOBALS['prefix']}pages`.Page_Expandable,
+				`{$GLOBALS['prefix']}pages`.Page_Default,
+				`{$GLOBALS['prefix']}articles`.Article_ID,
+				`{$GLOBALS['prefix']}articles`.Article_Title,
+				`{$GLOBALS['prefix']}articles`.Article_Text,
+				`{$GLOBALS['prefix']}articles`.Article_Javascript,
+				`{$GLOBALS['prefix']}articles`.Article_Archived,
+				`{$GLOBALS['prefix']}references`.Reference_ID,
+				`{$GLOBALS['prefix']}references`.Reference_Title,
+				`{$GLOBALS['prefix']}references`.Reference_Authors,
+				`{$GLOBALS['prefix']}references`.Reference_Ref,
+				`{$GLOBALS['prefix']}references`.Reference_Abstract,
+				`{$GLOBALS['prefix']}references`.Reference_Bibtex,
+				`{$GLOBALS['prefix']}referencesources`.Referencesource_ID,
+				`{$GLOBALS['prefix']}referencesources`.Referencesource_Name,
+				`{$GLOBALS['prefix']}referencesources`.Referencesource_Url
+			FROM `{$GLOBALS['prefix']}pages`
+			LEFT OUTER JOIN `{$GLOBALS['prefix']}articles`         ON `{$GLOBALS['prefix']}pages`.Page_ID           = `{$GLOBALS['prefix']}articles`.Page_ID
+			LEFT OUTER JOIN `{$GLOBALS['prefix']}citations`        ON `{$GLOBALS['prefix']}articles`.Article_ID     = `{$GLOBALS['prefix']}citations`.Article_ID
+			LEFT OUTER JOIN `{$GLOBALS['prefix']}references`       ON `{$GLOBALS['prefix']}citations`.Reference_ID  = `{$GLOBALS['prefix']}references`.Reference_ID
+			LEFT OUTER JOIN `{$GLOBALS['prefix']}referencesources` ON `{$GLOBALS['prefix']}references`.Reference_ID = `{$GLOBALS['prefix']}referencesources`.Reference_ID
 			ORDER BY
-				{$prefix}pages.Page_Order IS NULL,
-				{$prefix}pages.Page_Order ASC,
-				{$prefix}articles.Article_Timestamp DESC,
-				{$prefix}citations.Citation_Order IS NULL,
-				{$prefix}citations.Citation_Order ASC"
+				{$GLOBALS['prefix']}pages.Page_Order													ASC,
+				{$GLOBALS['prefix']}articles.Article_Order										ASC,
+				{$GLOBALS['prefix']}citations.Citation_Order									ASC,
+				{$GLOBALS['prefix']}referencesources.Referencesource_Order		ASC"
 		);
-		while ($line = $query_results->fetch()) $this->page->parse($line);
+		while ($line = $query_results->fetch()) $this->pages->parse($line);
 		$query_results->closeCursor();
 
 		# ==========================================================================
 		$query_results = $socket->query(
-			"SELECT * FROM `{$prefix}socials` ORDER BY `{$prefix}socials`.Social_Timestamp ASC"
+			"SELECT * FROM `{$GLOBALS['prefix']}socials` ORDER BY `{$GLOBALS['prefix']}socials`.Social_Order ASC"
 		);
 		while ($line = $query_results->fetch()) $this->socials->parse($line);
 		$query_results->closeCursor();
 
 		# ==========================================================================
 		$query_results = $socket->query(
-			"SELECT * FROM `{$prefix}links` ORDER BY `{$prefix}links`.Link_Timestamp ASC"
+			"SELECT * FROM `{$GLOBALS['prefix']}links` ORDER BY `{$GLOBALS['prefix']}links`.Link_Order ASC"
 		);
 		while ($line = $query_results->fetch()) $this->links->parse($line);
 		$query_results->closeCursor();
@@ -89,9 +89,9 @@ class WebSite
 
 	function setEnv()
 	{
-		foreach ($this->page->sections->list as $section)
-			if ((isset($_GET['page']) && $_GET['page'] == $section->title) || (is_null($this->current) && $section->default))
-				$this->current = $section->id();
+		foreach ($this->pages->list as $page)
+			if ((isset($_GET['page']) && $_GET['page'] == $page->title) || (is_null($this->current) && $page->default))
+				$this->current = $page->id();
 	}
 
 }

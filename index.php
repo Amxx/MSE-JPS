@@ -62,7 +62,7 @@ if ($html == null)
 
 	# Build website
 	$website = new WebSite();
-	$website->readDB($sqlsocket, $prefix);
+	$website->readDB($sqlsocket);
 	$website->setEnv();
 
 	# Make environment
@@ -75,7 +75,7 @@ if ($html == null)
 
 	# Load template
 	$template = $twig->loadTemplate('index.twig');
-	$html     = $template->render(array('website' => $website, 'modules' => $modules));
+	$html     = $template->render(array('website' => $website, 'modules' => isset($modules)?$modules:null));
 
 	__c("files")->set($hash, $html, 600);
 }

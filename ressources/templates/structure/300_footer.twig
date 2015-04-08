@@ -21,7 +21,7 @@
 		{% endfor %}
 	</ul>
 	<ul id='mininav'>
-		{% for page in website.page.sections.list %}
+		{% for page in website.pages.list %}
 			<li>
 				<a id='mininav-a-{{page.id}}' href='?page={{page.title}}'>{{page.title}}</a>
 			</li>

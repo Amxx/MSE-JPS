@@ -26,6 +26,14 @@ class Connection
 	{
 		if (!is_null($this->socket)) return $this->socket->query($query);
 	}
+	public function prepare($query)
+	{
+		if (!is_null($this->socket)) return $this->socket->prepare($query);
+	}
+	public function lastInsertId()
+	{
+		if (!is_null($this->socket)) return $this->socket->lastInsertId();
+	}
 }
 
 ?>

@@ -1,4 +1,6 @@
+buffer/*
 config/*
 !config/sample_config
 
-buffer/*
+
+.htpasswd

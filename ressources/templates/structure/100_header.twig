@@ -13,7 +13,7 @@
 	<span id='name'>{{website.header.name}}</span>
 	<img id='picture' src='{{website.header.picture}}' alt='Profile picture'/>
 	<ul id='nav'>
-		{% for page in website.page.sections.list %}
+		{% for page in website.pages.list %}
 			<li id='nav-li-{{page.id}}' {% if page.id == website.current %} class='current' {% endif %}>
 				<a id='nav-a-{{page.id}}' href='?page={{page.title}}'>{{ page.title }}</a>
 			</li>

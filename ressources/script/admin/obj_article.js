@@ -12,48 +12,60 @@
 // ============================= Object Definition =============================
 function Article()
 {
-	this.id         = -1;
-	this.pageID			=	-1;
+	this.id         = null;
+	this.pageID			=	null;
 	this.title      = '';
 	this.text       = '';
 	this.javascript = '';
 	this.archived   = false;
+	this.order      = 0;
 	// this.citations  = new Map();
+}
+function SQL2Article(articleSQL)
+{
+	this.id         = articleSQL.Article_ID;
+	this.pageID			=	articleSQL.Page_ID;
+	this.title      = articleSQL.Article_Title;
+	this.text       = articleSQL.Article_Text;
+	this.javascript = articleSQL.Article_Javascript;
+	this.archived   = parseInt(articleSQL.Article_Archived);
+	this.order      = parseInt(articleSQL.Article_Order);
+	// this.citations  = new Map();
+}
+
+// ================================== Tray IO ==================================
+function setArticleTray(obj)
+{
+	$('.tray.article #input_article_title'     ).val (           obj ? obj.title      : 'new page');
+	$('.tray.article #input_article_text'      ).val (           obj ? obj.text       : ''        );
+	$('.tray.article #input_article_javascript').val (           obj ? obj.javascript : ''        );
+	$('.tray.article #input_article_archived'  ).prop('checked', obj ? obj.archived   : false     );
+}
+function getArticleTray(obj)
+{
+	obj.title      = $('.tray.article #input_article_title'     ).val();
+	obj.text       = $('.tray.article #input_article_text'      ).val();
+	obj.javascript = $('.tray.article #input_article_javascript').val();
+	obj.archived   = $('.tray.article #input_article_archived'  ).prop('checked');
 }
 
 // ============================= Article - Buttons =============================
 function pressNewArticle()
 {
-	openTray($('.tray.article'), function(){
-		// Set environment
-		ENV.flags     = FLAG_NEW;
-		ENV.editionID = undefined;
-		// Clean tray
-		$('.tray.article #input_article_title'     ).val('new article');
-		$('.tray.article #input_article_text'      ).val('');
-		$('.tray.article #input_article_javascript').val('');
-		$('.tray.article #input_article_archived'  ).prop('checked', false);
-	});
+	launchTray($('.tray.article'), undefined, setArticleTray);
 }
 function pressEditArticle(articleID)
 {
-	openTray($('.tray.article'), function(){
-		var articleOBJ = ENV.db_pages.at(ENV.pageID).articles.at(articleID);
-		// Set environment
-		ENV.flags     = FLAG_NULL;
-		ENV.editionID = articleID;
-		// Set tray
-		$('.tray.article #input_article_title'     ).val(articleOBJ.title);
-		$('.tray.article #input_article_text'      ).val(articleOBJ.text);
-		$('.tray.article #input_article_javascript').val(articleOBJ.javascript);
-		$('.tray.article #input_article_archived'  ).prop('checked', articleOBJ.archived);
-	});
+	launchTray($('.tray.article'), ENV.db_articles.at(articleID), setArticleTray);
 }
 function pressCommitArticle()
 {
 	if (ENV.flags)
 	{
-		(ENV.editionID==undefined?newArticle:updateArticle)();
+		if (ENV.editionObject)
+			updateArticle(ENV.editionObject);
+		else
+			newArticle();
 		resetFlags();
 	}
 	closeTray($('.tray.article'));
@@ -71,7 +83,7 @@ function pressDeleteArticle()
 			if (confirm)
 			{
 				if (!(ENV.flags & FLAG_NEW))
-					deleteArticle();
+					deleteArticle(ENV.editionObject);
 				resetFlags();
 				closeTray($('.tray.article'));
 			}
@@ -83,50 +95,62 @@ function pressDeleteArticle()
 function newArticle()
 {
 	var articleOBJ = new Article();
-	// Get tray data
-	articleOBJ.title      = $('.tray.article #input_article_title'     ).val();
-	articleOBJ.text       = $('.tray.article #input_article_text'      ).val();
-	articleOBJ.javascript = $('.tray.article #input_article_javascript').val();
-	articleOBJ.archived   = $('.tray.article #input_article_archived'  ).prop('checked');
-	articleOBJ.pageID     = ENV.pageID;
-
-	// TMP Set id
-	articleOBJ.id    = ENV.db_pages.at(ENV.pageID).articles.size();
-	// Remote push 
-	// ...
-	// Local push + build
-	newArticleDOM(articleOBJ, true);
-	ENV.db_pages.at(ENV.pageID).articles.insert(articleOBJ);
+	getArticleTray(articleOBJ);
+	// Remote push
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "insert_article", object: articleOBJ }, function(data){
+		// record id
+		articleOBJ.id = data.id;
+		// Local push + build
+		newArticleDOM(articleOBJ, true); // Front
+		ENV.db_articles.insert(articleOBJ);
+		// Close info
+		closePopup(info);
+		// Reorder
+		reorderArticle();
+	}, 'json');
 }
 
-function updateArticle()
+function updateArticle(articleOBJ)
 {
-	var articleOBJ = ENV.db_pages.at(ENV.pageID).articles.at(ENV.editionID);
-	// Update Obj
-	articleOBJ.title      = $('.tray.article #input_article_title'     ).val();
-	articleOBJ.text       = $('.tray.article #input_article_text'      ).val();
-	articleOBJ.javascript = $('.tray.article #input_article_javascript').val();
-	articleOBJ.archived   = $('.tray.article #input_article_archived'  ).prop('checked');
+	getArticleTray(articleOBJ);
 	// Remote update
-	// ...
-	// Local update
-	updateArticleDOM(articleOBJ);
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "update_article", object: articleOBJ }, function(data){
+		// Local update
+		updateArticleDOM(articleOBJ);
+		// Close info
+		closePopup(info);
+	}, 'json');
 }
-function deleteArticle()
-{
-	var articleOBJ = ENV.db_pages.at(ENV.pageID).articles.at(ENV.editionID);
+function deleteArticle(articleOBJ)
+{	
 	// Remote delete
-	// ...
-	// Local delete
-	deleteArticleDOM(articleOBJ);
-	ENV.db_pages.at(ENV.pageID).articles.remove(articleOBJ.id);
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "drop_article", object: articleOBJ }, function(data){
+		// Local delete
+		deleteArticleDOM(articleOBJ);
+		ENV.db_articles.remove(articleOBJ.id);
+		// Close info
+		closePopup(info);
+	}, 'json');
+}
+function reorderArticle()
+{
+	var order = $('section.articles .sortable li').toArray().map( e => parseInt($(e).attr('id').substring(8)) );
+	// Remote update
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "reorder_article", array: order }, function(data){
+		// Close info
+		closePopup(info);		
+	}, 'json');
 }
 
 // ================================ Article DOM ================================
 function newArticleDOM(articleOBJ, front)
 {
 	var block = $('<li/>')
-			.attr('id', 'article_'+ENV.pageID+'_'+articleOBJ.id)
+			.attr('id', 'article_'+articleOBJ.id)
 			.append($('<span/>')
 				.addClass('handle')
 				.text('\u2195')
@@ -145,14 +169,14 @@ function newArticleDOM(articleOBJ, front)
 function updateArticleDOM(articleOBJ)
 {
 	$('section.articles .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'article_'+ENV.pageID+'_'+articleOBJ.id; })
+		.filter(function(){ return $(this).attr('id') == 'article_'+articleOBJ.id; })
 		.find('a.title')
 		.text(articleOBJ.title);
 }
 function deleteArticleDOM(articleOBJ)
 {
 	$('section.articles .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'article_'+ENV.pageID+'_'+articleOBJ.id; })
+		.filter(function(){ return $(this).attr('id') == 'article_'+articleOBJ.id; })
 		.remove();
 }
 
@@ -170,14 +194,15 @@ function setArticleSection(pageID)
 	// Hide
 	slider.hide('slide', { direction: "left" }, function(){
 		// Set env
-		ENV.pageID = pageID;
+		ENV.currentPage = pageID;
 		// Cleanup
 		$('section.articles .sortable li').remove();
 		if (pageID != undefined)
 		{
 			// Fill
-			for (articleOBJ of ENV.db_pages.at(ENV.pageID).articles.orderedValues())
-				newArticleDOM(articleOBJ);
+			for (articleOBJ of ENV.db_articles.orderedValues())
+				if (articleOBJ.pageID == pageID)
+					newArticleDOM(articleOBJ);
 			// Show
 			slider.show('slide', { direction: "left" });
 		}

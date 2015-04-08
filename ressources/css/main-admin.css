@@ -11,11 +11,11 @@ section div.slider.hidden
 	display:								none;
 }
 
-section.pages				{ flex:	4;	}
-section.articles		{ flex:	10;	}
-section.references	{ flex:	10;	}
-section.links				{ flex:	10;	}
-section.socials			{ flex:	10;	}
+section.pages				{ /*flex:	4; */	width: 16%; }
+section.articles		{ /*flex:	10;*/	width: 42%; }
+section.references	{ /*flex:	10;*/	width: 42%; }
+section.links				{ /*flex:	10;*/	width: 50%; }
+section.socials			{ /*flex:	10;*/	width: 50%; }
 
 /******************************************************************************
  *                                  Sortable                                  *

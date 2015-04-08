@@ -12,40 +12,48 @@
 // ============================= Object Definition =============================
 function Link()
 {
-	this.id      = -1;
+	this.id      = null;
 	this.title   = '';
 	this.content = '';
+	this.order   = 0;
+}
+function SQL2Link(linkSQL)
+{
+	this.id      = linkSQL.Link_ID;
+	this.title   = linkSQL.Link_Title;
+	this.content = linkSQL.Link_Content;
+	this.order   = parseInt(linkSQL.Link_Order);
+}
+
+// ================================== Tray IO ==================================
+function setLinkTray(obj)
+{
+	$('.tray.link #input_link_title'  ).val (obj ? obj.title   : 'new link');
+	$('.tray.link #input_link_content').val (obj ? obj.content : ''        );
+}
+function getLinkTray(obj)
+{
+	obj.title   = $('.tray.link #input_link_title'  ).val();
+	obj.content = $('.tray.link #input_link_content').val();
 }
 
 // ============================== Link - Buttons ===============================
 function pressNewLink()
 {
-	openTray($('.tray.link'), function(){
-		// Set environment
-		ENV.flags     = FLAG_NEW;
-		ENV.editionID = undefined;
-		// Clean tray
-		$('.tray.link #input_link_title'  ).val('new link');
-		$('.tray.link #input_link_content').val('');
-	});
+	launchTray($('.tray.link'), undefined, setLinkTray);
 }
 function pressEditLink(linkID)
 {
-	openTray($('.tray.link'), function(){
-		var linkOBJ = ENV.db_links.at(linkID);
-		// Set environment
-		ENV.flags     = FLAG_NULL;
-		ENV.editionID = linkID;
-		// Set tray
-		$('.tray.link #input_link_title'  ).val(linkOBJ.title);
-		$('.tray.link #input_link_content').val(linkOBJ.authors);
-	});
+	launchTray($('.tray.link'), ENV.db_links.at(linkID), setLinkTray);
 }
 function pressCommitLink()
 {
 	if (ENV.flags)
 	{
-		(ENV.editionID==undefined?newLink:updateLink)();
+		if (ENV.editionObject)
+			updateLink(ENV.editionObject);
+		else
+			newLink()
 		resetFlags();
 	}
 	closeTray($('.tray.link'));
@@ -63,7 +71,7 @@ function pressDeleteLink()
 			if (confirm)
 			{
 				if (!(ENV.flags & FLAG_NEW))
-					deleteLink();
+					deleteLink(ENV.editionObject);
 				resetFlags();
 				closeTray($('.tray.link'));
 			}
@@ -74,39 +82,55 @@ function pressDeleteLink()
 // ============================== Link - Methods ===============================
 function newLink()
 {
-	var linkOBJ = new Page();
-	// Get tray data
-	linkOBJ.title   = $('.tray.link #input_link_title'  ).val();
-	linkOBJ.authors = $('.tray.link #input_link_content').val();
-
-	// TMP Set id
-	linkOBJ.id = ENV.db_links.size();
+	var linkOBJ = new Link();
+	getLinkTray(linkOBJ);
 	// Remote push 
-	// ...
-	// Local push + build
-	newLinkDOM(linkOBJ);
-	ENV.db_links.insert(linkOBJ);
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "insert_link", object: linkOBJ }, function(data){
+		linkOBJ.id = data.id;
+		// Local push + build
+		newLinkDOM(linkOBJ);
+		ENV.db_links.insert(linkOBJ);
+		// Close info
+		closePopup(info);
+		// Reorder
+		reorderLink();
+	}, 'json');
 }
-
-function updateLink()
+function updateLink(linkOBJ)
 {
-	var linkOBJ = ENV.db_links.at(ENV.editionID);
-	// Update Obj
-	linkOBJ.title   = $('.tray.link #input_link_title'  ).val();
-	linkOBJ.authors = $('.tray.link #input_link_content').val();
+	getLinkTray(linkOBJ);
 	// Remote update
-	// ...
-	// Local update
-	updateLinkDOM(linkOBJ);
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "update_link", object: linkOBJ }, function(data){
+		// Local update
+		updateLinkDOM(linkOBJ);
+		// Close info
+		closePopup(info);
+	}, 'json');
 }
-function deleteLink()
+function deleteLink(linkOBJ)
 {
-	var linkOBJ = ENV.db_links.at(ENV.editionID);
 	// Remote delete
-	// ...
-	// Local delete
-	deleteLinkDOM(linkOBJ);
-	ENV.db_links.remove(linkOBJ.id);
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "drop_link", object: linkOBJ }, function(data){
+		// Local delete
+		deleteLinkDOM(linkOBJ);
+		ENV.db_links.remove(linkOBJ.id);
+		// Close info
+		closePopup(info);
+	}, 'json');
+}
+function reorderLink()
+{
+	// Get order
+	var order = $('section.links .sortable li').toArray().map( e => parseInt($(e).attr('id').substring(5)) );
+	// Remote update
+	var info = openPopup().append($('<h4/>').text('Synchronisation ...'));
+	$.post(UPDATER, { QUERY: "reorder_link", array: order }, function(data){
+		// Close info
+		closePopup(info);
+	}, 'json');
 }
 
 // ================================= Link DOM ==================================

@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "My Files"
+AuthUserFile /var/www/hadrien.croubois/.htpasswd
+Require valid-user
