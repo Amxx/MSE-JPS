@@ -18,9 +18,7 @@
 		$('section').show();
 			
 		// make tiles
-		$('section').packery({
-			'itemSelector': '.block'
-		});
+		$('section').packery({ 'itemSelector': '.block' });
 
 		// Run javascript
 		{% for page in website.pages.list %}

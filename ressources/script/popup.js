@@ -42,15 +42,15 @@ function popup_input(text, callback, input)
 		.append($('<input/>').attr('type', 'text').val(input));
 	p.find('input')
 		.keyup(function(event){
-			if (event.which == 13) // ENTER
+			switch(event.which)
 			{
-				if (this.value && callback)
-					callback(this.value);
-				closePopup(p);
-			}
-			else if (event.which == 27)
-			{
-				closePopup(p);
+				case 13: // ENTER
+					closePopup(p);
+					if (callback) callback(this.value);
+					break;
+				case 27:
+					closePopup(p);
+					break;
 			}
 		})
 		.blur(function(){ closePopup(p); })

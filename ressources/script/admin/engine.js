@@ -8,151 +8,118 @@
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
-// ================================== Config ===================================
-const UPDATER = 'updater.php'
 
-// ================================ Containers =================================
-function Container()
-{
-	this.data = new Object();
-	this.at     = function(objID)	{ return this.data[objID];							}
-	this.insert = function(obj)		{ return this.data[obj.id] = obj;				}
-	this.remove = function(obj)		{ delete this.data[obj.id];							}
-	this.size		= function()			{ return Object.keys(this.data).length;	}
-	this.values	= function()
-	{
-		return Object
-			.keys(this.data)
-			.map(key => this.data[key]);
-	}
-	this.orderedValues = function()
-	{
-		return Object
-			.keys(this.data)
-			.sort((a, b) => this.data[a].order > this.data[b].order)
-			.map(key => this.data[key]);
-	}
-	this.revOrderedValues = function()
-	{
-		return Object
-			.keys(this.data)
-			.sort((a, b) => this.data[a].order < this.data[b].order)
-			.map(key => this.data[key]);
-	}
-}
+/******************************************************************************
+ *                                Dependencies                                *
+ ******************************************************************************/
+// $.ajaxSetup({async: false});
+$.getScript('../ressources/script/admin/container/container.js'     );
+$.getScript('../ressources/script/admin/container/postcontainer.js' );
+$.getScript('../ressources/script/admin/entry/entry.js'             );
+$.getScript('../ressources/script/admin/entry/instance/article.js'  );
+$.getScript('../ressources/script/admin/entry/instance/link.js'     );
+$.getScript('../ressources/script/admin/entry/instance/page.js'     );
+$.getScript('../ressources/script/admin/entry/instance/reference.js');
+$.getScript('../ressources/script/admin/entry/instance/social.js'   );
+$.getScript('../ressources/script/admin/tools.js'                   );
+// $.ajaxSetup({async: true});
 
-// ================================ Environment ================================
+/******************************************************************************
+ *                                Environment                                 *
+ ******************************************************************************/
+console.info("allocating sharred memory");
 const FLAG_NULL = 0x0;
 const FLAG_EDIT = 0x1;
-const FLAG_NEW  = 0x2;
+const FLAG_NEW = 0x2;
 
-var ENV = new Object();
-ENV.flags         = 0x0;
+var ENV           = new Object();
+ENV.flags         = FLAG_NULL;
 ENV.currentPage   = undefined;
 ENV.editionObject = undefined;
-ENV.db_pages      = new Container();
-ENV.db_articles   = new Container();
-ENV.db_references = new Container();
-ENV.db_links      = new Container();
-ENV.db_socials    = new Container();
+function resetFlags() { ENV.flags = FLAG_NULL; }
 
-function resetFlags() { ENV.flags  = 0x0; }
+/******************************************************************************
+ *                                   Setup                                    *
+ ******************************************************************************/
+$(function(){
+	console.info("loading complete");
 
-// ================================== Objects ==================================
-$.getScript('../ressources/script/admin/obj_page.js'     );
-$.getScript('../ressources/script/admin/obj_article.js'  );
-$.getScript('../ressources/script/admin/obj_reference.js');
-$.getScript('../ressources/script/admin/obj_link.js'     );
-$.getScript('../ressources/script/admin/obj_social.js'   );
-
-// =================================== Tray ====================================
-$.getScript('../ressources/script/admin/tray.js');
-
-// ==================================== Tab ====================================
-function changeTab(id)
-{
-	if (!$('#nav li').eq(id).hasClass('current'))
-	{
-		$('#nav li.current').removeClass('current');
-		$('#nav li').eq(id).addClass('current');
+	//============================================================================
+	console.group("building context");
+	var popup = openPopup().append($('<h4/>').text('loading...'));
+	//============================================================================
 	
-		$('main .tab:visible').slideToggle();
-		$('main .tab').eq(id).slideToggle();
-	}
-}
-
-// ============================== Initialization ===============================
-function initTab()
-{
+	//--------------------------------
+	console.info("tab intialisation");
 	$('#nav li').eq(0).addClass('current');
 	$('main .tab').slice(1).hide();
-}
-function initSection()
-{
+
+	//-----------------------------------
+	console.info("slider intialisation");
 	$('section.articles .slider').hide();
-}
-function initSortable()
-{
-	$('section.pages .sortable').sortable({
-		handle: ".handle",
-		update: function(){ reorderPages();	}
-	});
-	$('section.articles .sortable').sortable({
-		handle: ".handle",
-		update: function(){ reorderArticle(); }
-	});
-	$('section.links .sortable').sortable({
-		handle: ".handle",
-		update: function(){ reorderLink(); }
-	});
-	$('section.socials .sortable').sortable({
-		handle: ".handle",
-		update: function(){ reorderSocial(); }
-	});
-}
-function initContent()
-{
-	$.post(UPDATER, { QUERY: "get_all" }, function(data) {	
-		// -------------------------- Filling containers ---------------------------
-		for (pageSQL      of data.pages     ) ENV.db_pages.insert			(new SQL2Page     (pageSQL     ));
-		for (articleSQL   of data.articles  ) ENV.db_articles.insert	(new SQL2Article  (articleSQL  ));
-		for (referenceSQL of data.references) ENV.db_references.insert(new SQL2Reference(referenceSQL));
-		for (linkSQL      of data.links     ) ENV.db_links.insert     (new SQL2Link     (linkSQL     ));
-		for (socialSQL    of data.socials   ) ENV.db_socials.insert   (new SQL2Social   (socialSQL   ));
 
-		// ------------------------------- Build DOM -------------------------------
-		for (pageOBJ      of ENV.db_pages.orderedValues()     ) newPageDOM     (pageOBJ     );
-		for (referenceOBJ of ENV.db_references.orderedValues()) newReferenceDOM(referenceOBJ);
-		for (linkOBJ      of ENV.db_links.orderedValues()     ) newLinkDOM     (linkOBJ     );
-		for (socialOBJ    of ENV.db_socials.orderedValues()   ) newSocialDOM   (socialOBJ   );
-		// -------------------------------------------------------------------------
-	}, 'json')
-	.fail(function(){
-		alert('Error in POST request');
-	})
-}
+	//-------------------------------------
+	console.info("sortable intialisation");
+	$('section.pages    .sortable').sortable({ handle: ".handle", update: function(){ reorderPages();   } });
+	$('section.articles .sortable').sortable({ handle: ".handle", update: function(){ reorderArticle(); } });
+	$('section.links    .sortable').sortable({ handle: ".handle", update: function(){ reorderLink();    } });
+	$('section.socials  .sortable').sortable({ handle: ".handle", update: function(){ reorderSocial();  }	});
 
-// ================================== RUNNING ==================================
-$(function(){
-	// info popup
-	var info = openPopup().append($('<h4/>').text('loading'));
-	// Initialisation
-	initTab();
-	initSection();
-	initContent();
-	initSortable();
-	// close popup
-	closePopup(info);
+	//-----------------------------------
+	console.info("setting environment");
+	ENV.db_articles = new POSTContainer({
+		target       : 'updater.php',
+		allocator    : Article,
+		query_select : 'select_articles',
+		query_insert : 'insert_article',
+		query_update : 'update_article',
+		query_delete : 'delete_article'
+	});
+	ENV.db_links = new POSTContainer({
+		target       : 'updater.php',
+		allocator    : Link,
+		query_select : 'select_links',
+		query_insert : 'insert_link',
+		query_update : 'update_link',
+		query_delete : 'delete_link'
+	});
+	ENV.db_pages = new POSTContainer({
+		target       : 'updater.php',
+		allocator    : Page,
+		query_select : 'select_pages',
+		query_insert : 'insert_page',
+		query_update : 'update_page',
+		query_delete : 'delete_page'
+	});
+	ENV.db_references = new POSTContainer({
+		target       : 'updater.php',
+		allocator    : Reference,
+		query_select : 'select_references',
+		query_insert : 'insert_reference',
+		query_update : 'update_reference',
+		query_delete : 'delete_reference'
+	});
+	ENV.db_socials = new POSTContainer({
+		target       : 'updater.php',
+		allocator    : Social,
+		query_select : 'select_socials',
+		query_insert : 'insert_social',
+		query_update : 'update_social',
+		query_delete : 'delete_social'
+	});
+
+	//-------------------------------
+	console.info("reading database");
+	ENV.db_articles     .select(); //.done(function(){ for (value of ENV.db_articles  .values()) value.insertDOM(); });
+	ENV.db_links        .select().done(function(){ for (value of ENV.db_links     .values()) value.insertDOM(); });
+	ENV.db_pages        .select().done(function(){ for (value of ENV.db_pages     .values()) value.insertDOM(); });
+	ENV.db_references   .select().done(function(){ for (value of ENV.db_references.values()) value.insertDOM(); });
+	ENV.db_socials      .select().done(function(){ for (value of ENV.db_socials   .values()) value.insertDOM(); });
+
+	//============================================================================
+	closePopup(popup);
+	console.groupEnd();
+	//============================================================================
+
+	console.info("Ready !");
 });
-
-
-
-
-
-
-
-
-
-
-			
-

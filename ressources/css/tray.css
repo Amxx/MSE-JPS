@@ -6,13 +6,13 @@
 	position:								fixed;
 	display:								flex;
 	overflow:								hidden;
-	height:									40%;
+	height:									60%;
 	width:									80%;
 	bottom:									0;
 	left:										50%;
 	box-shadow:							0 10px 20px #2D2D2D;
 	transform:							translateX(-50%);
-	transition:							all .6s;
+	/*transition:							all .6s;*/
 }
 .tray:not(.expanded)
 {

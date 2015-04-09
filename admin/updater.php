@@ -8,39 +8,39 @@ include_once '../ressources/MSE/connection.php';
  *                          S Q L   R e q u e s t s                            *
  ******************************************************************************/
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_all_pages'						] = "SELECT * FROM `{$GLOBALS['prefix']}pages";
-$QUERY_STR['insert_page'								] = "INSERT   INTO `{$GLOBALS['prefix']}pages` (`Page_Title`, `Page_Style`, `Page_Bordered`, `Page_Expandable`) VALUES (:title, :style, :bordered, :expandable)";
-$QUERY_STR['update_page'								] = "UPDATE        `{$GLOBALS['prefix']}pages` SET `Page_Title` = :title, `Page_Style` = :style, `Page_Bordered` = :bordered, `Page_Expandable` = :expandable WHERE `Page_ID` = :id";
-$QUERY_STR['drop_page'									] = "DELETE   FROM `{$GLOBALS['prefix']}pages` WHERE `Page_ID` = :id";
-$QUERY_STR['reorder_page'								] = "UPDATE        `{$GLOBALS['prefix']}pages` SET `Page_Order` = :order WHERE `Page_ID` = :id";
+$QUERY_STR['select_pages'						] = "SELECT * FROM `{$GLOBALS['prefix']}pages";
+$QUERY_STR['insert_page'						] = "INSERT   INTO `{$GLOBALS['prefix']}pages` (`Page_Title`, `Page_Style`, `Page_Bordered`, `Page_Expandable`) VALUES (:title, :style, :bordered, :expandable)";
+$QUERY_STR['update_page'						] = "UPDATE        `{$GLOBALS['prefix']}pages` SET `Page_Title` = :title, `Page_Style` = :style, `Page_Bordered` = :bordered, `Page_Expandable` = :expandable WHERE `Page_ID` = :id";
+$QUERY_STR['drop_page'							] = "DELETE   FROM `{$GLOBALS['prefix']}pages` WHERE `Page_ID` = :id";
+$QUERY_STR['reorder_page'						] = "UPDATE        `{$GLOBALS['prefix']}pages` SET `Page_Order` = :order WHERE `Page_ID` = :id";
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_all_articles'				] = "SELECT * FROM `{$GLOBALS['prefix']}articles";
-$QUERY_STR['insert_article'							] = "INSERT   INTO `{$GLOBALS['prefix']}articles` (`Page_ID`, `Article_Title`, `Article_Text`, `Article_Javascript`, `Article_Archived`) VALUES (:pid, :title, :text, :javascript, :archived)";
-$QUERY_STR['update_article'							] = "UPDATE        `{$GLOBALS['prefix']}articles` SET `Page_ID` = :pid, `Article_Title` = :title, `Article_Text` = :text, `Article_Javascript` = :javascript, `Article_Archived` = :archived WHERE `Article_ID` = :id";
-$QUERY_STR['drop_article'								] = "DELETE   FROM `{$GLOBALS['prefix']}articles` WHERE `Article_ID` = :id";
-$QUERY_STR['reorder_article'						] = "UPDATE        `{$GLOBALS['prefix']}articles` SET `Article_Order` = :order WHERE `Article_ID` = :id";
+$QUERY_STR['select_articles'				] = "SELECT * FROM `{$GLOBALS['prefix']}articles";
+$QUERY_STR['insert_article'					] = "INSERT   INTO `{$GLOBALS['prefix']}articles` (`Page_ID`, `Article_Title`, `Article_Text`, `Article_Javascript`, `Article_Archived`) VALUES (:pid, :title, :text, :javascript, :archived)";
+$QUERY_STR['update_article'					] = "UPDATE        `{$GLOBALS['prefix']}articles` SET `Page_ID` = :pid, `Article_Title` = :title, `Article_Text` = :text, `Article_Javascript` = :javascript, `Article_Archived` = :archived WHERE `Article_ID` = :id";
+$QUERY_STR['drop_article'						] = "DELETE   FROM `{$GLOBALS['prefix']}articles` WHERE `Article_ID` = :id";
+$QUERY_STR['reorder_article'				] = "UPDATE        `{$GLOBALS['prefix']}articles` SET `Article_Order` = :order WHERE `Article_ID` = :id";
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_all_references'			] = "SELECT * FROM `{$GLOBALS['prefix']}references`";
-$QUERY_STR['insert_reference'						] = "INSERT   INTO `{$GLOBALS['prefix']}references` (`Reference_Title`, `Reference_Authors`, `Reference_Ref`, `Reference_Abstract`, `Reference_Bibtex`) VALUES (:title, :authors, :ref, :abstract, :bibtex)";
-$QUERY_STR['update_reference'						] = "UPDATE        `{$GLOBALS['prefix']}references` SET `Reference_Title` = :title, `Reference_Authors` = :authors, `Reference_Ref` = :ref, `Reference_Abstract` = :abstract, `Reference_Bibtex` = :bibtex WHERE `Reference_ID` = :id";
-$QUERY_STR['drop_reference'							] = "DELETE   FROM `{$GLOBALS['prefix']}references` WHERE `Reference_ID` = :id";
+$QUERY_STR['select_references'			] = "SELECT * FROM `{$GLOBALS['prefix']}references`";
+$QUERY_STR['insert_reference'				] = "INSERT   INTO `{$GLOBALS['prefix']}references` (`Reference_Title`, `Reference_Authors`, `Reference_Ref`, `Reference_Abstract`, `Reference_Bibtex`) VALUES (:title, :authors, :ref, :abstract, :bibtex)";
+$QUERY_STR['update_reference'				] = "UPDATE        `{$GLOBALS['prefix']}references` SET `Reference_Title` = :title, `Reference_Authors` = :authors, `Reference_Ref` = :ref, `Reference_Abstract` = :abstract, `Reference_Bibtex` = :bibtex WHERE `Reference_ID` = :id";
+$QUERY_STR['drop_reference'					] = "DELETE   FROM `{$GLOBALS['prefix']}references` WHERE `Reference_ID` = :id";
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_all_links'						] = "SELECT * FROM `{$GLOBALS['prefix']}links`";
-$QUERY_STR['insert_link'								] = "INSERT   INTO `{$GLOBALS['prefix']}links` (`Link_Title`, `Link_Content`) VALUES (:title, :content)";
-$QUERY_STR['update_link'								] = "UPDATE        `{$GLOBALS['prefix']}links` SET `Link_Title` = :title, `Link_Content` = :content WHERE `Link_ID` = :id";
-$QUERY_STR['drop_link'									] = "DELETE   FROM `{$GLOBALS['prefix']}links` WHERE `Link_ID` = :id";
-$QUERY_STR['reorder_link'								] = "UPDATE        `{$GLOBALS['prefix']}links` SET `Link_Order` = :order WHERE `Link_ID` = :id";
+$QUERY_STR['select_links'						] = "SELECT * FROM `{$GLOBALS['prefix']}links`";
+$QUERY_STR['insert_link'						] = "INSERT   INTO `{$GLOBALS['prefix']}links` (`Link_Title`, `Link_Content`) VALUES (:title, :content)";
+$QUERY_STR['update_link'						] = "UPDATE        `{$GLOBALS['prefix']}links` SET `Link_Title` = :title, `Link_Content` = :content WHERE `Link_ID` = :id";
+$QUERY_STR['drop_link'							] = "DELETE   FROM `{$GLOBALS['prefix']}links` WHERE `Link_ID` = :id";
+$QUERY_STR['reorder_link'						] = "UPDATE        `{$GLOBALS['prefix']}links` SET `Link_Order` = :order WHERE `Link_ID` = :id";
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_all_socials'					] = "SELECT * FROM `{$GLOBALS['prefix']}socials`";
-$QUERY_STR['insert_social'							] = "INSERT   INTO `{$GLOBALS['prefix']}socials` (`Social_Title`, `Social_Img`, `Social_Url`) VALUES (:title, :img, :url)";
-$QUERY_STR['update_social'							] = "UPDATE        `{$GLOBALS['prefix']}socials` SET `Social_Title` = :title, `Social_Img` = :img, `Social_Url` = :url WHERE `Social_ID` = :id";
-$QUERY_STR['drop_social'								] = "DELETE   FROM `{$GLOBALS['prefix']}socials` WHERE `Social_ID` = :id";
-$QUERY_STR['reorder_social'							] = "UPDATE        `{$GLOBALS['prefix']}socials` SET `Social_Order` = :order WHERE `Social_ID` = :id";
+$QUERY_STR['select_socials'					] = "SELECT * FROM `{$GLOBALS['prefix']}socials`";
+$QUERY_STR['insert_social'					] = "INSERT   INTO `{$GLOBALS['prefix']}socials` (`Social_Title`, `Social_Img`, `Social_Url`) VALUES (:title, :img, :url)";
+$QUERY_STR['update_social'					] = "UPDATE        `{$GLOBALS['prefix']}socials` SET `Social_Title` = :title, `Social_Img` = :img, `Social_Url` = :url WHERE `Social_ID` = :id";
+$QUERY_STR['drop_social'						] = "DELETE   FROM `{$GLOBALS['prefix']}socials` WHERE `Social_ID` = :id";
+$QUERY_STR['reorder_social'					] = "UPDATE        `{$GLOBALS['prefix']}socials` SET `Social_Order` = :order WHERE `Social_ID` = :id";
 
 
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_all_citations'				] = "SELECT * FROM `{$GLOBALS['prefix']}citations`";
-$QUERY_STR['select_all_referencesources'] = "SELECT * FROM `{$GLOBALS['prefix']}referencesources`";
+$QUERY_STR['select_citations'				] = "SELECT * FROM `{$GLOBALS['prefix']}citations`";
+$QUERY_STR['select_referencesources'] = "SELECT * FROM `{$GLOBALS['prefix']}referencesources`";
 // -----------------------------------------------------------------------------
 
 /******************************************************************************
@@ -58,17 +58,27 @@ if (isset($_POST['QUERY']))
 	switch($_POST['QUERY'])
 	{
 		// ============================= G e t   A l l =============================
-		case "get_all":
-		{
-			$result['pages'							] = $sqlsocket->query($QUERY_STR['select_all_pages'						])->fetchAll(PDO::FETCH_ASSOC);
-			$result['articles'					] = $sqlsocket->query($QUERY_STR['select_all_articles'				])->fetchAll(PDO::FETCH_ASSOC);
-			$result['references'				] = $sqlsocket->query($QUERY_STR['select_all_references'			])->fetchAll(PDO::FETCH_ASSOC);
-			$result['citations'					] = $sqlsocket->query($QUERY_STR['select_all_citations'				])->fetchAll(PDO::FETCH_ASSOC);
-			$result['links'							] = $sqlsocket->query($QUERY_STR['select_all_links'						])->fetchAll(PDO::FETCH_ASSOC);
-			$result['referencesources'	] = $sqlsocket->query($QUERY_STR['select_all_referencesources'])->fetchAll(PDO::FETCH_ASSOC);
-			$result['socials'						] = $sqlsocket->query($QUERY_STR['select_all_socials'					])->fetchAll(PDO::FETCH_ASSOC);
+		case "select_pages":
+			$result['values'] = $sqlsocket->query($QUERY_STR['select_pages'])->fetchAll(PDO::FETCH_ASSOC);
 			break;
-		}
+		case "select_articles":
+			$result['values'] = $sqlsocket->query($QUERY_STR['select_articles'])->fetchAll(PDO::FETCH_ASSOC);
+			break;
+		case "select_references":
+			$result['values'] = $sqlsocket->query($QUERY_STR['select_references'])->fetchAll(PDO::FETCH_ASSOC);
+			break;
+		case "select_citations":
+			$result['values'] = $sqlsocket->query($QUERY_STR['select_citations'])->fetchAll(PDO::FETCH_ASSOC);
+			break;
+		case "select_links":
+			$result['values'] = $sqlsocket->query($QUERY_STR['select_links'])->fetchAll(PDO::FETCH_ASSOC);
+			break;
+		case "select_referencesources":
+			$result['values'] = $sqlsocket->query($QUERY_STR['select_referencesources'])->fetchAll(PDO::FETCH_ASSOC);
+			break;
+		case "select_socials":
+			$result['values'] = $sqlsocket->query($QUERY_STR['select_socials'])->fetchAll(PDO::FETCH_ASSOC);
+			break;
 		// ================================ P a g e ================================
 		// Insert ------------------------------------------------------------------
 		case "insert_page":
@@ -131,6 +141,7 @@ if (isset($_POST['QUERY']))
 				':javascript'	=> $_POST['object']['javascript'],
 				':archived'		=> $_POST['object']['archived'	] === 'true'
 			));
+			$result['obj'] = $_POST['object'];
 			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			$result['id']  = $sqlsocket->lastInsertId();
 			break;
