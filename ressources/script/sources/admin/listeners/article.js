@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.0.0-2 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -69,7 +69,7 @@ function pressDeleteArticle()
 				var article = ENV.editionObject;
 				ENV.db_articles.delete(article)
 					.done(function(){
-						var citations = ENV.db_citations.values().filter(a => a.articleID == article.id);
+						var citations = ENV.db_citations.values().filter(function(a){ return a.articleID == article.id; });
 						for (citation of citations)
 							ENV.db_citations.rem(citation);
 						article.deleteDOM();

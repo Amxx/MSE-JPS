@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.0.0-2 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -35,11 +35,12 @@ Container.prototype.size = function()
 }
 Container.prototype.values = function()
 {
+	var self = this;
 	return Object
 		.keys(this.data)
-		.map(key => this.data[key]);
+		.map(function(key){ return self.get(key); });
 }
 Container.prototype.orderedValues = function()
 {
-	return this.values().sort((a,b) => a.order > b.order);
+	return this.values().sort(function(a,b){ return a.order > b.order; });
 }

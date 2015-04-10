@@ -322,7 +322,7 @@ $(function(){
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.0.0-2 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -343,7 +343,6 @@ function buildAutocomplete()
 			select: function(event, ui){
 				searchField.val(ui.item.title);
 				pressAddCitation(ui.item.value);
-				// searchFieldID.val(ui.item.value);
 				return false;
 			}
 		})
@@ -359,13 +358,15 @@ function buildAutocomplete()
 
 function fillAutocomplete()
 {
-	var array = ENV.db_references.values().map(e => ({ label: e.title+" "+e.authors, title: e.title, authors: e.authors, value: e.id }));
+	var array = ENV.db_references.values().map(function(e){
+		return ({ label: e.title+" "+e.authors, title: e.title, authors: e.authors, value: e.id });
+	});
 	$('.tray.article #input_article_refsearch').autocomplete('option', 'source', array);
 }/******************************************************************************
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.0.0-2 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -374,7 +375,7 @@ function fillAutocomplete()
 
 function ordered_idarray(block)
 {
-	return block.toArray().map( e => parseInt($(e).attr('id').match(/(\d+)$/)) );
+	return block.toArray().map(function(e){ return parseInt($(e).attr('id').match(/(\d+)$/)); });
 }
 
 function viewTab(id)
@@ -410,8 +411,8 @@ function viewPage(pageID)
 				if (pageID != undefined)
 				{
 					var articles = ENV.db_articles.values()
-						.filter(a => a.pageID == pageID)
-						.sort((a,b) => a.order > b.order);
+						.filter(function(a){ return a.pageID == pageID; })
+						.sort(function(a,b){ return a.order > b.order; });
 					for (article of articles)
 						article.insertDOM();
 					// Show
@@ -424,13 +425,13 @@ function viewPage(pageID)
 function viewCitations(articleID)
 {
 	$('.tray.article .sortable li').remove();
-	for (citation of ENV.db_citations.values().filter(e => e.articleID == articleID))
+	for (citation of ENV.db_citations.values().filter(function(e){ return e.articleID == articleID; }))
 		citation.insertDOM();
 }
 function viewSources(referenceID)
 {
 	$('.tray.reference .sortable li').remove();
-	for (source of ENV.db_sources.values().filter(e => e.referenceID == referenceID))
+	for (source of ENV.db_sources.values().filter(function(e){ return e.referenceID == referenceID; }))
 		source.insertDOM();
 }/******************************************************************************
  *                                  MSE-JPS                                   *
@@ -1147,7 +1148,7 @@ POSTContainer.prototype.reorder = function(idarray)
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.0.0-2 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -1180,13 +1181,14 @@ Container.prototype.size = function()
 }
 Container.prototype.values = function()
 {
+	var self = this;
 	return Object
 		.keys(this.data)
-		.map(key => this.data[key]);
+		.map(function(key){ return self.get(key); });
 }
 Container.prototype.orderedValues = function()
 {
-	return this.values().sort((a,b) => a.order > b.order);
+	return this.values().sort(function(a,b){ return a.order > b.order; });
 }/******************************************************************************
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
@@ -1378,7 +1380,7 @@ function pressDeleteLink()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.0.0-2 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -1446,7 +1448,7 @@ function pressDeleteReference()
 				var reference = ENV.editionObject;
 				ENV.db_references.delete(reference)
 					.done(function(){
-						var citations = ENV.db_citations.values().filter(a => a.referenceID == reference.id);
+						var citations = ENV.db_citations.values().filter(function(a){ return a.referenceID == reference.id; });
 						for (citation of citations)
 							ENV.db_citations.rem(citation);
 						reference.deleteDOM();
@@ -1461,7 +1463,7 @@ function pressDeleteReference()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.0.0-2 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -1528,7 +1530,7 @@ function pressDeleteArticle()
 				var article = ENV.editionObject;
 				ENV.db_articles.delete(article)
 					.done(function(){
-						var citations = ENV.db_citations.values().filter(a => a.articleID == article.id);
+						var citations = ENV.db_citations.values().filter(function(a){ return a.articleID == article.id; });
 						for (citation of citations)
 							ENV.db_citations.rem(citation);
 						article.deleteDOM();
@@ -1543,7 +1545,7 @@ function pressDeleteArticle()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.0.0-2 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -1612,7 +1614,7 @@ function pressDeletePage()
 					.done(function(){
 						if (ENV.currentPage == page.id)
 							viewPage();
-						var articles = ENV.db_articles.values().filter(a => a.pageID == page.id);
+						var articles = ENV.db_articles.values().filter(function(a){ return a.pageID == page.id; });
 						for (article of articles)
 							ENV.db_articles.rem(article);
 						page.deleteDOM();

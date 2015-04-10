@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.0.0-2 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -23,7 +23,6 @@ function buildAutocomplete()
 			select: function(event, ui){
 				searchField.val(ui.item.title);
 				pressAddCitation(ui.item.value);
-				// searchFieldID.val(ui.item.value);
 				return false;
 			}
 		})
@@ -39,6 +38,8 @@ function buildAutocomplete()
 
 function fillAutocomplete()
 {
-	var array = ENV.db_references.values().map(e => ({ label: e.title+" "+e.authors, title: e.title, authors: e.authors, value: e.id }));
+	var array = ENV.db_references.values().map(function(e){
+		return ({ label: e.title+" "+e.authors, title: e.title, authors: e.authors, value: e.id });
+	});
 	$('.tray.article #input_article_refsearch').autocomplete('option', 'source', array);
 }

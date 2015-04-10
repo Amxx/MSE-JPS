@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.0.0-2 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -70,7 +70,7 @@ function pressDeleteReference()
 				var reference = ENV.editionObject;
 				ENV.db_references.delete(reference)
 					.done(function(){
-						var citations = ENV.db_citations.values().filter(a => a.referenceID == reference.id);
+						var citations = ENV.db_citations.values().filter(function(a){ return a.referenceID == reference.id; });
 						for (citation of citations)
 							ENV.db_citations.rem(citation);
 						reference.deleteDOM();
