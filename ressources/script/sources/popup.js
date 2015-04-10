@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -38,7 +38,7 @@ function popup_input(text, callback, input)
 {
 	var p = openPopup();
 	p	.append($('<h4/>'   ).text(text))
-		.append($('<input/>').attr('type', 'text').val(input));
+		.append($('<input/>').attr('type', 'text').attr('placeholder', input));
 	p.find('input')
 		.keyup(function(event){
 			switch(event.which)
@@ -59,18 +59,15 @@ function popup_input(text, callback, input)
 function popup_confirm(text, callback)
 {
 	var p = openPopup();
-	p	.append($('<h4/>'    ).text(text) )
-		.append($('<button/>').text('No') )
-		.append($('<button/>').text('Yes'))
+	p	.append($('<h4/>').text(text))
+		.append($('<a/>' ).addClass('button').text('No'))
+		.append($('<a/>' ).addClass('button').text('Yes'))
 
-	p.find('button').each(function(){
-		var b = $(this).text() == 'Yes';
-		if (!b)
-			$(this).focus();
+	p.find('a.button').each(function(){
 		$(this).click(function(){
 			closePopup(p);
 			if (callback)
-				callback(b);
+				callback($(this).text() == 'Yes');
 		});
 	});
 }

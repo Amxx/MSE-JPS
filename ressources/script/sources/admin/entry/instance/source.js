@@ -10,54 +10,78 @@
  ******************************************************************************/
 
 // ============================= Object Definition =============================
-function Citation()
+function Source()
 {
 	Entry.apply(this);
-	this.id
-	this.articleID   = null;
+	this.id          = null;
 	this.referenceID = null;
+	this.title       = '';
+	this.url         = '';
 	this.order       = 0;
 }
-Citation.prototype = new Entry();
-Citation.prototype = new Citation();
+Source.prototype = new Entry();
+Source.prototype = new Source();
 
 // ================================== Parsing ==================================
-Citation.prototype.parse = function(sql)
+Source.prototype.parse = function(sql)
 {
-	this.id          = sql.Citation_ID;
-	this.articleID   = sql.Article_ID;
+	this.id          = sql.Source_ID;
 	this.referenceID = sql.Reference_ID;
-	this.order       = parseInt(sql.Citation_Order);
+	this.title       = sql.Source_Title;
+	this.url         = sql.Source_Url;
+	this.order       = parseInt(sql.Source_Order);
+}
+
+// ================================== Methods ==================================
+Source.prototype.descrition = function()
+{
+	var self   = this;
+	var length = self.url.length;
+	if (length < 63)
+		var url = self.url;
+	else
+		var url = self.url.substring(0, 30)+'...'+self.url.substring(length-30, length);
+
+	return '['+self.title+'] '+url;
 }
 
 // ==================================== DOM ====================================
-Citation.prototype.insertDOM = function(front)
+Source.prototype.insertDOM = function(front)
 {
 	var self = this;
 	var block = $('<li/>')
-			.attr('id', 'citation_'+self.id)
+			.attr('id', 'source_'+self.id)
 			.append($('<span/>')
 				.addClass('handle')
 				.text('\u2195')
 			)
-			.append($('<span/>')
+			.append($('<a/>')
 				.addClass('title')
-				.text(ENV.db_references.get(self.referenceID).title)
+				.click(function(){ pressEditSource(self.id); })
+				.text(self.descrition())
 			)
 			.append($('<a/>')
 				.addClass('pointer')
-				.click(function(){ pressDeleteCitation(self.id); })
+				.click(function(){ pressDeleteSource(self.id); })
 				.text('\u2716')
 			);
 	if (front)
-		$('.tray.article .sortable').prepend(block);
+		$('.tray.reference .sortable').prepend(block);
 	else
-		$('.tray.article .sortable').append(block);
+		$('.tray.reference .sortable').append(block);
 }
-Citation.prototype.deleteDOM = function()
+Source.prototype.updateDOM = function()
 {
 	var self = this;
-	$('.tray.article .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'citation_'+self.id; })
+	$('.tray.reference .sortable li')
+		.filter(function(){ return $(this).attr('id') == 'source_'+self.id; })
+		.find('a.title')
+		.text(self.descrition());
+}
+Source.prototype.deleteDOM = function()
+{
+	var self = this;
+	$('.tray.reference .sortable li')
+		.filter(function(){ return $(this).attr('id') == 'source_'+self.id; })
 		.remove();
 }

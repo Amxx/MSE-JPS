@@ -1,4 +1,15 @@
 /******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
+/******************************************************************************
  *                                 P o p u p                                  *
  ******************************************************************************/
 .popup
@@ -20,7 +31,7 @@
 /******************************************************************************
  *                                B u t t o n                                 *
  ******************************************************************************/
-.popup button
+.popup a.button
 {
 	display:								inline-block;
 	width:									100px;
@@ -33,12 +44,12 @@
 	font-size:							22px;
 	font-weight: 						bold;
 }
-.popup button:hover
+.popup a.button:hover
 {
 	border:									1px solid #626262;
 	background:							#575757;
 }
-.popup button:active
+.popup a.button:active
 {
 	border:									1px solid #4C4C4C;
 	background:							#282828;
@@ -49,10 +60,19 @@
  ******************************************************************************/
 .popup input[type='text']
 {
+	margin:									3px;
 	padding:								5px 10px 5px 10px;
 	width:									40%;
+	border-radius:					3px;
 	border:									1px solid #696969;
 	color:									#FFFFFF;
 	background:							#626262;
 	font-size:							22px;
+}
+.popup input[type='text'].block
+{
+	display:								block;
+	width: 									80%;
+	margin-left:						auto;
+	margin-right:						auto;
 }

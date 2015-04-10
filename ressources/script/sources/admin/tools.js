@@ -1,3 +1,14 @@
+/******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
 function ordered_idarray(block)
 {
 	return block.toArray().map( e => parseInt($(e).attr('id').match(/(\d+)$/)) );
@@ -52,4 +63,10 @@ function viewCitations(articleID)
 	$('.tray.article .sortable li').remove();
 	for (citation of ENV.db_citations.values().filter(e => e.articleID == articleID))
 		citation.insertDOM();
+}
+function viewSources(referenceID)
+{
+	$('.tray.reference .sortable li').remove();
+	for (source of ENV.db_sources.values().filter(e => e.referenceID == referenceID))
+		source.insertDOM();
 }

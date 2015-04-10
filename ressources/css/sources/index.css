@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.1.0-2 : 30/03/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -49,6 +49,7 @@ a.button
 	font-size:							16px;
 	font-weight: 						bold;
 	text-align:							center;
+	/*vertical-align:					middle;*/
 }
 a.button:hover
 {

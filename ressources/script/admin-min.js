@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -38,7 +38,7 @@ function popup_input(text, callback, input)
 {
 	var p = openPopup();
 	p	.append($('<h4/>'   ).text(text))
-		.append($('<input/>').attr('type', 'text').val(input));
+		.append($('<input/>').attr('type', 'text').attr('placeholder', input));
 	p.find('input')
 		.keyup(function(event){
 			switch(event.which)
@@ -59,18 +59,15 @@ function popup_input(text, callback, input)
 function popup_confirm(text, callback)
 {
 	var p = openPopup();
-	p	.append($('<h4/>'    ).text(text) )
-		.append($('<button/>').text('No') )
-		.append($('<button/>').text('Yes'))
+	p	.append($('<h4/>').text(text))
+		.append($('<a/>' ).addClass('button').text('No'))
+		.append($('<a/>' ).addClass('button').text('Yes'))
 
-	p.find('button').each(function(){
-		var b = $(this).text() == 'Yes';
-		if (!b)
-			$(this).focus();
+	p.find('a.button').each(function(){
 		$(this).click(function(){
 			closePopup(p);
 			if (callback)
-				callback(b);
+				callback($(this).text() == 'Yes');
 		});
 	});
 }
@@ -89,36 +86,12 @@ function popup_information(text, callback)
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
-
-/******************************************************************************
- *                                Dependencies                                *
- ******************************************************************************/
-// $.ajaxSetup({async: false});
-// $.getScript('../ressources/script/admin/container/container.js'     );
-// $.getScript('../ressources/script/admin/container/postcontainer.js' );
-// $.getScript('../ressources/script/admin/entry/entry.js'             );
-// $.getScript('../ressources/script/admin/entry/instance/article.js'  );
-// $.getScript('../ressources/script/admin/entry/instance/citation.js' );
-// $.getScript('../ressources/script/admin/entry/instance/link.js'     );
-// $.getScript('../ressources/script/admin/entry/instance/page.js'     );
-// $.getScript('../ressources/script/admin/entry/instance/reference.js');
-// $.getScript('../ressources/script/admin/entry/instance/social.js'   );
-// $.getScript('../ressources/script/admin/listeners/article.js'       );
-// $.getScript('../ressources/script/admin/listeners/citation.js'			);
-// $.getScript('../ressources/script/admin/listeners/link.js'          );
-// $.getScript('../ressources/script/admin/listeners/page.js'          );
-// $.getScript('../ressources/script/admin/listeners/reference.js'     );
-// $.getScript('../ressources/script/admin/listeners/social.js'        );
-// $.getScript('../ressources/script/admin/autocomplete.js'            );
-// $.getScript('../ressources/script/admin/tray.js'                    );
-// $.getScript('../ressources/script/admin/tools.js'                   );
-// $.ajaxSetup({async: true});
 
 /******************************************************************************
  *                                Environment                                 *
@@ -178,7 +151,11 @@ $(function(){
 	});
 	$('.tray.article    .sortable').sortable({
 		handle: ".handle",
-		update: function(){ ENV.db_citations   .reorder(ordered_idarray($(this).find('li'))); }
+		update: function(){ ENV.db_citations.reorder(ordered_idarray($(this).find('li'))); }
+	});
+	$('.tray.reference  .sortable').sortable({
+		handle: ".handle",
+		update: function(){ ENV.db_sources.reorder(ordered_idarray($(this).find('li'))); }
 	});
 
 	//-----------------------------------
@@ -235,11 +212,21 @@ $(function(){
 		query_delete  : 'delete_social',
 		query_reorder : 'reorder_social'
 	});
+	ENV.db_sources = new POSTContainer({
+		target        : 'updater.php',
+		allocator     : Source,
+		query_select  : 'select_sources',
+		query_insert  : 'insert_source',
+		query_update  : 'update_source',
+		query_delete  : 'delete_source',
+		query_reorder : 'reorder_source'
+	});
 
 	//-------------------------------
 	console.info("reading database");
 	ENV.db_articles.select();
 	ENV.db_citations.select();
+	ENV.db_sources.select();
 	ENV.db_links.select().done(function(){
 		for (value of ENV.db_links.orderedValues())
 			value.insertDOM();
@@ -268,7 +255,7 @@ $(function(){
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -331,7 +318,18 @@ $(function(){
 			closeTray($('.tray.expanded'), resetFlags);
 	});
 
-});function buildAutocomplete()
+});/******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
+function buildAutocomplete()
 {
 	var searchField   = $('.tray.article #input_article_refsearch');
 	var searchFieldID = $('.tray.article #input_article_refID'    );
@@ -363,7 +361,18 @@ function fillAutocomplete()
 {
 	var array = ENV.db_references.values().map(e => ({ label: e.title+" "+e.authors, title: e.title, authors: e.authors, value: e.id }));
 	$('.tray.article #input_article_refsearch').autocomplete('option', 'source', array);
-}function ordered_idarray(block)
+}/******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
+function ordered_idarray(block)
 {
 	return block.toArray().map( e => parseInt($(e).attr('id').match(/(\d+)$/)) );
 }
@@ -417,7 +426,24 @@ function viewCitations(articleID)
 	$('.tray.article .sortable li').remove();
 	for (citation of ENV.db_citations.values().filter(e => e.articleID == articleID))
 		citation.insertDOM();
-}function Entry(){}
+}
+function viewSources(referenceID)
+{
+	$('.tray.reference .sortable li').remove();
+	for (source of ENV.db_sources.values().filter(e => e.referenceID == referenceID))
+		source.insertDOM();
+}/******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
+function Entry(){}
 
 Entry.prototype.post = function(){
 	var properties = {};
@@ -429,7 +455,7 @@ Entry.prototype.post = function(){
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -452,13 +478,24 @@ Source.prototype = new Source();
 // ================================== Parsing ==================================
 Source.prototype.parse = function(sql)
 {
-	this.id         = sql.Article_ID;
-	this.pageID     = sql.Page_ID;
-	this.title      = sql.Article_Title;
-	this.text       = sql.Article_Text;
-	this.javascript = sql.Article_Javascript;
-	this.archived   = parseInt(sql.Article_Archived);
-	this.order      = parseInt(sql.Article_Order);
+	this.id          = sql.Source_ID;
+	this.referenceID = sql.Reference_ID;
+	this.title       = sql.Source_Title;
+	this.url         = sql.Source_Url;
+	this.order       = parseInt(sql.Source_Order);
+}
+
+// ================================== Methods ==================================
+Source.prototype.descrition = function()
+{
+	var self   = this;
+	var length = self.url.length;
+	if (length < 63)
+		var url = self.url;
+	else
+		var url = self.url.substring(0, 30)+'...'+self.url.substring(length-30, length);
+
+	return '['+self.title+'] '+url;
 }
 
 // ==================================== DOM ====================================
@@ -466,40 +503,45 @@ Source.prototype.insertDOM = function(front)
 {
 	var self = this;
 	var block = $('<li/>')
-			.attr('id', 'article_'+self.id)
+			.attr('id', 'source_'+self.id)
 			.append($('<span/>')
 				.addClass('handle')
 				.text('\u2195')
 			)
 			.append($('<a/>')
 				.addClass('title')
-				.click(function(){ pressEditArticle(self.id); })
-				.text(self.title)
+				.click(function(){ pressEditSource(self.id); })
+				.text(self.descrition())
+			)
+			.append($('<a/>')
+				.addClass('pointer')
+				.click(function(){ pressDeleteSource(self.id); })
+				.text('\u2716')
 			);
 	if (front)
-		$('section.articles .sortable').prepend(block);
+		$('.tray.reference .sortable').prepend(block);
 	else
-		$('section.articles .sortable').append(block);
+		$('.tray.reference .sortable').append(block);
 }
 Source.prototype.updateDOM = function()
 {
 	var self = this;
-	$('section.articles .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'article_'+self.id; })
+	$('.tray.reference .sortable li')
+		.filter(function(){ return $(this).attr('id') == 'source_'+self.id; })
 		.find('a.title')
-		.text(self.title);
+		.text(self.descrition());
 }
 Source.prototype.deleteDOM = function()
 {
 	var self = this;
-	$('section.articles .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'article_'+self.id; })
+	$('.tray.reference .sortable li')
+		.filter(function(){ return $(this).attr('id') == 'source_'+self.id; })
 		.remove();
 }/******************************************************************************
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -537,7 +579,7 @@ Citation.prototype.insertDOM = function(front)
 				.addClass('handle')
 				.text('\u2195')
 			)
-			.append($('<sapn/>')
+			.append($('<span/>')
 				.addClass('title')
 				.text(ENV.db_references.get(self.referenceID).title)
 			)
@@ -562,7 +604,7 @@ Citation.prototype.deleteDOM = function()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -642,7 +684,7 @@ Link.prototype.deleteDOM = function()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -683,6 +725,16 @@ Reference.prototype.setTray = function()
 	$('#input_reference_reference').val(self.reference);
 	$('#input_reference_abstract' ).val(self.abstract);
 	$('#input_reference_bibtex'   ).val(self.bibtex);
+
+	if (self.id == null)
+	{
+		$('.tray.reference .menu li').eq(3).hide();
+	}
+	else
+	{
+		$('.tray.reference .menu li').eq(3).show();
+		viewSources(self.id);
+	}
 }
 Reference.prototype.getTray = function()
 {
@@ -732,7 +784,7 @@ Reference.prototype.deleteDOM = function()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -775,9 +827,16 @@ Article.prototype.setTray = function()
 	$('#input_article_javascript').val(self.javascript);
 	$('#input_article_archived'  ).prop('checked', self.archived);
 
-	$('#input_article_refsearch' ).val('');
-	// $('#input_article_refID'     ).val('');
-	viewCitations(self.id);
+	if (self.id == null)
+	{
+		$('.tray.article .menu li').eq(2).hide();
+	}
+	else
+	{
+		$('.tray.article .menu li').eq(2).show();
+		$('#input_article_refsearch' ).val('');
+		viewCitations(self.id);
+	}
 }
 Article.prototype.getTray = function()
 {
@@ -826,7 +885,7 @@ Article.prototype.deleteDOM = function()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -920,7 +979,7 @@ Page.prototype.deleteDOM = function()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -1005,6 +1064,17 @@ Social.prototype.deleteDOM = function()
 		.filter(function(){ return $(this).attr('id') == 'social_'+self.id; })
 		.remove();
 }/******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
+/******************************************************************************
  *                               POST Container                               *
  ******************************************************************************/
 function POSTContainer(params)
@@ -1074,6 +1144,17 @@ POSTContainer.prototype.reorder = function(idarray)
 		closePopup(popup);
 	}, 'json');
 }/******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
+/******************************************************************************
  *                                 Container                                  *
  ******************************************************************************/
 function Container()
@@ -1110,7 +1191,85 @@ Container.prototype.orderedValues = function()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
+function pressAddSource()
+{
+	var p = openPopup();
+	p	.append($('<h4/>'   ).text('New Link'))
+		.append($('<input/>').addClass('block').attr('type', 'text').attr('placeholder', 'Title'))
+		.append($('<input/>').addClass('block').attr('type', 'text').attr('placeholder', 'Url'  ))
+		.append($('<a/>').addClass('button').text('Cancel').click(function(){
+			closePopup(p);
+		}))
+		.append($('<a/>').addClass('button').text('Ok').click(function(){
+			title = p.find('input').eq(0).val().trim();
+			url   = p.find('input').eq(1).val().trim();
+			if (title && url)
+			{
+				var source = new Source();
+				source.title       = title;
+				source.url         = url;
+				source.referenceID = ENV.editionObject.id;
+				ENV.db_sources.insert(source)
+					.done(function(){
+						source.insertDOM();
+						ENV.db_sources.reorder(ordered_idarray($('.tray.reference .sortable li')));
+						closePopup(p);
+					})
+			}
+		}));
+}
+
+function pressEditSource(sourceID)
+{
+	var source = ENV.db_sources.get(sourceID);
+
+	var p = openPopup();
+	p	.append($('<h4/>'   ).text('New Link'))
+		.append($('<input/>').addClass('block').attr('type', 'text').attr('placeholder', 'Title').val(source.title))
+		.append($('<input/>').addClass('block').attr('type', 'text').attr('placeholder', 'Url'  ).val(source.url))
+		.append($('<a/>').addClass('button').text('Cancel').click(function(){
+			closePopup(p);
+		}))
+		.append($('<a/>').addClass('button').text('Ok').click(function(){
+			title = p.find('input').eq(0).val().trim();
+			url   = p.find('input').eq(1).val().trim();
+			if (title && url)
+			{
+				source.title       = title;
+				source.url         = url;
+				ENV.db_sources.update(source)
+					.done(function(){
+						source.updateDOM();
+						closePopup(p);
+					})
+			}
+		}));
+
+
+
+}
+
+function pressDeleteSource(sourceID)
+{
+	popup_confirm("Are you sure you want to delete this source ?", function(confirm){
+		var source = ENV.db_sources.get(sourceID);
+		ENV.db_sources.delete(source)
+			.done(function(){
+				source.deleteDOM();
+			});
+	});
+}/******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -1142,7 +1301,7 @@ function pressDeleteCitation(citationID)
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -1219,7 +1378,7 @@ function pressDeleteLink()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -1302,7 +1461,7 @@ function pressDeleteReference()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -1384,7 +1543,7 @@ function pressDeleteArticle()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -1467,7 +1626,7 @@ function pressDeletePage()
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *

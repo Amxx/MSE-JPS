@@ -3,7 +3,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -51,8 +51,8 @@ include_once 'ressources/libs/phpfastcache/phpfastcache.php';
 
 $cache = phpFastCache();
 $hash  = md5($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
-// $html  = __c('files')->get($hash);
-$html  = null;
+$html  = __c('files')->get($hash);
+// $html  = null;
 
 if ($html == null)
 {

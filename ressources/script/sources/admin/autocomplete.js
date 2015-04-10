@@ -1,3 +1,14 @@
+/******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
 function buildAutocomplete()
 {
 	var searchField   = $('.tray.article #input_article_refsearch');

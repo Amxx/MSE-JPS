@@ -2,36 +2,12 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
-
-/******************************************************************************
- *                                Dependencies                                *
- ******************************************************************************/
-// $.ajaxSetup({async: false});
-// $.getScript('../ressources/script/admin/container/container.js'     );
-// $.getScript('../ressources/script/admin/container/postcontainer.js' );
-// $.getScript('../ressources/script/admin/entry/entry.js'             );
-// $.getScript('../ressources/script/admin/entry/instance/article.js'  );
-// $.getScript('../ressources/script/admin/entry/instance/citation.js' );
-// $.getScript('../ressources/script/admin/entry/instance/link.js'     );
-// $.getScript('../ressources/script/admin/entry/instance/page.js'     );
-// $.getScript('../ressources/script/admin/entry/instance/reference.js');
-// $.getScript('../ressources/script/admin/entry/instance/social.js'   );
-// $.getScript('../ressources/script/admin/listeners/article.js'       );
-// $.getScript('../ressources/script/admin/listeners/citation.js'			);
-// $.getScript('../ressources/script/admin/listeners/link.js'          );
-// $.getScript('../ressources/script/admin/listeners/page.js'          );
-// $.getScript('../ressources/script/admin/listeners/reference.js'     );
-// $.getScript('../ressources/script/admin/listeners/social.js'        );
-// $.getScript('../ressources/script/admin/autocomplete.js'            );
-// $.getScript('../ressources/script/admin/tray.js'                    );
-// $.getScript('../ressources/script/admin/tools.js'                   );
-// $.ajaxSetup({async: true});
 
 /******************************************************************************
  *                                Environment                                 *
@@ -91,7 +67,11 @@ $(function(){
 	});
 	$('.tray.article    .sortable').sortable({
 		handle: ".handle",
-		update: function(){ ENV.db_citations   .reorder(ordered_idarray($(this).find('li'))); }
+		update: function(){ ENV.db_citations.reorder(ordered_idarray($(this).find('li'))); }
+	});
+	$('.tray.reference  .sortable').sortable({
+		handle: ".handle",
+		update: function(){ ENV.db_sources.reorder(ordered_idarray($(this).find('li'))); }
 	});
 
 	//-----------------------------------
@@ -148,11 +128,21 @@ $(function(){
 		query_delete  : 'delete_social',
 		query_reorder : 'reorder_social'
 	});
+	ENV.db_sources = new POSTContainer({
+		target        : 'updater.php',
+		allocator     : Source,
+		query_select  : 'select_sources',
+		query_insert  : 'insert_source',
+		query_update  : 'update_source',
+		query_delete  : 'delete_source',
+		query_reorder : 'reorder_source'
+	});
 
 	//-------------------------------
 	console.info("reading database");
 	ENV.db_articles.select();
 	ENV.db_citations.select();
+	ENV.db_sources.select();
 	ENV.db_links.select().done(function(){
 		for (value of ENV.db_links.orderedValues())
 			value.insertDOM();

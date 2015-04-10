@@ -1,4 +1,14 @@
 <?php
+/******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
 
 include_once '../config/config.php';
 include_once '../ressources/MSE/connection.php';
@@ -43,6 +53,10 @@ $QUERY_STR['delete_citation'  ] = "DELETE   FROM `{$GLOBALS['prefix']}citations`
 $QUERY_STR['reorder_citation' ] = "UPDATE        `{$GLOBALS['prefix']}citations` SET `Citation_Order` = :order WHERE `Citation_ID` = :id";
 // -----------------------------------------------------------------------------
 $QUERY_STR['select_sources'   ] = "SELECT * FROM `{$GLOBALS['prefix']}sources`";
+$QUERY_STR['insert_source'    ] = "INSERT   INTO `{$GLOBALS['prefix']}sources` (`Reference_ID`, `Source_Title`, `Source_Url`) VALUES (:rid, :title, :url)";
+$QUERY_STR['update_source'    ] = "UPDATE        `{$GLOBALS['prefix']}sources` SET `Reference_ID` = :rid, `Source_Title` = :title, `Source_Url` = :url WHERE `Source_ID` = :id";
+$QUERY_STR['delete_source'    ] = "DELETE   FROM `{$GLOBALS['prefix']}sources` WHERE `Source_ID` = :id";
+$QUERY_STR['reorder_source'   ] = "UPDATE        `{$GLOBALS['prefix']}sources` SET `Source_Order` = :order WHERE `Source_ID` = :id";
 // -----------------------------------------------------------------------------
 
 /******************************************************************************
@@ -355,8 +369,53 @@ if (isset($_POST['QUERY']))
 			}
 			break;
 		}
-
-
+		// ============================== S o u r c e ==============================
+		// Insert ------------------------------------------------------------------
+		case "insert_source":
+		{
+			$stmt = $sqlsocket->prepare($QUERY_STR["insert_source"]);
+			$stmt->execute(array(
+				':rid'   => $_POST['object']['referenceID'],
+				':title' => $_POST['object']['title'      ],
+				':url'   => $_POST['object']['url'        ]
+			));
+			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$result['id']  = $sqlsocket->lastInsertId();
+			break;
+		}
+		case "update_source":
+		{
+			$stmt = $sqlsocket->prepare($QUERY_STR["update_source"]);
+			$stmt->execute(array(
+				':id'    => $_POST['object']['id'         ],
+				':rid'   => $_POST['object']['referenceID'],
+				':title' => $_POST['object']['title'      ],
+				':url'   => $_POST['object']['url'        ]
+			));
+			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			break;
+		}
+		// Drop --------------------------------------------------------------------
+		case "delete_source":
+		{
+			$stmt = $sqlsocket->prepare($QUERY_STR["delete_source"]);
+			$stmt->execute(array(
+				':id' => $_POST['object']['id']
+			));
+			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			break;
+		}
+		// Reorder -----------------------------------------------------------------
+		case "reorder_source":
+		{
+			$stmt = $sqlsocket->prepare($QUERY_STR["reorder_source"]);
+			foreach($_POST['object'] as $order => $id)
+			{
+				$stmt->execute(array(':id' => $id, ':order' => $order));
+				$result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			}
+			break;
+		}
 	}
 
 

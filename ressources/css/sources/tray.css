@@ -1,4 +1,15 @@
 /******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
+/******************************************************************************
  *                                  T r a y                                   *
  ******************************************************************************/
 .tray
@@ -90,7 +101,7 @@
 .tray .content h3
 {
 	height:									30px;
-	margin:									15px 10px;
+	margin:									5px 10px;
 	color:									#2D2D2D;
 	font-size:							20px;
 }
@@ -123,8 +134,8 @@
 .tray .content select,
 .tray .content textarea
 {
+	margin:									6px 0px;
 	padding:								6px;
-	border:									0;
 	border-radius:					3px;
 	color:									#626262;
 	background:							#F0F0F0;
@@ -147,7 +158,6 @@
 	width:									80px;
 	height:									26px;
 	background:							#333;
-	margin:									5px;
 	border-radius:					13px;
 }
 .tray .content .slider:before

@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -43,6 +43,16 @@ Reference.prototype.setTray = function()
 	$('#input_reference_reference').val(self.reference);
 	$('#input_reference_abstract' ).val(self.abstract);
 	$('#input_reference_bibtex'   ).val(self.bibtex);
+
+	if (self.id == null)
+	{
+		$('.tray.reference .menu li').eq(3).hide();
+	}
+	else
+	{
+		$('.tray.reference .menu li').eq(3).show();
+		viewSources(self.id);
+	}
 }
 Reference.prototype.getTray = function()
 {

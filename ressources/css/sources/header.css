@@ -1,4 +1,15 @@
 /******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
+/******************************************************************************
  *                                H e a d e r                                 *
  ******************************************************************************/
 header
@@ -6,16 +17,16 @@ header
 	position:								fixed;
 	top:										0px;
 	z-index:								100000;
-	
+
 	width:									100%;
 	padding:								20px calc((100% - 1000px) / 2);
-	
-	border-bottom:					1px solid #DDD;	
+
+	border-bottom:					1px solid #DDD;
 	background: 						#FFFFFF;
 }
 header.dark
 {
-	border-bottom:					0px;	
+	border-bottom:					0px;
 	color:									#FFFFFF;
 	background:							#4D4D4D;
 }
