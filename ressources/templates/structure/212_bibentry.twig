@@ -16,7 +16,7 @@
 		{{ reference.ref}}
 
 		{% for source in reference.sources.list %}
-			<a href={{ source.url }} target='_blank'>[{{ source.name }}]</a>
+			<a href={{ source.url }} target='_blank'>[{{ source.title }}]</a>
 		{% endfor %}
 
 		{% if reference.bibtex or reference.abstract %}

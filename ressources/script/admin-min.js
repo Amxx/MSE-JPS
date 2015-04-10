@@ -437,6 +437,76 @@ Entry.prototype.post = function(){
  ******************************************************************************/
 
 // ============================= Object Definition =============================
+function Source()
+{
+	Entry.apply(this);
+	this.id          = null;
+	this.referenceID = null;
+	this.title       = '';
+	this.url         = '';
+	this.order       = 0;
+}
+Source.prototype = new Entry();
+Source.prototype = new Source();
+
+// ================================== Parsing ==================================
+Source.prototype.parse = function(sql)
+{
+	this.id         = sql.Article_ID;
+	this.pageID     = sql.Page_ID;
+	this.title      = sql.Article_Title;
+	this.text       = sql.Article_Text;
+	this.javascript = sql.Article_Javascript;
+	this.archived   = parseInt(sql.Article_Archived);
+	this.order      = parseInt(sql.Article_Order);
+}
+
+// ==================================== DOM ====================================
+Source.prototype.insertDOM = function(front)
+{
+	var self = this;
+	var block = $('<li/>')
+			.attr('id', 'article_'+self.id)
+			.append($('<span/>')
+				.addClass('handle')
+				.text('\u2195')
+			)
+			.append($('<a/>')
+				.addClass('title')
+				.click(function(){ pressEditArticle(self.id); })
+				.text(self.title)
+			);
+	if (front)
+		$('section.articles .sortable').prepend(block);
+	else
+		$('section.articles .sortable').append(block);
+}
+Source.prototype.updateDOM = function()
+{
+	var self = this;
+	$('section.articles .sortable li')
+		.filter(function(){ return $(this).attr('id') == 'article_'+self.id; })
+		.find('a.title')
+		.text(self.title);
+}
+Source.prototype.deleteDOM = function()
+{
+	var self = this;
+	$('section.articles .sortable li')
+		.filter(function(){ return $(this).attr('id') == 'article_'+self.id; })
+		.remove();
+}/******************************************************************************
+ *                                  MSE-JPS                                   *
+ *                 Mini Site Engine - Javascript / PHP / SQL                  *
+ *                                                                            *
+ *                        Version 1.2.0-1 : 06/04/2015                        *
+ *                                                                            *
+ *                      Developped by Hadrien Croubois :                      *
+ *                         hadrien.croubois@gmail.com                         *
+ *                                                                            *
+ ******************************************************************************/
+
+// ============================= Object Definition =============================
 function Citation()
 {
 	Entry.apply(this);
@@ -524,14 +594,14 @@ Link.prototype.parse = function(sql)
 Link.prototype.setTray = function()
 {
 	var self = this;
-	$('.tray.link #input_link_title'  ).val(self.title);
-	$('.tray.link #input_link_content').val(self.content);
+	$('#input_link_title'  ).val(self.title);
+	$('#input_link_content').val(self.content);
 }
 Link.prototype.getTray = function()
 {
 	var self = this;
-	self.title   = $('.tray.link #input_link_title'  ).val();
-	self.content = $('.tray.link #input_link_content').val();
+	self.title   = $('#input_link_title'  ).val();
+	self.content = $('#input_link_content').val();
 }
 
 // ==================================== DOM ====================================
@@ -608,20 +678,20 @@ Reference.prototype.parse = function(sql)
 Reference.prototype.setTray = function()
 {
 	var self = this;
-	$('.tray.reference #input_reference_title'    ).val(self.title);
-	$('.tray.reference #input_reference_authors'  ).val(self.authors);
-	$('.tray.reference #input_reference_reference').val(self.reference);
-	$('.tray.reference #input_reference_abstract' ).val(self.abstract);
-	$('.tray.reference #input_reference_bibtex'   ).val(self.bibtex);
+	$('#input_reference_title'    ).val(self.title);
+	$('#input_reference_authors'  ).val(self.authors);
+	$('#input_reference_reference').val(self.reference);
+	$('#input_reference_abstract' ).val(self.abstract);
+	$('#input_reference_bibtex'   ).val(self.bibtex);
 }
 Reference.prototype.getTray = function()
 {
 	var self = this;
-	self.title     = $('.tray.reference #input_reference_title'    ).val();
-	self.authors   = $('.tray.reference #input_reference_authors'  ).val();
-	self.reference = $('.tray.reference #input_reference_reference').val();
-	self.abstract  = $('.tray.reference #input_reference_abstract' ).val();
-	self.bibtex    = $('.tray.reference #input_reference_bibtex'   ).val();
+	self.title     = $('#input_reference_title'    ).val();
+	self.authors   = $('#input_reference_authors'  ).val();
+	self.reference = $('#input_reference_reference').val();
+	self.abstract  = $('#input_reference_abstract' ).val();
+	self.bibtex    = $('#input_reference_bibtex'   ).val();
 }
 
 // ==================================== DOM ====================================
@@ -700,22 +770,22 @@ Article.prototype.parse = function(sql)
 Article.prototype.setTray = function()
 {
 	var self = this;
-	$('.tray.article #input_article_title'     ).val(self.title);
-	$('.tray.article #input_article_text'      ).val(self.text);
-	$('.tray.article #input_article_javascript').val(self.javascript);
-	$('.tray.article #input_article_archived'  ).prop('checked', self.archived);
+	$('#input_article_title'     ).val(self.title);
+	$('#input_article_text'      ).val(self.text);
+	$('#input_article_javascript').val(self.javascript);
+	$('#input_article_archived'  ).prop('checked', self.archived);
 
-	$('.tray.article #input_article_refsearch' ).val('');
-	// $('.tray.article #input_article_refID'     ).val('');
+	$('#input_article_refsearch' ).val('');
+	// $('#input_article_refID'     ).val('');
 	viewCitations(self.id);
 }
 Article.prototype.getTray = function()
 {
 	var self = this;
-	self.title      = $('.tray.article #input_article_title'     ).val();
-	self.text       = $('.tray.article #input_article_text'      ).val();
-	self.javascript = $('.tray.article #input_article_javascript').val();
-	self.archived   = $('.tray.article #input_article_archived'  ).prop('checked');
+	self.title      = $('#input_article_title'     ).val();
+	self.text       = $('#input_article_text'      ).val();
+	self.javascript = $('#input_article_javascript').val();
+	self.archived   = $('#input_article_archived'  ).prop('checked');
 }
 
 // ==================================== DOM ====================================
@@ -792,18 +862,18 @@ Page.prototype.parse = function(sql)
 Page.prototype.setTray = function()
 {
 	var self = this;
-	$('.tray.page #input_page_title'     ).val(self.title);
-	$('.tray.page #input_page_style'     ).val(self.style);
-	$('.tray.page #input_page_expendable').prop('checked', self.expandable);
-	$('.tray.page #input_page_bordered'  ).prop('checked', self.bordered);
+	$('#input_page_title'     ).val(self.title);
+	$('#input_page_style'     ).val(self.style);
+	$('#input_page_expendable').prop('checked', self.expandable);
+	$('#input_page_bordered'  ).prop('checked', self.bordered);
 }
 Page.prototype.getTray = function()
 {
 	var self = this;
-	self.title      = $('.tray.page #input_page_title'     ).val();
-	self.style      = $('.tray.page #input_page_style'     ).val();
-	self.expandable = $('.tray.page #input_page_expendable').prop('checked');
-	self.bordered   = $('.tray.page #input_page_bordered'  ).prop('checked');
+	self.title      = $('#input_page_title'     ).val();
+	self.style      = $('#input_page_style'     ).val();
+	self.expandable = $('#input_page_expendable').prop('checked');
+	self.bordered   = $('#input_page_bordered'  ).prop('checked');
 }
 
 // ==================================== DOM ====================================
@@ -861,11 +931,12 @@ Page.prototype.deleteDOM = function()
 function Social()
 {
 	Entry.apply(this);
-	this.id    = null;
-	this.title = '';
-	this.img   = '';
-	this.url   = '';
-	this.order = 0;
+	this.id       = null;
+	this.title    = '';
+	this.img      = '';
+	this.url      = '';
+	this.showtext = true;
+	this.order    = 0;
 }
 Social.prototype = new Entry();
 Social.prototype = new Social();
@@ -873,27 +944,30 @@ Social.prototype = new Social();
 // ================================== Parsing ==================================
 Social.prototype.parse = function(sql)
 {
-	this.id    = sql.Social_ID;
-	this.title = sql.Social_Title;
-	this.img   = sql.Social_Img;
-	this.url   = sql.Social_Url;
-	this.order = parseInt(sql.Social_Order);
+	this.id       = sql.Social_ID;
+	this.title    = sql.Social_Title;
+	this.img      = sql.Social_Img;
+	this.url      = sql.Social_Url;
+	this.showtext = parseInt(sql.Social_ShowText);
+	this.order    = parseInt(sql.Social_Order);
 }
 
 // =================================== Tray ====================================
 Social.prototype.setTray = function()
 {
 	var self = this;
-	$('.tray.social #input_social_title').val(self.title);
-	$('.tray.social #input_social_img'  ).val(self.img);
-	$('.tray.social #input_social_url'  ).val(self.url);
+	$('#input_social_title'   ).val(self.title);
+	$('#input_social_img'     ).val(self.img);
+	$('#input_social_url'     ).val(self.url);
+	$('#input_social_showtext').prop('checked', self.showtext);
 }
 Social.prototype.getTray = function()
 {
 	var self = this;
-	self.title = $('.tray.social #input_social_title').val();
-	self.img   = $('.tray.social #input_social_img'  ).val();
-	self.url   = $('.tray.social #input_social_url'  ).val();
+	self.title    = $('#input_social_title'   ).val();
+	self.img      = $('#input_social_img'     ).val();
+	self.url      = $('#input_social_url'     ).val();
+	self.showtext = $('#input_social_showtext').prop('checked');
 }
 
 // ==================================== DOM ====================================
@@ -951,6 +1025,7 @@ POSTContainer.prototype = new Container();
 POSTContainer.prototype.select = function()
 {
 	var self = this;
+	var popup = openPopup().append($('<h4/>').text('synchronisation ...'));
 	return $.post(self.target, { QUERY: self.query_select }, function(data){
 		if (data.values) // Sanity
 		for (entry of data.values)
@@ -959,35 +1034,44 @@ POSTContainer.prototype.select = function()
 			obj.parse(entry);
 			self.set(obj);
 		}
+		closePopup(popup);
 	}, 'json');
 }
 POSTContainer.prototype.insert = function(obj)
 {
 	var self = this;
+	var popup = openPopup().append($('<h4/>').text('synchronisation ...'));
 	return $.post(self.target, { QUERY: self.query_insert, object: obj.post() }, function(data){
 		obj.id = data.id;
 		self.set(obj);
+		closePopup(popup);
 	}, 'json');
 }
 POSTContainer.prototype.update = function(obj)
 {
 	var self = this;
+	var popup = openPopup().append($('<h4/>').text('synchronisation ...'));
 	return $.post(self.target, { QUERY: self.query_update, object: obj.post() }, function(data){
+		closePopup(popup);
 	}, 'json');
 }
 POSTContainer.prototype.delete = function(obj)
 {
 	var self = this;
+	var popup = openPopup().append($('<h4/>').text('synchronisation ...'));
 	return $.post(self.target, { QUERY: self.query_delete, object: obj.post() }, function(data){
 		self.rem(obj);
+		closePopup(popup);
 	}, 'json');
 }
 POSTContainer.prototype.reorder = function(idarray)
 {
 	var self = this;
+	var popup = openPopup().append($('<h4/>').text('synchronisation ...'));
 	return $.post(self.target, { QUERY: self.query_reorder, object: idarray }, function(data){
 		for (var i in idarray)
 			self.get(idarray[i]).order = i;
+		closePopup(popup);
 	}, 'json');
 }/******************************************************************************
  *                                 Container                                  *
@@ -1078,7 +1162,7 @@ function pressCommitLink()
 {
 	if (ENV.flags)
 	{
-		if (!$('.tray.link #input_link_title').val().trim())
+		if (!$('#input_link_title').val().trim())
 		{
 			popup_information("Title should not be empty");
 		}
@@ -1155,7 +1239,7 @@ function pressCommitReference()
 {
 	if (ENV.flags)
 	{
-		if (!$('.tray.reference #input_reference_title').val().trim())
+		if (!$('#input_reference_title').val().trim())
 		{
 			popup_information("Title should not be empty");
 		}
@@ -1238,7 +1322,7 @@ function pressCommitArticle()
 {
 	if (ENV.flags)
 	{
-		if (!$('.tray.article #input_article_title').val().trim())
+		if (!$('#input_article_title').val().trim())
 		{
 			popup_information("Title should not be empty");
 		}
@@ -1320,7 +1404,7 @@ function pressCommitPage()
 {
 	if (ENV.flags)
 	{
-		if (!$('.tray.page #input_page_title').val().trim())
+		if (!$('#input_page_title').val().trim())
 		{
 			popup_information("Title should not be empty");
 		}
@@ -1403,7 +1487,7 @@ function pressCommitSocial()
 {
 	if (ENV.flags)
 	{
-		if (!$('.tray.social #input_social_title').val().trim())
+		if (!$('#input_social_title').val().trim())
 		{
 			popup_information("Title should not be empty");
 		}

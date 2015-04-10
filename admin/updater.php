@@ -32,8 +32,8 @@ $QUERY_STR['delete_link'      ] = "DELETE   FROM `{$GLOBALS['prefix']}links` WHE
 $QUERY_STR['reorder_link'     ] = "UPDATE        `{$GLOBALS['prefix']}links` SET `Link_Order` = :order WHERE `Link_ID` = :id";
 // -----------------------------------------------------------------------------
 $QUERY_STR['select_socials'   ] = "SELECT * FROM `{$GLOBALS['prefix']}socials`";
-$QUERY_STR['insert_social'    ] = "INSERT   INTO `{$GLOBALS['prefix']}socials` (`Social_Title`, `Social_Img`, `Social_Url`) VALUES (:title, :img, :url)";
-$QUERY_STR['update_social'    ] = "UPDATE        `{$GLOBALS['prefix']}socials` SET `Social_Title` = :title, `Social_Img` = :img, `Social_Url` = :url WHERE `Social_ID` = :id";
+$QUERY_STR['insert_social'    ] = "INSERT   INTO `{$GLOBALS['prefix']}socials` (`Social_Title`, `Social_Img`, `Social_Url`, `Social_ShowText`) VALUES (:title, :img, :url, :showtext)";
+$QUERY_STR['update_social'    ] = "UPDATE        `{$GLOBALS['prefix']}socials` SET `Social_Title` = :title, `Social_Img` = :img, `Social_Url` = :url, `Social_ShowText` = :showtext WHERE `Social_ID` = :id";
 $QUERY_STR['delete_social'    ] = "DELETE   FROM `{$GLOBALS['prefix']}socials` WHERE `Social_ID` = :id";
 $QUERY_STR['reorder_social'   ] = "UPDATE        `{$GLOBALS['prefix']}socials` SET `Social_Order` = :order WHERE `Social_ID` = :id";
 // -----------------------------------------------------------------------------
@@ -277,9 +277,10 @@ if (isset($_POST['QUERY']))
 		{
 			$stmt = $sqlsocket->prepare($QUERY_STR["insert_social"]);
 			$stmt->execute(array(
-				':title' => $_POST['object']['title'],
-				':img'   => $_POST['object']['img'  ],
-				':url'   => $_POST['object']['url'  ]
+				':title'    => $_POST['object']['title'   ],
+				':img'      => $_POST['object']['img'     ],
+				':url'      => $_POST['object']['url'     ],
+				':showtext' => $_POST['object']['showtext']
 			));
 			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			$result['id']  = $sqlsocket->lastInsertId();
@@ -290,10 +291,11 @@ if (isset($_POST['QUERY']))
 		{
 			$stmt = $sqlsocket->prepare($QUERY_STR["update_social"]);
 			$stmt->execute(array(
-				':id'    => $_POST['object']['id'   ],
-				':title' => $_POST['object']['title'],
-				':img'   => $_POST['object']['img'  ],
-				':url'   => $_POST['object']['url'  ]
+				':id'       => $_POST['object']['id'      ],
+				':title'    => $_POST['object']['title'   ],
+				':img'      => $_POST['object']['img'     ],
+				':url'      => $_POST['object']['url'     ],
+				':showtext' => $_POST['object']['showtext']
 			));
 			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;

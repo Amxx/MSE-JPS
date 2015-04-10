@@ -18,7 +18,7 @@ class Source extends Entry
 	{
 		parent::__construct($input['Source_ID']);
 		$this->referenceID = $input['Reference_ID'];
-		$this->name        = $input['Source_Name'];
+		$this->title       = $input['Source_Title'];
 		$this->url         = $input['Source_Url'];
 	}
 }

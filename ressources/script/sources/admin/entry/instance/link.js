@@ -34,14 +34,14 @@ Link.prototype.parse = function(sql)
 Link.prototype.setTray = function()
 {
 	var self = this;
-	$('.tray.link #input_link_title'  ).val(self.title);
-	$('.tray.link #input_link_content').val(self.content);
+	$('#input_link_title'  ).val(self.title);
+	$('#input_link_content').val(self.content);
 }
 Link.prototype.getTray = function()
 {
 	var self = this;
-	self.title   = $('.tray.link #input_link_title'  ).val();
-	self.content = $('.tray.link #input_link_content').val();
+	self.title   = $('#input_link_title'  ).val();
+	self.content = $('#input_link_content').val();
 }
 
 // ==================================== DOM ====================================

@@ -22,7 +22,7 @@ function pressCommitLink()
 {
 	if (ENV.flags)
 	{
-		if (!$('.tray.link #input_link_title').val().trim())
+		if (!$('#input_link_title').val().trim())
 		{
 			popup_information("Title should not be empty");
 		}

@@ -22,7 +22,7 @@ function pressCommitSocial()
 {
 	if (ENV.flags)
 	{
-		if (!$('.tray.social #input_social_title').val().trim())
+		if (!$('#input_social_title').val().trim())
 		{
 			popup_information("Title should not be empty");
 		}

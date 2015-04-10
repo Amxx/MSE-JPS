@@ -38,18 +38,18 @@ Page.prototype.parse = function(sql)
 Page.prototype.setTray = function()
 {
 	var self = this;
-	$('.tray.page #input_page_title'     ).val(self.title);
-	$('.tray.page #input_page_style'     ).val(self.style);
-	$('.tray.page #input_page_expendable').prop('checked', self.expandable);
-	$('.tray.page #input_page_bordered'  ).prop('checked', self.bordered);
+	$('#input_page_title'     ).val(self.title);
+	$('#input_page_style'     ).val(self.style);
+	$('#input_page_expendable').prop('checked', self.expandable);
+	$('#input_page_bordered'  ).prop('checked', self.bordered);
 }
 Page.prototype.getTray = function()
 {
 	var self = this;
-	self.title      = $('.tray.page #input_page_title'     ).val();
-	self.style      = $('.tray.page #input_page_style'     ).val();
-	self.expandable = $('.tray.page #input_page_expendable').prop('checked');
-	self.bordered   = $('.tray.page #input_page_bordered'  ).prop('checked');
+	self.title      = $('#input_page_title'     ).val();
+	self.style      = $('#input_page_style'     ).val();
+	self.expandable = $('#input_page_expendable').prop('checked');
+	self.bordered   = $('#input_page_bordered'  ).prop('checked');
 }
 
 // ==================================== DOM ====================================

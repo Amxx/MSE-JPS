@@ -56,7 +56,7 @@ class WebSite
 				`{$GLOBALS['prefix']}references`.Reference_Abstract,
 				`{$GLOBALS['prefix']}references`.Reference_Bibtex,
 				`{$GLOBALS['prefix']}sources`.Source_ID,
-				`{$GLOBALS['prefix']}sources`.Source_Name,
+				`{$GLOBALS['prefix']}sources`.Source_Title,
 				`{$GLOBALS['prefix']}sources`.Source_Url
 			FROM `{$GLOBALS['prefix']}pages`
 			LEFT OUTER JOIN `{$GLOBALS['prefix']}articles`   ON `{$GLOBALS['prefix']}pages`.Page_ID           = `{$GLOBALS['prefix']}articles`.Page_ID

@@ -17,9 +17,10 @@ class Social extends Entry
 	public function __construct($input)
 	{
 		parent::__construct($input['Social_ID']);
-		$this->title = $input['Social_Title'];
-		$this->img   = $input['Social_Img'];
-		$this->url   = $input['Social_Url'];
+		$this->title     = $input['Social_Title'];
+		$this->img       = $input['Social_Img'];
+		$this->url       = $input['Social_Url'];
+		$this->show_text = $input['Social_ShowText'];
 	}
 }
 class Socials extends Catalog

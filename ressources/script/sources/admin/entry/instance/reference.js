@@ -38,20 +38,20 @@ Reference.prototype.parse = function(sql)
 Reference.prototype.setTray = function()
 {
 	var self = this;
-	$('.tray.reference #input_reference_title'    ).val(self.title);
-	$('.tray.reference #input_reference_authors'  ).val(self.authors);
-	$('.tray.reference #input_reference_reference').val(self.reference);
-	$('.tray.reference #input_reference_abstract' ).val(self.abstract);
-	$('.tray.reference #input_reference_bibtex'   ).val(self.bibtex);
+	$('#input_reference_title'    ).val(self.title);
+	$('#input_reference_authors'  ).val(self.authors);
+	$('#input_reference_reference').val(self.reference);
+	$('#input_reference_abstract' ).val(self.abstract);
+	$('#input_reference_bibtex'   ).val(self.bibtex);
 }
 Reference.prototype.getTray = function()
 {
 	var self = this;
-	self.title     = $('.tray.reference #input_reference_title'    ).val();
-	self.authors   = $('.tray.reference #input_reference_authors'  ).val();
-	self.reference = $('.tray.reference #input_reference_reference').val();
-	self.abstract  = $('.tray.reference #input_reference_abstract' ).val();
-	self.bibtex    = $('.tray.reference #input_reference_bibtex'   ).val();
+	self.title     = $('#input_reference_title'    ).val();
+	self.authors   = $('#input_reference_authors'  ).val();
+	self.reference = $('#input_reference_reference').val();
+	self.abstract  = $('#input_reference_abstract' ).val();
+	self.bibtex    = $('#input_reference_bibtex'   ).val();
 }
 
 // ==================================== DOM ====================================

@@ -22,7 +22,7 @@ function pressCommitReference()
 {
 	if (ENV.flags)
 	{
-		if (!$('.tray.reference #input_reference_title').val().trim())
+		if (!$('#input_reference_title').val().trim())
 		{
 			popup_information("Title should not be empty");
 		}

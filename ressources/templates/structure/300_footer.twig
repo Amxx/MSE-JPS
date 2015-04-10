@@ -14,8 +14,8 @@
 		{% for social in website.socials.list %}
 			<li>
 				<a href='{{social.url}}' target='_blank'>
-					<img src='{{social.img}}' alt='{{social.title}}'>
-					{{social.title}}
+					{% if social.img %}<img src='{{social.img}}' alt='{{social.title}}'>{% endif %}
+					{% if social.show_text %}{{social.title}}{% endif %}
 				</a>
 			</li>
 		{% endfor %}

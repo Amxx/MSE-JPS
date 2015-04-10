@@ -22,7 +22,7 @@ function pressCommitPage()
 {
 	if (ENV.flags)
 	{
-		if (!$('.tray.page #input_page_title').val().trim())
+		if (!$('#input_page_title').val().trim())
 		{
 			popup_information("Title should not be empty");
 		}

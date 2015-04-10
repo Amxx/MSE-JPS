@@ -13,11 +13,12 @@
 function Social()
 {
 	Entry.apply(this);
-	this.id    = null;
-	this.title = '';
-	this.img   = '';
-	this.url   = '';
-	this.order = 0;
+	this.id       = null;
+	this.title    = '';
+	this.img      = '';
+	this.url      = '';
+	this.showtext = true;
+	this.order    = 0;
 }
 Social.prototype = new Entry();
 Social.prototype = new Social();
@@ -25,27 +26,30 @@ Social.prototype = new Social();
 // ================================== Parsing ==================================
 Social.prototype.parse = function(sql)
 {
-	this.id    = sql.Social_ID;
-	this.title = sql.Social_Title;
-	this.img   = sql.Social_Img;
-	this.url   = sql.Social_Url;
-	this.order = parseInt(sql.Social_Order);
+	this.id       = sql.Social_ID;
+	this.title    = sql.Social_Title;
+	this.img      = sql.Social_Img;
+	this.url      = sql.Social_Url;
+	this.showtext = parseInt(sql.Social_ShowText);
+	this.order    = parseInt(sql.Social_Order);
 }
 
 // =================================== Tray ====================================
 Social.prototype.setTray = function()
 {
 	var self = this;
-	$('.tray.social #input_social_title').val(self.title);
-	$('.tray.social #input_social_img'  ).val(self.img);
-	$('.tray.social #input_social_url'  ).val(self.url);
+	$('#input_social_title'   ).val(self.title);
+	$('#input_social_img'     ).val(self.img);
+	$('#input_social_url'     ).val(self.url);
+	$('#input_social_showtext').prop('checked', self.showtext);
 }
 Social.prototype.getTray = function()
 {
 	var self = this;
-	self.title = $('.tray.social #input_social_title').val();
-	self.img   = $('.tray.social #input_social_img'  ).val();
-	self.url   = $('.tray.social #input_social_url'  ).val();
+	self.title    = $('#input_social_title'   ).val();
+	self.img      = $('#input_social_img'     ).val();
+	self.url      = $('#input_social_url'     ).val();
+	self.showtext = $('#input_social_showtext').prop('checked');
 }
 
 // ==================================== DOM ====================================

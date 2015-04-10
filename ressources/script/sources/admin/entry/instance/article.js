@@ -40,22 +40,22 @@ Article.prototype.parse = function(sql)
 Article.prototype.setTray = function()
 {
 	var self = this;
-	$('.tray.article #input_article_title'     ).val(self.title);
-	$('.tray.article #input_article_text'      ).val(self.text);
-	$('.tray.article #input_article_javascript').val(self.javascript);
-	$('.tray.article #input_article_archived'  ).prop('checked', self.archived);
+	$('#input_article_title'     ).val(self.title);
+	$('#input_article_text'      ).val(self.text);
+	$('#input_article_javascript').val(self.javascript);
+	$('#input_article_archived'  ).prop('checked', self.archived);
 
-	$('.tray.article #input_article_refsearch' ).val('');
-	// $('.tray.article #input_article_refID'     ).val('');
+	$('#input_article_refsearch' ).val('');
+	// $('#input_article_refID'     ).val('');
 	viewCitations(self.id);
 }
 Article.prototype.getTray = function()
 {
 	var self = this;
-	self.title      = $('.tray.article #input_article_title'     ).val();
-	self.text       = $('.tray.article #input_article_text'      ).val();
-	self.javascript = $('.tray.article #input_article_javascript').val();
-	self.archived   = $('.tray.article #input_article_archived'  ).prop('checked');
+	self.title      = $('#input_article_title'     ).val();
+	self.text       = $('#input_article_text'      ).val();
+	self.javascript = $('#input_article_javascript').val();
+	self.archived   = $('#input_article_archived'  ).prop('checked');
 }
 
 // ==================================== DOM ====================================
