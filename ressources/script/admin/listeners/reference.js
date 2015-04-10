@@ -64,6 +64,13 @@ function pressDeleteReference()
 				var reference = ENV.editionObject;
 				ENV.db_references.delete(reference)
 					.done(function(){
+
+						console.log(reference.id);
+						var citations = ENV.db_citations.values().filter(a => a.referenceID == reference.id);
+						console.log(citations);
+						for (citation of citations)
+							ENV.db_citations.rem(citation);
+
 						reference.deleteDOM();
 						fillAutocomplete();
 						resetFlags();

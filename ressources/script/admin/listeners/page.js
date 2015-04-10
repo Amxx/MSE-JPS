@@ -42,6 +42,7 @@ function pressCommitPage()
 					ENV.db_pages.reorder(ordered_idarray($('section.pages .sortable li')));
 					resetFlags();
 					closeTray($('.tray.page'));
+					viewPage(page.id);
 				})
 		}
 	else
@@ -62,6 +63,13 @@ function pressDeletePage()
 				var page = ENV.editionObject;
 				ENV.db_pages.delete(page)
 					.done(function(){
+
+						if (ENV.currentPage == page.id)
+							viewPage();
+						var articles = ENV.db_articles.values().filter(a => a.pageID == page.id);
+						for (article of articles)
+							ENV.db_articles.rem(article);
+
 						page.deleteDOM();
 						resetFlags();
 						closeTray($('.tray.page'));

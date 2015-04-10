@@ -49,8 +49,6 @@ function viewPage(pageID)
 
 function viewCitations(articleID)
 {
-	console.log('viewCitations '+articleID);
-
 	$('.tray.article .sortable li').remove();
 	for (citation of ENV.db_citations.values().filter(e => e.articleID == articleID))
 		citation.insertDOM();

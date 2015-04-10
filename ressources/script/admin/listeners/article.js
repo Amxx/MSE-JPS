@@ -63,6 +63,11 @@ function pressDeleteArticle()
 				var article = ENV.editionObject;
 				ENV.db_articles.delete(article)
 					.done(function(){
+
+						var citations = ENV.db_citations.values().filter(a => a.articleID == article.id);
+						for (citation of citations)
+							ENV.db_citations.rem(citation);
+
 						article.deleteDOM();
 						resetFlags();
 						closeTray($('.tray.article'));
