@@ -18,7 +18,7 @@
 		{% for source in reference.sources.list %}
 			<a href={{ source.url }} target='_blank'>[{{ source.name }}]</a>
 		{% endfor %}
-	
+
 		{% if reference.bibtex or reference.abstract %}
 			<a href='#' onclick='toggleBib(this); return false;'>
 				[{% if reference.abstract %}Abstract{% endif %}
@@ -27,7 +27,7 @@
 			</a>
 		{% endif %}
 	</div>
-	
+
 	{% if reference.bibtex or reference.abstract %}
 		<div class='bibtray' style='display: none;'>
 			{% if reference.abstract %}

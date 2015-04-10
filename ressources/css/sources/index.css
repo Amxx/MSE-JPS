@@ -94,13 +94,13 @@ p.noindent
 	padding-left:						calc((100% - 1000px) / 2);
 	padding-right:					calc((100% - 1000px) / 2);
 }
-#page.padding-header
+#page.with-header
 {
-	padding-top:						calc(100px + 40px);
+	padding-top:						140px; /* 100+20x2 */
 }
-#page.padding-footer
+#page.with-footer
 {
-	padding-bottom:					calc(16px  + 16px);
+	padding-bottom:					32px; /* 16px+16px */;
 }
 
 /******************************************************************************

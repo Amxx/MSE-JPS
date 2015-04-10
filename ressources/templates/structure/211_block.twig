@@ -12,14 +12,13 @@
 	{% if page.bordered %}bordered{% endif %}
 	{% if page.expandable %}expandable{% endif %}
 	{% if not article.archived %}expanded{% endif %}'>
-	
 	<article>
 		<h1 class='label label-blue'><a href='#' onclick='toggleBlock(this); return false;'>{{article.title}}</a></h1>
 		<div class='content'>
 			{{ article.text | raw }}
 			{% for reference in article.citations.list %}
 				{{ include ('structure/212_bibentry.twig', {'reference': reference }) }}
-			{% endfor %}							
+			{% endfor %}
 		</div>
 	</article>
 </div>

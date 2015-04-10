@@ -8,7 +8,7 @@
  #                         hadrien.croubois@gmail.com                         #
  #                                                                            #
  ##############################################################################}
- 
+
 <main>
 	{% for page in website.pages.list %}
 		<section id='section-{{page.id}}' class='flex wrap' {% if page.id != website.current %} style="display: none;" {% endif %}>
