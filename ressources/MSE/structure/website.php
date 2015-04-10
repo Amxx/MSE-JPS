@@ -3,7 +3,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.0.0-1 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -18,8 +18,8 @@ class Header
 {
 	function __construct()
 	{
-		$this->name    = 'Hadrien Croubois';
-		$this->picture = 'ressources/img/croubois.jpg';
+		$this->name    = $GLOBALS['name'];
+		$this->picture = $GLOBALS['picture'];
 	}
 }
 
@@ -90,7 +90,7 @@ class WebSite
 	function setEnv()
 	{
 		foreach ($this->pages->list as $page)
-			if ((isset($_GET['page']) && $_GET['page'] == $page->title) || (is_null($this->current) && $page->default))
+			if ((isset($_GET['page']) && $_GET['page'] == $page->title) || is_null($this->current))
 				$this->current = $page->id();
 	}
 
