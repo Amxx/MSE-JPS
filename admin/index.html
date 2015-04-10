@@ -13,18 +13,18 @@
 
 <!DOCTYPE html>
 <html lang="fr">
-	
+
 	<head>
 		<meta charset="utf-8">
 
-		<!-- L i b   -   J q u e r y -->	
+		<!-- L i b   -   J q u e r y -->
 		<script type="text/javascript" src="../ressources/libs/jquery-2.1.3.js"></script>
 		<script type="text/javascript" src="../ressources/libs/jquery-ui.min.js"></script>
-		
-		<!-- L i b   -   D i a l o g   p o l y f i l l -->	
+
+		<!-- L i b   -   D i a l o g   p o l y f i l l -->
 		<script src="../ressources/libs/dialog-polyfill-master/dialog-polyfill.js"></script>
 		<link rel="stylesheet" type="text/css" href="../ressources/libs/dialog-polyfill-master/dialog-polyfill.css"/>
-		
+
 		<!-- S t y l e - O p e n S a n s -->
 		<link rel="stylesheet" href="../ressources/font/OpenSans.css" type="text/css"/>
 
@@ -63,7 +63,7 @@
 		<div id='page' class='flex column wrap padding-header'>
 		<main>
 			<div class='flex row tab'>
-				
+
 				<section class='pages flex column'>
 						<a class='button' onClick='pressNewPage();'>Add Page</a>
 						<ul class='sortable list'></ul>
@@ -75,7 +75,7 @@
 						<ul class='sortable list'></ul>
 					</div>
 				</section>
-				
+
 				<section class='references flex column'>
 						<a class='button' onClick='pressNewReference();'>Add Reference</a>
 						<ul class='sortable list'></ul>
@@ -83,7 +83,7 @@
 
 			</div>
 			<div class='flex row tab'>
-				
+
 				<section class='links flex column'>
 						<a class='button' onClick='pressNewLink();'>Add Link</a>
 						<ul class='sortable list'></ul>
@@ -107,19 +107,19 @@
 			<a class='close'>Close</a>
 			<div class='menu'>
 				<ul>
-					<li><a onclick='viewTab(this, 0);'>Settings</a></li>
+					<li><a onclick='viewTrayTab(this, 0);'>Settings</a></li>
 					<li class='warning'><a onclick='pressDeletePage();'>Delete</a></li>
 					<li class='confirm'><a onclick='pressCommitPage();'>Commit</a></li>
-				<ul>
+				</ul>
 			</div>
 			<div class='content'>
 				<div class='tab'>
 					<h3>Title :</h3>
-					<input type='text' id='input_page_title'></input>
+					<input type='text' class='followchange' id='input_page_title' placeholder='Title'/>
 					<h3>Articles style :</h3>
-					<select id='input_page_style'>
+					<select class='followchange' id='input_page_style'>
 						<option value=''           > Full (100%)</option>
-						<option disabled           > ---        </option> 
+						<option disabled           > ---        </option>
 						<option value='quarter'    >25%         </option>
 						<option value='third'      >33%         </option>
 						<option value='half'       >50%         </option>
@@ -127,9 +127,9 @@
 						<!-- <option value='treequarter'>75%         </option> -->
 					</select>
 					<span class='entry'>
-						<span class='slider'><input type='checkbox' id='input_page_expendable'/><label for='input_page_expendable'></label></span>
+						<span class='slider'><input type='checkbox' class='followchange' id='input_page_expendable'/><label for='input_page_expendable'></label></span>
 						<h4>Expandable</h4>
-						<span class='slider'><input type='checkbox' id='input_page_bordered'/><label for='input_page_bordered'></label></span>
+						<span class='slider'><input type='checkbox' class='followchange' id='input_page_bordered'/><label for='input_page_bordered'></label></span>
 						<h4>Borders</h4>
 					</span>
 				</div>
@@ -144,30 +144,39 @@
 			<a class='close'>Close</a>
 			<div class='menu'>
 				<ul>
-					<li><a onclick='viewTab(this, 0);'>Content</a></li>
-					<li><a onclick='viewTab(this, 1);'>Javascript</a></li>
-					<li><a onclick='viewTab(this, 2);'>Bibliography</a></li>
+					<li><a onclick='viewTrayTab(this, 0);'>Content</a></li>
+					<li><a onclick='viewTrayTab(this, 1);'>Javascript</a></li>
+					<li><a onclick='viewTrayTab(this, 2);'>Bibliography</a></li>
 					<li class='warning'><a onclick='pressDeleteArticle();'>Delete</a></li>
 					<li class='confirm'><a onclick='pressCommitArticle();'>Commit</a></li>
-				<ul>
+				</ul>
 			</div>
 			<div class='content'>
 				<div class='tab'>
 					<h3>Title</h3>
-					<input type='text' id='input_article_title'></input>
+					<input type='text' class='followchange' id='input_article_title' placeholder='Title'/>
 					<h3>Text</h3>
-					<textarea id='input_article_text'></textarea>
+					<textarea class='followchange' id='input_article_text' placeholder='Content'></textarea>
 					<span class='entry'>
-						<span class='slider'><input type='checkbox' id='input_article_archived'/><label for='input_article_archived'></label></span>
+						<span class='slider'><input type='checkbox' class='followchange' id='input_article_archived'/><label for='input_article_archived'></label></span>
 						<h4>Archived</h4>
 					</span>
 				</div>
 				<div class='tab'>
 					<h3>Javascript</h3>
-					<textarea class='monospace' id='input_article_javascript'></textarea>
+					<textarea class='monospace followchange' id='input_article_javascript' placeholder='Javascript code'></textarea>
 				</div>
-				<div class='tab'>				
-					<h3>Bibliography</h3>
+				<div class='tab'>
+					<div class='flex column isflex'>
+						<h3>Bibliography</h3>
+						<div class='search flex row'>
+							<input type='text' class='isflex ui-autocomplete-input' id='input_article_refsearch' placeholder='Search...'/>
+							<!-- <input type='hidden' id='input_article_refID'/> -->
+							<!-- <a class='button' onclick='pressAddCitation();'>Cite</a> -->
+						</div>
+						<ul class='sortable list isflex'>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -180,30 +189,30 @@
 			<a class='close'>Close</a>
 			<div class='menu'>
 				<ul>
-					<li><a onclick='viewTab(this, 0);'>Content</a></li>
-					<li><a onclick='viewTab(this, 1);'>Abstract</a></li>
-					<li><a onclick='viewTab(this, 2);'>Bibtex</a></li>
-					<li><a onclick='viewTab(this, 3);'>Links</a></li>
+					<li><a onclick='viewTrayTab(this, 0);'>Content</a></li>
+					<li><a onclick='viewTrayTab(this, 1);'>Abstract</a></li>
+					<li><a onclick='viewTrayTab(this, 2);'>Bibtex</a></li>
+					<li><a onclick='viewTrayTab(this, 3);'>Links</a></li>
 					<li class='warning'><a onclick='pressDeleteReference()';>Delete</a></li>
 					<li class='confirm'><a onclick='pressCommitReference()';>Commit</a></li>
-				<ul>
+				</ul>
 			</div>
 			<div class='content'>
-				<div class='tab'>					
+				<div class='tab'>
 					<h3>Title</h3>
-					<input type='text' id='input_reference_title'></input>
+					<input type='text' class='followchange' id='input_reference_title' placeholder='Title'/>
 					<h3>Authors</h3>
-					<input type='text' id='input_reference_authors'></input>
+					<input type='text' class='followchange' id='input_reference_authors' placeholder='Authors'/>
 					<h3>Reference</h3>
-					<textarea id='input_reference_reference'></textarea>
+					<textarea class='followchange' id='input_reference_reference' placeholder='Reference'></textarea>
 				</div>
 				<div class='tab'>
 					<h3>Abstract</h3>
-					<textarea id='input_reference_abstract'></textarea>
+					<textarea class='followchange' id='input_reference_abstract' placeholder='Abstract'></textarea>
 				</div>
 				<div class='tab'>
 					<h3>Bibtex</h3>
-					<textarea class='monospace' id='input_reference_bibtex'></textarea>
+					<textarea class='monospace followchange' id='input_reference_bibtex' placeholder='Bibtex entry'></textarea>
 				</div>
 				<div class='tab'>
 					<h3>Links</h3>
@@ -219,17 +228,17 @@
 			<a class='close'>Close</a>
 			<div class='menu'>
 				<ul>
-					<li><a onclick='viewTab(this, 0);'>Settings</a></li>
+					<li><a onclick='viewTrayTab(this, 0);'>Settings</a></li>
 					<li class='warning'><a onclick='pressDeleteLink()';>Delete</a></li>
 					<li class='confirm'><a onclick='pressCommitLink()';>Commit</a></li>
-				<ul>
+				</ul>
 			</div>
 			<div class='content'>
 				<div class='tab'>
 					<h3>Title</h3>
-					<input type='text' id='input_link_title'></input>
+					<input type='text' class='followchange' id='input_link_title' placeholder='Title'/>
 					<h3>Content</h3>
-					<textarea id='input_link_content'></textarea>
+					<textarea class='followchange' id='input_link_content' placeholder='Content'></textarea>
 				</div>
 			</div>
 		</div>
@@ -242,23 +251,23 @@
 			<a class='close'>Close</a>
 			<div class='menu'>
 				<ul>
-					<li><a onclick='viewTab(this, 0);'>Settings</a></li>
+					<li><a onclick='viewTrayTab(this, 0);'>Settings</a></li>
 					<li class='warning'><a onclick='pressDeleteSocial()';>Delete</a></li>
 					<li class='confirm'><a onclick='pressCommitSocial()';>Commit</a></li>
-				<ul>
+				</ul>
 			</div>
 			<div class='content'>
-				<div class='tab'>							
+				<div class='tab'>
 					<h3>Title</h3>
-					<input type='text' id='input_social_title'></input>
+					<input type='text' class='followchange' id='input_social_title' placeholder='Name'/>
 					<h3>Image</h3>
-					<input type='text' id='input_social_img'></input>
+					<input type='text' class='followchange' id='input_social_img' placeholder='Image url'/>
 					<h3>Url</h3>
-					<input type='text' id='input_social_url'></input>
+					<input type='text' class='followchange' id='input_social_url' placeholder='Link target'/>
  				</div>
 			</div>
 		</div>
-		
+
 
 	</body>
 </html>

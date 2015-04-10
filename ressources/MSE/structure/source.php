@@ -12,14 +12,14 @@
 
 include_once 'entry.php';
 
-class ReferenceSource extends Entry
+class Source extends Entry
 {
 	public function __construct($input)
 	{
-		parent::__construct($input['Referencesource_ID']);
+		parent::__construct($input['Source_ID']);
 		$this->referenceID = $input['Reference_ID'];
-		$this->name        = $input['Referencesource_Name'];
-		$this->url         = $input['Referencesource_Url'];
+		$this->name        = $input['Source_Name'];
+		$this->url         = $input['Source_Url'];
 	}
 }
 

@@ -20,6 +20,7 @@ function Social()
 	this.order = 0;
 }
 Social.prototype = new Entry();
+Social.prototype = new Social();
 
 // ================================== Parsing ==================================
 Social.prototype.parse = function(sql)
@@ -31,20 +32,36 @@ Social.prototype.parse = function(sql)
 	this.order = parseInt(sql.Social_Order);
 }
 
+// =================================== Tray ====================================
+Social.prototype.setTray = function()
+{
+	var self = this;
+	$('.tray.social #input_social_title').val(self.title);
+	$('.tray.social #input_social_img'  ).val(self.img);
+	$('.tray.social #input_social_url'  ).val(self.url);
+}
+Social.prototype.getTray = function()
+{
+	var self = this;
+	self.title = $('.tray.social #input_social_title').val();
+	self.img   = $('.tray.social #input_social_img'  ).val();
+	self.url   = $('.tray.social #input_social_url'  ).val();
+}
+
 // ==================================== DOM ====================================
 Social.prototype.insertDOM = function(front)
 {
-	var instance = this;
+	var self = this;
 	var block = $('<li/>')
-			.attr('id', 'social_'+instance.id)
+			.attr('id', 'social_'+self.id)
 			.append($('<span/>')
 				.addClass('handle')
 				.text('\u2195')
 			)
 			.append($('<a/>')
 				.addClass('title')
-				// .click(function(){ pressEditPage(pageOBJ.id); })
-				.text(instance.title)
+				.click(function(){ pressEditSocial(self.id); })
+				.text(self.title)
 			);
 	if (front)
 		$('section.socials .sortable').prepend(block);
@@ -53,16 +70,16 @@ Social.prototype.insertDOM = function(front)
 }
 Social.prototype.updateDOM = function()
 {
-	var instance = this;
+	var self = this;
 	$('section.socials .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'social_'+instance.id; })
+		.filter(function(){ return $(this).attr('id') == 'social_'+self.id; })
 		.find('a.title')
-		.text(instance.title);
+		.text(self.title);
 }
 Social.prototype.deleteDOM = function()
 {
-	var instance = this;
+	var self = this;
 	$('section.socials .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'social_'+instance.id; })
+		.filter(function(){ return $(this).attr('id') == 'social_'+self.id; })
 		.remove();
 }

@@ -30,8 +30,5 @@ Container.prototype.values = function()
 }
 Container.prototype.orderedValues = function()
 {
-	return Object
-		.keys(this.data)
-		.sort((a, b) => this.data[a].order > this.data[b].order)
-		.map(key => this.data[key]);
+	return this.values().sort((a,b) => a.order > b.order);
 }

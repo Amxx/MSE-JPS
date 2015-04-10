@@ -22,6 +22,7 @@ function Article()
 	this.order      = 0;
 }
 Article.prototype = new Entry();
+Article.prototype = new Article();
 
 // ================================== Parsing ==================================
 Article.prototype.parse = function(sql)
@@ -35,20 +36,42 @@ Article.prototype.parse = function(sql)
 	this.order      = parseInt(sql.Article_Order);
 }
 
+// =================================== Tray ====================================
+Article.prototype.setTray = function()
+{
+	var self = this;
+	$('.tray.article #input_article_title'     ).val(self.title);
+	$('.tray.article #input_article_text'      ).val(self.text);
+	$('.tray.article #input_article_javascript').val(self.javascript);
+	$('.tray.article #input_article_archived'  ).prop('checked', self.archived);
+
+	$('.tray.article #input_article_refsearch' ).val('');
+	// $('.tray.article #input_article_refID'     ).val('');
+	viewCitations(self.id);
+}
+Article.prototype.getTray = function()
+{
+	var self = this;
+	self.title      = $('.tray.article #input_article_title'     ).val();
+	self.text       = $('.tray.article #input_article_text'      ).val();
+	self.javascript = $('.tray.article #input_article_javascript').val();
+	self.archived   = $('.tray.article #input_article_archived'  ).prop('checked');
+}
+
 // ==================================== DOM ====================================
 Article.prototype.insertDOM = function(front)
 {
-	var instance = this;
+	var self = this;
 	var block = $('<li/>')
-			.attr('id', 'article_'+instance.id)
+			.attr('id', 'article_'+self.id)
 			.append($('<span/>')
 				.addClass('handle')
 				.text('\u2195')
 			)
 			.append($('<a/>')
 				.addClass('title')
-				// .click(function(){ pressEditPage(pageOBJ.id); })
-				.text(instance.title)
+				.click(function(){ pressEditArticle(self.id); })
+				.text(self.title)
 			);
 	if (front)
 		$('section.articles .sortable').prepend(block);
@@ -57,16 +80,16 @@ Article.prototype.insertDOM = function(front)
 }
 Article.prototype.updateDOM = function()
 {
-	var instance = this;
+	var self = this;
 	$('section.articles .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'article_'+instance.id; })
+		.filter(function(){ return $(this).attr('id') == 'article_'+self.id; })
 		.find('a.title')
-		.text(instance.title);
+		.text(self.title);
 }
 Article.prototype.deleteDOM = function()
 {
-	var instance = this;
+	var self = this;
 	$('section.articles .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'article_'+instance.id; })
+		.filter(function(){ return $(this).attr('id') == 'article_'+self.id; })
 		.remove();
 }

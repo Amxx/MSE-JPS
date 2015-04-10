@@ -55,19 +55,19 @@ class WebSite
 				`{$GLOBALS['prefix']}references`.Reference_Ref,
 				`{$GLOBALS['prefix']}references`.Reference_Abstract,
 				`{$GLOBALS['prefix']}references`.Reference_Bibtex,
-				`{$GLOBALS['prefix']}referencesources`.Referencesource_ID,
-				`{$GLOBALS['prefix']}referencesources`.Referencesource_Name,
-				`{$GLOBALS['prefix']}referencesources`.Referencesource_Url
+				`{$GLOBALS['prefix']}sources`.Source_ID,
+				`{$GLOBALS['prefix']}sources`.Source_Name,
+				`{$GLOBALS['prefix']}sources`.Source_Url
 			FROM `{$GLOBALS['prefix']}pages`
-			LEFT OUTER JOIN `{$GLOBALS['prefix']}articles`         ON `{$GLOBALS['prefix']}pages`.Page_ID           = `{$GLOBALS['prefix']}articles`.Page_ID
-			LEFT OUTER JOIN `{$GLOBALS['prefix']}citations`        ON `{$GLOBALS['prefix']}articles`.Article_ID     = `{$GLOBALS['prefix']}citations`.Article_ID
-			LEFT OUTER JOIN `{$GLOBALS['prefix']}references`       ON `{$GLOBALS['prefix']}citations`.Reference_ID  = `{$GLOBALS['prefix']}references`.Reference_ID
-			LEFT OUTER JOIN `{$GLOBALS['prefix']}referencesources` ON `{$GLOBALS['prefix']}references`.Reference_ID = `{$GLOBALS['prefix']}referencesources`.Reference_ID
+			LEFT OUTER JOIN `{$GLOBALS['prefix']}articles`   ON `{$GLOBALS['prefix']}pages`.Page_ID           = `{$GLOBALS['prefix']}articles`.Page_ID
+			LEFT OUTER JOIN `{$GLOBALS['prefix']}citations`  ON `{$GLOBALS['prefix']}articles`.Article_ID     = `{$GLOBALS['prefix']}citations`.Article_ID
+			LEFT OUTER JOIN `{$GLOBALS['prefix']}references` ON `{$GLOBALS['prefix']}citations`.Reference_ID  = `{$GLOBALS['prefix']}references`.Reference_ID
+			LEFT OUTER JOIN `{$GLOBALS['prefix']}sources`    ON `{$GLOBALS['prefix']}references`.Reference_ID = `{$GLOBALS['prefix']}sources`.Reference_ID
 			ORDER BY
-				{$GLOBALS['prefix']}pages.Page_Order													ASC,
-				{$GLOBALS['prefix']}articles.Article_Order										ASC,
-				{$GLOBALS['prefix']}citations.Citation_Order									ASC,
-				{$GLOBALS['prefix']}referencesources.Referencesource_Order		ASC"
+				{$GLOBALS['prefix']}pages.Page_Order         ASC,
+				{$GLOBALS['prefix']}articles.Article_Order   ASC,
+				{$GLOBALS['prefix']}citations.Citation_Order ASC,
+				{$GLOBALS['prefix']}sources.Source_Order     ASC"
 		);
 		while ($line = $query_results->fetch()) $this->pages->parse($line);
 		$query_results->closeCursor();

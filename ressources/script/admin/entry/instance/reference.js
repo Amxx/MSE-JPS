@@ -21,6 +21,7 @@ function Reference()
 	this.bibtex    = '';
 }
 Reference.prototype = new Entry();
+Reference.prototype = new Reference();
 
 // ================================== Parsing ==================================
 Reference.prototype.parse = function(sql)
@@ -33,20 +34,40 @@ Reference.prototype.parse = function(sql)
 	this.bibtex    = sql.Reference_Bibtex;
 }
 
+// =================================== Tray ====================================
+Reference.prototype.setTray = function()
+{
+	var self = this;
+	$('.tray.reference #input_reference_title'    ).val(self.title);
+	$('.tray.reference #input_reference_authors'  ).val(self.authors);
+	$('.tray.reference #input_reference_reference').val(self.reference);
+	$('.tray.reference #input_reference_abstract' ).val(self.abstract);
+	$('.tray.reference #input_reference_bibtex'   ).val(self.bibtex);
+}
+Reference.prototype.getTray = function()
+{
+	var self = this;
+	self.title     = $('.tray.reference #input_reference_title'    ).val();
+	self.authors   = $('.tray.reference #input_reference_authors'  ).val();
+	self.reference = $('.tray.reference #input_reference_reference').val();
+	self.abstract  = $('.tray.reference #input_reference_abstract' ).val();
+	self.bibtex    = $('.tray.reference #input_reference_bibtex'   ).val();
+}
+
 // ==================================== DOM ====================================
 Reference.prototype.insertDOM = function(front)
 {
-	var instance = this;
+	var self = this;
 	var block = $('<li/>')
-			.attr('id', 'reference_'+instance.id)
+			.attr('id', 'reference_'+self.id)
 			.append($('<span/>')
 				.addClass('handle')
 				.text('\u2195')
 			)
 			.append($('<a/>')
 				.addClass('title')
-				// .click(function(){ pressEditPage(pageOBJ.id); })
-				.text(instance.title)
+				.click(function(){ pressEditReference(self.id); })
+				.text(self.title)
 			);
 	if (front)
 		$('section.references .sortable').prepend(block);
@@ -55,16 +76,16 @@ Reference.prototype.insertDOM = function(front)
 }
 Reference.prototype.updateDOM = function()
 {
-	var instance = this;
+	var self = this;
 	$('section.references .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'reference_'+instance.id; })
+		.filter(function(){ return $(this).attr('id') == 'reference_'+self.id; })
 		.find('a.title')
-		.text(instance.title);
+		.text(self.title);
 }
 Reference.prototype.deleteDOM = function()
 {
-	var instance = this;
+	var self = this;
 	$('section.references .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'reference_'+instance.id; })
+		.filter(function(){ return $(this).attr('id') == 'reference_'+self.id; })
 		.remove();
 }

@@ -8,7 +8,7 @@
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
- 
+
 // =========================== Hash change listener ============================
 
 $(window).bind('hashchange', function() {
@@ -21,7 +21,7 @@ function hashHandler(smooth)
 
 	// Set hash if empty
 	if (hash == '') hash = id2hash(getCurrentId());
-	
+
 	// Try get page id from hash
 	try
 	{
@@ -33,7 +33,7 @@ function hashHandler(smooth)
 	{
 		var error	= 404; // default error
 		if (new RegExp("[0-9]{3}error").test(hash))
-			error = parseInt(hash.substring(0,3));	
+			error = parseInt(hash.substring(0,3));
 		showError(error);
 		updateTitle(errorText(error));
 	}
@@ -109,8 +109,14 @@ function retile(element)
 
 function toggleBlock(e)
 {
-	$(e).closest('.block').toggleClass('expanded');
-	retile($(e));
+	var block = $(e).closest('.block');
+	if (block.siblings().size())
+	{
+		block.toggleClass('expanded');
+		retile($(e));
+	}
+	else
+		block.find('.content').slideToggle();
 }
 
 function toggleBib(e)
@@ -118,7 +124,7 @@ function toggleBib(e)
 	$(e).closest('.bibentry').find('.bibtray').toggle();
 	retile($(e));
 }
-		
+
 
 // =================================== Tools ===================================
 

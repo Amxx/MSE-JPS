@@ -21,6 +21,7 @@ function Page()
 	this.order      = 0;
 }
 Page.prototype = new Entry();
+Page.prototype = new Page();
 
 // ================================== Parsing ==================================
 Page.prototype.parse = function(sql)
@@ -33,24 +34,42 @@ Page.prototype.parse = function(sql)
 	this.order			= parseInt(sql.Page_Order);
 }
 
+// =================================== Tray ====================================
+Page.prototype.setTray = function()
+{
+	var self = this;
+	$('.tray.page #input_page_title'     ).val(self.title);
+	$('.tray.page #input_page_style'     ).val(self.style);
+	$('.tray.page #input_page_expendable').prop('checked', self.expandable);
+	$('.tray.page #input_page_bordered'  ).prop('checked', self.bordered);
+}
+Page.prototype.getTray = function()
+{
+	var self = this;
+	self.title      = $('.tray.page #input_page_title'     ).val();
+	self.style      = $('.tray.page #input_page_style'     ).val();
+	self.expandable = $('.tray.page #input_page_expendable').prop('checked');
+	self.bordered   = $('.tray.page #input_page_bordered'  ).prop('checked');
+}
+
 // ==================================== DOM ====================================
 Page.prototype.insertDOM = function(front)
 {
-	var instance = this;
+	var self = this;
 	var block = $('<li/>')
-			.attr('id', 'page_'+instance.id)
+			.attr('id', 'page_'+self.id)
 			.append($('<span/>')
 				.addClass('handle')
 				.text('\u2195')
 			)
 			.append($('<a/>')
 				.addClass('title')
-				// .click(function(){ pressEditPage(instance.id); })
-				.text(instance.title)
+				.click(function(){ pressEditPage(self.id); })
+				.text(self.title)
 			)
 			.append($('<a/>')
 				.addClass('pointer')
-				.click(function(){ viewPage(instance.id); })
+				.click(function(){ viewPage(self.id); })
 				.text('\u25B6')
 			);
 	if (front)
@@ -60,16 +79,16 @@ Page.prototype.insertDOM = function(front)
 }
 Page.prototype.updateDOM = function()
 {
-	var instance = this;
+	var self = this;
 	$('section.pages .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'page_'+instance.id; })
+		.filter(function(){ return $(this).attr('id') == 'page_'+self.id; })
 		.find('a.title')
-		.text(instance.title);
+		.text(self.title);
 }
 Page.prototype.deleteDOM = function()
 {
-	var instance = this;
+	var self = this;
 	$('section.pages .sortable li')
-		.filter(function(){ return $(this).attr('id') == 'page_'+instance.id; })
+		.filter(function(){ return $(this).attr('id') == 'page_'+self.id; })
 		.remove();
 }

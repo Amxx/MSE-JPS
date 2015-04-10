@@ -1,38 +1,33 @@
-<?php
 /******************************************************************************
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                         Version 1.0.1 : 27/03/2015                         *
+ *                        Version 1.2.0-1 : 06/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
 
-include_once 'entry.php';
-include_once 'source.php';
-
-class Reference extends Entry
+function pressAddCitation(referenceID)
 {
-	public function __construct($input)
-	{
-		parent::__construct($input['Reference_ID']);
-		$this->articleID = $input['Article_ID'];
-		$this->title     = $input['Reference_Title'];
-		$this->authors   = $input['Reference_Authors'];
-		$this->ref       = $input['Reference_Ref'];
-		$this->abstract  = $input['Reference_Abstract'];
-		$this->bibtex    = $input['Reference_Bibtex'];
-		$this->sources   = new Catalog();
-	}
-	public function parse($input)
-	{
-		try {
-			$source = new Source($input);
-			$this->sources->insert($source);
-		} catch(Exception $e) {}
-	}
+	var citation = new Citation();
+	citation.articleID   = ENV.editionObject.id;
+	citation.referenceID = referenceID;
+	ENV.db_citations.insert(citation)
+		.done(function(){
+			citation.insertDOM();
+			ENV.db_citations.reorder(ordered_idarray($('.tray.article    .sortable li')));
+		})
 }
 
-?>
+function pressDeleteCitation(citationID)
+{
+	popup_confirm("Are you sure you want to delete this citation ?", function(confirm){
+		var citation = ENV.db_citations.get(citationID);
+		ENV.db_citations.delete(citation)
+			.done(function(){
+				citation.deleteDOM();
+			});
+	});
+}
