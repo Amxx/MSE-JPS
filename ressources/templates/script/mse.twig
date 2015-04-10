@@ -16,7 +16,7 @@
 		var id = $('section').filter(function(){ return $(this).css('display') != 'none'; }).attr('id');
 		// Set visibility for javascript
 		$('section').show();
-			
+
 		// make tiles
 		$('section').packery({ 'itemSelector': '.block' });
 
@@ -28,7 +28,7 @@
 		{% endif %}
 		{% endfor %}
 		{% endfor %}
-			
+
 		// Reset vicibility
 		$('section').filter(function(){ return $(this).attr('id') != id; }).hide()
 	});

@@ -12,26 +12,26 @@
 /******************************************************************************
  *                                Dependencies                                *
  ******************************************************************************/
-$.ajaxSetup({async: false});
-$.getScript('../ressources/script/admin/container/container.js'     );
-$.getScript('../ressources/script/admin/container/postcontainer.js' );
-$.getScript('../ressources/script/admin/entry/entry.js'             );
-$.getScript('../ressources/script/admin/entry/instance/article.js'  );
-$.getScript('../ressources/script/admin/entry/instance/citation.js' );
-$.getScript('../ressources/script/admin/entry/instance/link.js'     );
-$.getScript('../ressources/script/admin/entry/instance/page.js'     );
-$.getScript('../ressources/script/admin/entry/instance/reference.js');
-$.getScript('../ressources/script/admin/entry/instance/social.js'   );
-$.getScript('../ressources/script/admin/listeners/article.js'       );
-$.getScript('../ressources/script/admin/listeners/citation.js'			);
-$.getScript('../ressources/script/admin/listeners/link.js'          );
-$.getScript('../ressources/script/admin/listeners/page.js'          );
-$.getScript('../ressources/script/admin/listeners/reference.js'     );
-$.getScript('../ressources/script/admin/listeners/social.js'        );
-$.getScript('../ressources/script/admin/autocomplete.js'            );
-$.getScript('../ressources/script/admin/tray.js'                    );
-$.getScript('../ressources/script/admin/tools.js'                   );
-$.ajaxSetup({async: true});
+// $.ajaxSetup({async: false});
+// $.getScript('../ressources/script/admin/container/container.js'     );
+// $.getScript('../ressources/script/admin/container/postcontainer.js' );
+// $.getScript('../ressources/script/admin/entry/entry.js'             );
+// $.getScript('../ressources/script/admin/entry/instance/article.js'  );
+// $.getScript('../ressources/script/admin/entry/instance/citation.js' );
+// $.getScript('../ressources/script/admin/entry/instance/link.js'     );
+// $.getScript('../ressources/script/admin/entry/instance/page.js'     );
+// $.getScript('../ressources/script/admin/entry/instance/reference.js');
+// $.getScript('../ressources/script/admin/entry/instance/social.js'   );
+// $.getScript('../ressources/script/admin/listeners/article.js'       );
+// $.getScript('../ressources/script/admin/listeners/citation.js'			);
+// $.getScript('../ressources/script/admin/listeners/link.js'          );
+// $.getScript('../ressources/script/admin/listeners/page.js'          );
+// $.getScript('../ressources/script/admin/listeners/reference.js'     );
+// $.getScript('../ressources/script/admin/listeners/social.js'        );
+// $.getScript('../ressources/script/admin/autocomplete.js'            );
+// $.getScript('../ressources/script/admin/tray.js'                    );
+// $.getScript('../ressources/script/admin/tools.js'                   );
+// $.ajaxSetup({async: true});
 
 /******************************************************************************
  *                                Environment                                 *

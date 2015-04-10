@@ -4,3 +4,4 @@ config/*
 
 
 .htpasswd
+minify.sh
