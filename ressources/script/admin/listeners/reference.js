@@ -21,7 +21,12 @@ function pressEditReference(referenceID)
 function pressCommitReference()
 {
 	if (ENV.flags)
-		if (ENV.editionObject)
+	{
+		if (!$('.tray.reference #input_reference_title').val().trim())
+		{
+			popup_information("Title should not be empty");
+		}
+		else if (ENV.editionObject)
 		{
 			var reference = ENV.editionObject;
 			reference.getTray();
@@ -46,6 +51,7 @@ function pressCommitReference()
 					closeTray($('.tray.reference'));
 				})
 		}
+	}
 	else
 		closeTray($('.tray.reference'));
 }
@@ -64,13 +70,9 @@ function pressDeleteReference()
 				var reference = ENV.editionObject;
 				ENV.db_references.delete(reference)
 					.done(function(){
-
-						console.log(reference.id);
 						var citations = ENV.db_citations.values().filter(a => a.referenceID == reference.id);
-						console.log(citations);
 						for (citation of citations)
 							ENV.db_citations.rem(citation);
-
 						reference.deleteDOM();
 						fillAutocomplete();
 						resetFlags();

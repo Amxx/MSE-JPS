@@ -21,7 +21,12 @@ function pressEditSocial(socialID)
 function pressCommitSocial()
 {
 	if (ENV.flags)
-		if (ENV.editionObject)
+	{
+		if (!$('.tray.social #input_social_title').val().trim())
+		{
+			popup_information("Title should not be empty");
+		}
+		else if (ENV.editionObject)
 		{
 			var social = ENV.editionObject;
 			social.getTray();
@@ -44,6 +49,7 @@ function pressCommitSocial()
 					closeTray($('.tray.social'));
 				})
 		}
+	}
 	else
 		closeTray($('.tray.social'));
 }

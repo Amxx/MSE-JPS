@@ -21,7 +21,12 @@ function pressEditArticle(articleID)
 function pressCommitArticle()
 {
 	if (ENV.flags)
-		if (ENV.editionObject)
+	{
+		if (!$('.tray.article #input_article_title').val().trim())
+		{
+			popup_information("Title should not be empty");
+		}
+		else if (ENV.editionObject)
 		{
 			var article = ENV.editionObject;
 			article.getTray();
@@ -45,6 +50,7 @@ function pressCommitArticle()
 					closeTray($('.tray.article'));
 				})
 		}
+	}
 	else
 		closeTray($('.tray.article'));
 }
@@ -63,11 +69,9 @@ function pressDeleteArticle()
 				var article = ENV.editionObject;
 				ENV.db_articles.delete(article)
 					.done(function(){
-
 						var citations = ENV.db_citations.values().filter(a => a.articleID == article.id);
 						for (citation of citations)
 							ENV.db_citations.rem(citation);
-
 						article.deleteDOM();
 						resetFlags();
 						closeTray($('.tray.article'));

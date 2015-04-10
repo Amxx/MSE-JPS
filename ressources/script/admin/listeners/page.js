@@ -21,7 +21,12 @@ function pressEditPage(pageID)
 function pressCommitPage()
 {
 	if (ENV.flags)
-		if (ENV.editionObject)
+	{
+		if (!$('.tray.page #input_page_title').val().trim())
+		{
+			popup_information("Title should not be empty");
+		}
+		else if (ENV.editionObject)
 		{
 			var page = ENV.editionObject;
 			page.getTray();
@@ -45,6 +50,7 @@ function pressCommitPage()
 					viewPage(page.id);
 				})
 		}
+	}
 	else
 		closeTray($('.tray.page'));
 }
@@ -63,13 +69,11 @@ function pressDeletePage()
 				var page = ENV.editionObject;
 				ENV.db_pages.delete(page)
 					.done(function(){
-
 						if (ENV.currentPage == page.id)
 							viewPage();
 						var articles = ENV.db_articles.values().filter(a => a.pageID == page.id);
 						for (article of articles)
 							ENV.db_articles.rem(article);
-
 						page.deleteDOM();
 						resetFlags();
 						closeTray($('.tray.page'));

@@ -12,7 +12,7 @@
  function openPopup()
 {
 	var dialog = $('<dialog/>').addClass('popup').appendTo('body');
-	
+
 	/****************************************************************************
 	 *               Provide support for non compatible browsers                *
 	 *                                                                          *
@@ -23,7 +23,7 @@
 	 ****************************************************************************/
 	dialogPolyfill.registerDialog(dialog[0]);
 	/****************************************************************************/
-	
+
 	dialog[0].showModal();
 	return dialog;
 }
@@ -33,7 +33,6 @@ function closePopup(dialog)
 	dialog[0].close();
 	dialog.remove();
 }
-
 
 function popup_input(text, callback, input)
 {
@@ -63,7 +62,7 @@ function popup_confirm(text, callback)
 	p	.append($('<h4/>'    ).text(text) )
 		.append($('<button/>').text('No') )
 		.append($('<button/>').text('Yes'))
-		
+
 	p.find('button').each(function(){
 		var b = $(this).text() == 'Yes';
 		if (!b)
@@ -80,7 +79,7 @@ function popup_information(text, callback)
 {
 	var p = openPopup();
 	p	.css('cursor', 'pointer')
-		.append($('<h4/>').text(text) )		
+		.append($('<h4/>').text(text) )
 		.click(function(){
 			closePopup(p);
 			if (callback)

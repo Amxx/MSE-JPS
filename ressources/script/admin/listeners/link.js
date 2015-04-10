@@ -21,7 +21,12 @@ function pressEditLink(linkID)
 function pressCommitLink()
 {
 	if (ENV.flags)
-		if (ENV.editionObject)
+	{
+		if (!$('.tray.link #input_link_title').val().trim())
+		{
+			popup_information("Title should not be empty");
+		}
+		else if (ENV.editionObject)
 		{
 			var link = ENV.editionObject;
 			link.getTray();
@@ -44,6 +49,7 @@ function pressCommitLink()
 					closeTray($('.tray.link'));
 				})
 		}
+	}
 	else
 		closeTray($('.tray.link'));
 }
