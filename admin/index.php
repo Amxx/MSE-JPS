@@ -1,21 +1,21 @@
+<!DOCTYPE html>
 <!--
 ################################################################################
 #                                   MSE-JPS                                    #
 #                  Mini Site Engine - Javascript / PHP / SQL                   #
 #                                                                              #
-#                         Version 2.0.0-2 : 10/04/2015                         #
+#                         Version 2.0.0-3 : 10/04/2015                         #
 #                                                                              #
 #                       Developped by Hadrien Croubois :                       #
 #                          hadrien.croubois@gmail.com                          #
 #                                                                              #
 ################################################################################
 -->
-
-<!DOCTYPE html>
 <html lang="fr">
 
 	<head>
 		<meta charset="utf-8">
+		<title>Administration interface</title>
 
 		<!-- L i b   -   J q u e r y -->
 		<script type="text/javascript" src="../ressources/libs/jquery-2.1.3.js"></script>
@@ -35,7 +35,8 @@
 	</head>
 
 
-	<body class='nooverflow'>
+	<!-- <body class='nooverflow'> -->
+	<body>
 		<!--
 		****************************************************************************
 		*                                                                          *
@@ -66,8 +67,8 @@
 						<ul class='sortable list'></ul>
 				</section>
 
-				<section class='articles flex column'>
-					<div class='slider flex column'>
+				<section class='articles'> <!-- flex column -->
+					<div class='slider flex column'> <!-- isflex -->
 						<a class='button' onClick='pressNewArticle();'>Add Article</a>
 						<ul class='sortable list'></ul>
 					</div>
@@ -123,12 +124,12 @@
 						<!-- <option value='twothird'   >66%         </option> -->
 						<!-- <option value='treequarter'>75%         </option> -->
 					</select>
-					<span class='entry'>
+					<div class='entry'>
 						<span class='slider'><input type='checkbox' class='followchange' id='input_page_expendable'/><label for='input_page_expendable'></label></span>
 						<h4>Expandable</h4>
 						<span class='slider'><input type='checkbox' class='followchange' id='input_page_bordered'/><label for='input_page_bordered'></label></span>
 						<h4>Borders</h4>
-					</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -154,10 +155,10 @@
 					<input type='text' class='followchange' id='input_article_title' placeholder='Title'/>
 					<h3>Text</h3>
 					<textarea class='followchange' id='input_article_text' placeholder='Content'></textarea>
-					<span class='entry'>
+					<div class='entry'>
 						<span class='slider'><input type='checkbox' class='followchange' id='input_article_archived'/><label for='input_article_archived'></label></span>
 						<h4>Archived</h4>
-					</span>
+					</div>
 				</div>
 				<div class='tab'>
 					<h3>Javascript</h3>
@@ -190,8 +191,8 @@
 					<li><a onclick='viewTrayTab(this, 1);'>Abstract</a></li>
 					<li><a onclick='viewTrayTab(this, 2);'>Bibtex</a></li>
 					<li><a onclick='viewTrayTab(this, 3);'>Links</a></li>
-					<li class='warning'><a onclick='pressDeleteReference()';>Delete</a></li>
-					<li class='confirm'><a onclick='pressCommitReference()';>Commit</a></li>
+					<li class='warning'><a onclick='pressDeleteReference();'>Delete</a></li>
+					<li class='confirm'><a onclick='pressCommitReference();'>Commit</a></li>
 				</ul>
 			</div>
 			<div class='content'>
@@ -229,8 +230,8 @@
 			<div class='menu'>
 				<ul>
 					<li><a onclick='viewTrayTab(this, 0);'>Settings</a></li>
-					<li class='warning'><a onclick='pressDeleteLink()';>Delete</a></li>
-					<li class='confirm'><a onclick='pressCommitLink()';>Commit</a></li>
+					<li class='warning'><a onclick='pressDeleteLink();'>Delete</a></li>
+					<li class='confirm'><a onclick='pressCommitLink();'>Commit</a></li>
 				</ul>
 			</div>
 			<div class='content'>
@@ -252,8 +253,8 @@
 			<div class='menu'>
 				<ul>
 					<li><a onclick='viewTrayTab(this, 0);'>Settings</a></li>
-					<li class='warning'><a onclick='pressDeleteSocial()';>Delete</a></li>
-					<li class='confirm'><a onclick='pressCommitSocial()';>Commit</a></li>
+					<li class='warning'><a onclick='pressDeleteSocial();'>Delete</a></li>
+					<li class='confirm'><a onclick='pressCommitSocial();'>Commit</a></li>
 				</ul>
 			</div>
 			<div class='content'>
@@ -264,10 +265,10 @@
 					<input type='text' class='followchange' id='input_social_img' placeholder='Image url'/>
 					<h3>Url</h3>
 					<input type='text' class='followchange' id='input_social_url' placeholder='Link target'/>
-					<span class='entry'>
+					<div class='entry'>
 						<span class='slider'><input type='checkbox' class='followchange' id='input_social_showtext'/><label for='input_social_showtext'></label></span>
 						<h4>Verbose link</h4>
-					</span>
+					</div>
  				</div>
 			</div>
 		</div>

@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-2 : 10/04/2015                        *
+ *                        Version 2.0.0-3 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -26,28 +26,32 @@ main
 }
 .tab
 {
-	height:									100%;
-	position:								relative;
+	height:									auto;
+	/*position:								relative;*/
 }
 
-.content { flex: 6; }
-section.pages				{ width: 16%; }
-section.articles		{ width: 42%; }
-section.references	{ width: 42%; }
-section.links				{ flex: 2; }
-section.socials			{ flex: 2; }
+.content						{ flex: 3 3 60%; }
+section.pages				{ width: 20%; }
+section.articles		{ width: 40%; }
+section.references	{ width: 40%; }
+section.links				{ flex: 1 1 20%; }
+section.socials			{ flex: 1 1 20%; }
 
 /******************************************************************************
  *                           Slider & Customization                           *
  ******************************************************************************/
 section div.slider
 {
-	width:									100%;
-	height: 								100%;
+	width:									auto;
+	height: 								auto;
 }
 section div.slider.hidden
 {
 	display:								none;
+}
+section div.slider.flex.column a
+{
+	width: calc(100% - 12px);
 }
 
 /******************************************************************************
