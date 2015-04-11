@@ -3,7 +3,7 @@
 #                                   MSE-JPS                                    #
 #                  Mini Site Engine - Javascript / PHP / SQL                   #
 #                                                                              #
-#                         Version 2.0.0-0 : 10/04/2015                         #
+#                         Version 2.0.0-2 : 10/04/2015                         #
 #                                                                              #
 #                       Developped by Hadrien Croubois :                       #
 #                          hadrien.croubois@gmail.com                          #
@@ -45,8 +45,9 @@
 			<span id='name'>Administration panel</span>
 			<!-- <img id='picture' src='img.png' alt='Profile picture'/> -->
 			<ul id='nav'>
-				<li><a onClick='viewTab(0);'>Main</a></li>
-				<li><a onClick='viewTab(1);'>Links</a></li>
+				<!-- <li><a onClick='viewTab(0);'>Main</a></li> -->
+				<!-- <li><a onClick='viewTab(1);'>Links</a></li> -->
+				<li><a href='../index.php'>Return to site</a></li>
 			</ul>
 		</header>
 
@@ -56,8 +57,9 @@
 		****************************************************************************
 		-->
 		<div id='page' class='flex column wrap with-header'>
-		<main>
-			<div class='flex row tab'>
+		<main class='flex column'>
+
+			<div class='content flex row'>
 
 				<section class='pages flex column'>
 						<a class='button' onClick='pressNewPage();'>Add Page</a>
@@ -77,19 +79,19 @@
 				</section>
 
 			</div>
-			<div class='flex row tab'>
+			<!-- <div class='tab flex row'> -->
 
-				<section class='links flex column'>
-						<a class='button' onClick='pressNewLink();'>Add Link</a>
-						<ul class='sortable list'></ul>
-				</section>
+			<section class='links flex column'>
+					<a class='button' onClick='pressNewLink();'>Add Link</a>
+					<ul class='sortable list'></ul>
+			</section>
 
-				<section class='socials flex column'>
-						<a class='button' onClick='pressNewSocial();'>Add Social link</a>
-						<ul class='sortable list'></ul>
-				</section>
+			<section class='socials flex column'>
+					<a class='button' onClick='pressNewSocial();'>Add Social link</a>
+					<ul class='sortable list'></ul>
+			</section>
 
-			</div>
+			<!-- </div> -->
 		</main>
 		</div>
 

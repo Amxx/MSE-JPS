@@ -2,12 +2,40 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.0.0-2 : 10/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
+
+/******************************************************************************
+ *                                  Section                                   *
+ ******************************************************************************/
+section
+{
+	margin:									5px;
+	padding:								0;
+	border-radius:					6px;
+}
+
+main
+{
+	flex:										75%;
+	height:									100%;
+}
+.tab
+{
+	height:									100%;
+	position:								relative;
+}
+
+.content { flex: 6; }
+section.pages				{ width: 16%; }
+section.articles		{ width: 42%; }
+section.references	{ width: 42%; }
+section.links				{ flex: 2; }
+section.socials			{ flex: 2; }
 
 /******************************************************************************
  *                           Slider & Customization                           *
@@ -21,12 +49,6 @@ section div.slider.hidden
 {
 	display:								none;
 }
-
-section.pages				{ /*flex:	4; */	width: 16%; }
-section.articles		{ /*flex:	10;*/	width: 42%; }
-section.references	{ /*flex:	10;*/	width: 42%; }
-section.links				{ /*flex:	10;*/	width: 50%; }
-section.socials			{ /*flex:	10;*/	width: 50%; }
 
 /******************************************************************************
  *                                  Sortable                                  *
@@ -72,18 +94,6 @@ section.socials			{ /*flex:	10;*/	width: 50%; }
 	padding-left: 					10px;
 	text-align:							right;
 }
-
-/******************************************************************************
- *                                  Section                                   *
- ******************************************************************************/
-section
-{
-	margin:									5px;
-	padding:								0;
-	border-radius:					6px;
-	background:							#9999FF;
-}
-/*section:not(:last-child) { margin-right: 10px; }*/
 
 /******************************************************************************
  *                               Section pages                                *

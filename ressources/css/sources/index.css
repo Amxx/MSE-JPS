@@ -76,15 +76,50 @@ p.noindent
 /******************************************************************************
  *                                    Flex                                    *
  ******************************************************************************/
-.flex								{ display:				flex;					}
-.flex.column				{ flex-direction:	column;				}
-.flex.row						{ flex-direction:	row;					}
-.flex.nowrap				{ flex-wrap:			nowrap;				}
-.flex.wrap					{ flex-wrap:			wrap;					}
-.flex.wrap-reverse	{ flex-wrap:			wrap-reverse;	}
-.isflex							{ flex:						1;						}
-.isnoflex						{ flex:						0;						}
-.nooverflow					{	overflow:				hidden;				}
+.flex
+{
+	display:								-webkit-flex;
+  display:								flex;
+}
+.flex.column
+{
+	-webkit-flex-direction:	column;
+	flex-direction:					column;
+}
+.flex.row
+{
+	-webkit-flex-direction:	row;
+	flex-direction:					row;
+}
+.flex.nowrap
+{
+	-webkit-flex-wrap:			nowrap;
+	flex-wrap:							nowrap;
+}
+.flex.wrap
+{
+	-webkit-flex-wrap:			wrap;
+	flex-wrap:							wrap;
+}
+.flex.wrap-reverse
+{
+	-webkit-flex-wrap:			wrap-reverse;
+	flex-wrap:							wrap-reverse;
+}
+.isflex
+{
+	-webkit-flex:						1;
+	flex:										1;
+}
+.isnoflex
+{
+	-webkit-flex:						0;
+	flex:										0;
+}
+.nooverflow
+{
+	overflow:								hidden;
+}
 
 /******************************************************************************
  *                                  P a g e                                   *
