@@ -1,7 +1,8 @@
 buffer/*
+
 config/*
 !config/sample_config
 
-
-.htpasswd
+*/.htpasswd
+*/.htaccess
 minify.sh
