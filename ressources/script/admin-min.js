@@ -337,11 +337,12 @@ function buildAutocomplete()
 	searchField.autocomplete({
 			minLength: 0,
 			focus: function(event, ui){
-				searchField.val(ui.item.title);
+				// searchField.val(ui.item.title);
 				return false;
 			},
 			select: function(event, ui){
-				searchField.val(ui.item.title);
+				// searchField.val(ui.item.title);
+				searchField.val('');
 				pressAddCitation(ui.item.value);
 				return false;
 			}
@@ -362,7 +363,8 @@ function fillAutocomplete()
 		return ({ label: e.title+" "+e.authors, title: e.title, authors: e.authors, value: e.id });
 	});
 	$('.tray.article #input_article_refsearch').autocomplete('option', 'source', array);
-}/******************************************************************************
+}
+/******************************************************************************
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *

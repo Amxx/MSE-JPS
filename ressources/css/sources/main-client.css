@@ -102,6 +102,10 @@ main article .content
 /******************************************************************************
  *                   M a i n   A r t i c l e   B i b l i o                    *
  ******************************************************************************/
+main article .bibentry
+{
+	padding:								0px 10px;
+}
 main article .bibtitle
 {
 	display:								block;

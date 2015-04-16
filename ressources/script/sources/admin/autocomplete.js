@@ -17,11 +17,12 @@ function buildAutocomplete()
 	searchField.autocomplete({
 			minLength: 0,
 			focus: function(event, ui){
-				searchField.val(ui.item.title);
+				// searchField.val(ui.item.title);
 				return false;
 			},
 			select: function(event, ui){
-				searchField.val(ui.item.title);
+				// searchField.val(ui.item.title);
+				searchField.val('');
 				pressAddCitation(ui.item.value);
 				return false;
 			}
