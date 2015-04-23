@@ -10,67 +10,81 @@
  *                                                                            *
  ******************************************************************************/
 
-include_once '../config/config.php';
-include_once '../ressources/MSE/connection.php';
+include_once '../../config/config.php';
+// include_once '../config/sample_sqlite.php';
+
+include_once 'connection.php';
 
 
 /******************************************************************************
  *                          S Q L   R e q u e s t s                            *
  ******************************************************************************/
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_pages'     ] = "SELECT * FROM `{$GLOBALS['prefix']}pages";
-$QUERY_STR['insert_page'      ] = "INSERT   INTO `{$GLOBALS['prefix']}pages` (`Page_Title`, `Page_Style`, `Page_Bordered`, `Page_Expandable`) VALUES (:title, :style, :bordered, :expandable)";
-$QUERY_STR['update_page'      ] = "UPDATE        `{$GLOBALS['prefix']}pages` SET `Page_Title` = :title, `Page_Style` = :style, `Page_Bordered` = :bordered, `Page_Expandable` = :expandable WHERE `Page_ID` = :id";
-$QUERY_STR['delete_page'      ] = "DELETE   FROM `{$GLOBALS['prefix']}pages` WHERE `Page_ID` = :id";
-$QUERY_STR['reorder_page'     ] = "UPDATE        `{$GLOBALS['prefix']}pages` SET `Page_Order` = :order WHERE `Page_ID` = :id";
+$QUERY_STR['select_pages'     ] = "SELECT * FROM `{$GLOBALS['prefix']}pages`;";
+$QUERY_STR['insert_page'      ] = "INSERT   INTO `{$GLOBALS['prefix']}pages` (`Page_Title`, `Page_Style`, `Page_Bordered`, `Page_Expandable`) VALUES (:title, :style, :bordered, :expandable);";
+$QUERY_STR['update_page'      ] = "UPDATE        `{$GLOBALS['prefix']}pages` SET `Page_Title` = :title, `Page_Style` = :style, `Page_Bordered` = :bordered, `Page_Expandable` = :expandable WHERE `Page_ID` = :id;";
+$QUERY_STR['delete_page'      ] = "DELETE   FROM `{$GLOBALS['prefix']}pages` WHERE `Page_ID` = :id;";
+$QUERY_STR['reorder_page'     ] = "UPDATE        `{$GLOBALS['prefix']}pages` SET `Page_Order` = :order WHERE `Page_ID` = :id;";
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_articles'  ] = "SELECT * FROM `{$GLOBALS['prefix']}articles";
-$QUERY_STR['insert_article'   ] = "INSERT   INTO `{$GLOBALS['prefix']}articles` (`Page_ID`, `Article_Title`, `Article_Text`, `Article_Javascript`, `Article_Archived`) VALUES (:pid, :title, :text, :javascript, :archived)";
-$QUERY_STR['update_article'   ] = "UPDATE        `{$GLOBALS['prefix']}articles` SET `Page_ID` = :pid, `Article_Title` = :title, `Article_Text` = :text, `Article_Javascript` = :javascript, `Article_Archived` = :archived WHERE `Article_ID` = :id";
-$QUERY_STR['delete_article'   ] = "DELETE   FROM `{$GLOBALS['prefix']}articles` WHERE `Article_ID` = :id";
-$QUERY_STR['reorder_article'  ] = "UPDATE        `{$GLOBALS['prefix']}articles` SET `Article_Order` = :order WHERE `Article_ID` = :id";
+$QUERY_STR['select_articles'  ] = "SELECT * FROM `{$GLOBALS['prefix']}articles`;";
+$QUERY_STR['insert_article'   ] = "INSERT   INTO `{$GLOBALS['prefix']}articles` (`Page_ID`, `Article_Title`, `Article_Text`, `Article_Javascript`, `Article_Archived`) VALUES (:pid, :title, :text, :javascript, :archived);";
+$QUERY_STR['update_article'   ] = "UPDATE        `{$GLOBALS['prefix']}articles` SET `Page_ID` = :pid, `Article_Title` = :title, `Article_Text` = :text, `Article_Javascript` = :javascript, `Article_Archived` = :archived WHERE `Article_ID` = :id;";
+$QUERY_STR['delete_article'   ] = "DELETE   FROM `{$GLOBALS['prefix']}articles` WHERE `Article_ID` = :id;";
+$QUERY_STR['reorder_article'  ] = "UPDATE        `{$GLOBALS['prefix']}articles` SET `Article_Order` = :order WHERE `Article_ID` = :id;";
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_references'] = "SELECT * FROM `{$GLOBALS['prefix']}references`";
-$QUERY_STR['insert_reference' ] = "INSERT   INTO `{$GLOBALS['prefix']}references` (`Reference_Title`, `Reference_Authors`, `Reference_Ref`, `Reference_Abstract`, `Reference_Bibtex`) VALUES (:title, :authors, :ref, :abstract, :bibtex)";
-$QUERY_STR['update_reference' ] = "UPDATE        `{$GLOBALS['prefix']}references` SET `Reference_Title` = :title, `Reference_Authors` = :authors, `Reference_Ref` = :ref, `Reference_Abstract` = :abstract, `Reference_Bibtex` = :bibtex WHERE `Reference_ID` = :id";
-$QUERY_STR['delete_reference' ] = "DELETE   FROM `{$GLOBALS['prefix']}references` WHERE `Reference_ID` = :id";
+$QUERY_STR['select_references'] = "SELECT * FROM `{$GLOBALS['prefix']}references`;";
+$QUERY_STR['insert_reference' ] = "INSERT   INTO `{$GLOBALS['prefix']}references` (`Reference_Title`, `Reference_Authors`, `Reference_Ref`, `Reference_Abstract`, `Reference_Bibtex`) VALUES (:title, :authors, :ref, :abstract, :bibtex);";
+$QUERY_STR['update_reference' ] = "UPDATE        `{$GLOBALS['prefix']}references` SET `Reference_Title` = :title, `Reference_Authors` = :authors, `Reference_Ref` = :ref, `Reference_Abstract` = :abstract, `Reference_Bibtex` = :bibtex WHERE `Reference_ID` = :id;";
+$QUERY_STR['delete_reference' ] = "DELETE   FROM `{$GLOBALS['prefix']}references` WHERE `Reference_ID` = :id;";
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_links'     ] = "SELECT * FROM `{$GLOBALS['prefix']}links`";
-$QUERY_STR['insert_link'      ] = "INSERT   INTO `{$GLOBALS['prefix']}links` (`Link_Title`, `Link_Content`) VALUES (:title, :content)";
-$QUERY_STR['update_link'      ] = "UPDATE        `{$GLOBALS['prefix']}links` SET `Link_Title` = :title, `Link_Content` = :content WHERE `Link_ID` = :id";
-$QUERY_STR['delete_link'      ] = "DELETE   FROM `{$GLOBALS['prefix']}links` WHERE `Link_ID` = :id";
-$QUERY_STR['reorder_link'     ] = "UPDATE        `{$GLOBALS['prefix']}links` SET `Link_Order` = :order WHERE `Link_ID` = :id";
+$QUERY_STR['select_links'     ] = "SELECT * FROM `{$GLOBALS['prefix']}links`;";
+$QUERY_STR['insert_link'      ] = "INSERT   INTO `{$GLOBALS['prefix']}links` (`Link_Title`, `Link_Content`) VALUES (:title, :content);";
+$QUERY_STR['update_link'      ] = "UPDATE        `{$GLOBALS['prefix']}links` SET `Link_Title` = :title, `Link_Content` = :content WHERE `Link_ID` = :id;";
+$QUERY_STR['delete_link'      ] = "DELETE   FROM `{$GLOBALS['prefix']}links` WHERE `Link_ID` = :id;";
+$QUERY_STR['reorder_link'     ] = "UPDATE        `{$GLOBALS['prefix']}links` SET `Link_Order` = :order WHERE `Link_ID` = :id;";
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_socials'   ] = "SELECT * FROM `{$GLOBALS['prefix']}socials`";
-$QUERY_STR['insert_social'    ] = "INSERT   INTO `{$GLOBALS['prefix']}socials` (`Social_Title`, `Social_Img`, `Social_Url`, `Social_ShowText`) VALUES (:title, :img, :url, :showtext)";
-$QUERY_STR['update_social'    ] = "UPDATE        `{$GLOBALS['prefix']}socials` SET `Social_Title` = :title, `Social_Img` = :img, `Social_Url` = :url, `Social_ShowText` = :showtext WHERE `Social_ID` = :id";
-$QUERY_STR['delete_social'    ] = "DELETE   FROM `{$GLOBALS['prefix']}socials` WHERE `Social_ID` = :id";
-$QUERY_STR['reorder_social'   ] = "UPDATE        `{$GLOBALS['prefix']}socials` SET `Social_Order` = :order WHERE `Social_ID` = :id";
+$QUERY_STR['select_socials'   ] = "SELECT * FROM `{$GLOBALS['prefix']}socials`;";
+$QUERY_STR['insert_social'    ] = "INSERT   INTO `{$GLOBALS['prefix']}socials` (`Social_Title`, `Social_Img`, `Social_Url`, `Social_ShowText`) VALUES (:title, :img, :url, :showtext);";
+$QUERY_STR['update_social'    ] = "UPDATE        `{$GLOBALS['prefix']}socials` SET `Social_Title` = :title, `Social_Img` = :img, `Social_Url` = :url, `Social_ShowText` = :showtext WHERE `Social_ID` = :id;";
+$QUERY_STR['delete_social'    ] = "DELETE   FROM `{$GLOBALS['prefix']}socials` WHERE `Social_ID` = :id;";
+$QUERY_STR['reorder_social'   ] = "UPDATE        `{$GLOBALS['prefix']}socials` SET `Social_Order` = :order WHERE `Social_ID` = :id;";
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_citations' ] = "SELECT * FROM `{$GLOBALS['prefix']}citations`";
-$QUERY_STR['insert_citation'  ] = "INSERT   INTO `{$GLOBALS['prefix']}citations` (`Article_ID`, `Reference_ID`) VALUES (:articleID, :referenceID)";
-$QUERY_STR['delete_citation'  ] = "DELETE   FROM `{$GLOBALS['prefix']}citations` WHERE `Citation_ID` = :id";
-$QUERY_STR['reorder_citation' ] = "UPDATE        `{$GLOBALS['prefix']}citations` SET `Citation_Order` = :order WHERE `Citation_ID` = :id";
+$QUERY_STR['select_citations' ] = "SELECT * FROM `{$GLOBALS['prefix']}citations`;";
+$QUERY_STR['insert_citation'  ] = "INSERT   INTO `{$GLOBALS['prefix']}citations` (`Article_ID`, `Reference_ID`) VALUES (:articleID, :referenceID);";
+$QUERY_STR['delete_citation'  ] = "DELETE   FROM `{$GLOBALS['prefix']}citations` WHERE `Citation_ID` = :id;";
+$QUERY_STR['reorder_citation' ] = "UPDATE        `{$GLOBALS['prefix']}citations` SET `Citation_Order` = :order WHERE `Citation_ID` = :id;";
 // -----------------------------------------------------------------------------
-$QUERY_STR['select_sources'   ] = "SELECT * FROM `{$GLOBALS['prefix']}sources`";
-$QUERY_STR['insert_source'    ] = "INSERT   INTO `{$GLOBALS['prefix']}sources` (`Reference_ID`, `Source_Title`, `Source_Url`) VALUES (:rid, :title, :url)";
-$QUERY_STR['update_source'    ] = "UPDATE        `{$GLOBALS['prefix']}sources` SET `Reference_ID` = :rid, `Source_Title` = :title, `Source_Url` = :url WHERE `Source_ID` = :id";
-$QUERY_STR['delete_source'    ] = "DELETE   FROM `{$GLOBALS['prefix']}sources` WHERE `Source_ID` = :id";
-$QUERY_STR['reorder_source'   ] = "UPDATE        `{$GLOBALS['prefix']}sources` SET `Source_Order` = :order WHERE `Source_ID` = :id";
+$QUERY_STR['select_sources'   ] = "SELECT * FROM `{$GLOBALS['prefix']}sources`;";
+$QUERY_STR['insert_source'    ] = "INSERT   INTO `{$GLOBALS['prefix']}sources` (`Reference_ID`, `Source_Title`, `Source_Url`) VALUES (:rid, :title, :url);";
+$QUERY_STR['update_source'    ] = "UPDATE        `{$GLOBALS['prefix']}sources` SET `Reference_ID` = :rid, `Source_Title` = :title, `Source_Url` = :url WHERE `Source_ID` = :id;";
+$QUERY_STR['delete_source'    ] = "DELETE   FROM `{$GLOBALS['prefix']}sources` WHERE `Source_ID` = :id;";
+$QUERY_STR['reorder_source'   ] = "UPDATE        `{$GLOBALS['prefix']}sources` SET `Source_Order` = :order WHERE `Source_ID` = :id;";
 // -----------------------------------------------------------------------------
 
-/******************************************************************************
- *                            S Q L   S o c k e t                             *
- ******************************************************************************/
-$sqlsocket = new Connection();
-$sqlsocket->open($host, $user, $psswd);
-$result = array();
+
+
+
+
 
 
 /******************************************************************************
  *                            P r o c e s s i n g                             *
  ******************************************************************************/
-if (isset($_POST['QUERY']))
+session_start();
+
+if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
+ && isset($_POST['QUERY'])
+ && isset($_POST['TOKEN'])
+ && $_POST['TOKEN'] == $_SESSION['token'])
+{
+
+	/****************************************************************************
+	 *                           S Q L   S o c k e t                            *
+	 ****************************************************************************/
+	$sqlsocket = new Connection();
+	$sqlsocket->open($host, $user, $psswd);
+	$result = array();
+
 	switch($_POST['QUERY'])
 	{
 		// ============================= G e t   A l l =============================
@@ -106,7 +120,7 @@ if (isset($_POST['QUERY']))
 				':bordered'   => $_POST['object']['bordered'  ] === 'true',
 				':expandable' => $_POST['object']['expandable'] === 'true'
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			$result['id']  = $sqlsocket->lastInsertId();
 			break;
 		}
@@ -121,7 +135,7 @@ if (isset($_POST['QUERY']))
 				':bordered'   => $_POST['object']['bordered'  ] === 'true',
 				':expandable'	=> $_POST['object']['expandable'] === 'true'
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// Drop --------------------------------------------------------------------
@@ -131,7 +145,7 @@ if (isset($_POST['QUERY']))
 			$stmt->execute(array(
 				':id' => $_POST['object']['id']
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// Reorder -----------------------------------------------------------------
@@ -141,7 +155,7 @@ if (isset($_POST['QUERY']))
 			foreach($_POST['object'] as $order => $id)
 			{
 				$stmt->execute(array(':id' => $id, ':order' => $order));
-				$result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				// $result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			}
 			break;
 		}
@@ -158,7 +172,7 @@ if (isset($_POST['QUERY']))
 				':archived'   => $_POST['object']['archived'  ] === 'true'
 			));
 			$result['obj'] = $_POST['object'];
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			$result['id']  = $sqlsocket->lastInsertId();
 			break;
 		}
@@ -174,7 +188,7 @@ if (isset($_POST['QUERY']))
 				':javascript' => $_POST['object']['javascript'],
 				':archived'   => $_POST['object']['archived'  ] === 'true'
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// Drop --------------------------------------------------------------------
@@ -184,7 +198,7 @@ if (isset($_POST['QUERY']))
 			$stmt->execute(array(
 				':id' => $_POST['object']['id']
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// Reorder -----------------------------------------------------------------
@@ -194,7 +208,7 @@ if (isset($_POST['QUERY']))
 			foreach($_POST['object'] as $order => $id)
 			{
 				$stmt->execute(array(':id' => $id, ':order' => $order));
-				$result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				// $result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			}
 			break;
 		}
@@ -210,7 +224,7 @@ if (isset($_POST['QUERY']))
 				':abstract' => $_POST['object']['abstract' ],
 				':bibtex'   => $_POST['object']['bibtex'   ]
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			$result['id']  = $sqlsocket->lastInsertId();
 			break;
 		}
@@ -226,7 +240,7 @@ if (isset($_POST['QUERY']))
 				':abstract' => $_POST['object']['abstract' ],
 				':bibtex'   => $_POST['object']['bibtex'   ]
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// Drop --------------------------------------------------------------------
@@ -236,7 +250,7 @@ if (isset($_POST['QUERY']))
 			$stmt->execute(array(
 				':id' => $_POST['object']['id']
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// ================================ L i n k ================================
@@ -248,7 +262,7 @@ if (isset($_POST['QUERY']))
 				':title'   => $_POST['object']['title'  ],
 				':content' => $_POST['object']['content']
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			$result['id']  = $sqlsocket->lastInsertId();
 			break;
 		}
@@ -261,7 +275,7 @@ if (isset($_POST['QUERY']))
 				':title'   => $_POST['object']['title'  ],
 				':content' => $_POST['object']['content']
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// Drop --------------------------------------------------------------------
@@ -271,7 +285,7 @@ if (isset($_POST['QUERY']))
 			$stmt->execute(array(
 				':id' => $_POST['object']['id']
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// Reorder -----------------------------------------------------------------
@@ -281,7 +295,7 @@ if (isset($_POST['QUERY']))
 			foreach($_POST['object'] as $order => $id)
 			{
 				$stmt->execute(array(':id' => $id, ':order' => $order));
-				$result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				// $result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			}
 			break;
 		}
@@ -296,7 +310,7 @@ if (isset($_POST['QUERY']))
 				':url'      => $_POST['object']['url'     ],
 				':showtext' => $_POST['object']['showtext']
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			$result['id']  = $sqlsocket->lastInsertId();
 			break;
 		}
@@ -311,7 +325,7 @@ if (isset($_POST['QUERY']))
 				':url'      => $_POST['object']['url'     ],
 				':showtext' => $_POST['object']['showtext']
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// Drop --------------------------------------------------------------------
@@ -321,7 +335,7 @@ if (isset($_POST['QUERY']))
 			$stmt->execute(array(
 				':id' => $_POST['object']['id']
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// Reorder -----------------------------------------------------------------
@@ -331,7 +345,7 @@ if (isset($_POST['QUERY']))
 			foreach($_POST['object'] as $order => $id)
 			{
 				$stmt->execute(array(':id' => $id, ':order' => $order));
-				$result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				// $result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			}
 			break;
 		}
@@ -344,7 +358,7 @@ if (isset($_POST['QUERY']))
 				':articleID'   => $_POST['object']['articleID'  ],
 				':referenceID' => $_POST['object']['referenceID']
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			$result['id']  = $sqlsocket->lastInsertId();
 			break;
 		}
@@ -355,7 +369,7 @@ if (isset($_POST['QUERY']))
 			$stmt->execute(array(
 				':id' => $_POST['object']['id']
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// Reorder -----------------------------------------------------------------
@@ -365,7 +379,7 @@ if (isset($_POST['QUERY']))
 			foreach($_POST['object'] as $order => $id)
 			{
 				$stmt->execute(array(':id' => $id, ':order' => $order));
-				$result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				// $result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			}
 			break;
 		}
@@ -379,7 +393,7 @@ if (isset($_POST['QUERY']))
 				':title' => $_POST['object']['title'      ],
 				':url'   => $_POST['object']['url'        ]
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			$result['id']  = $sqlsocket->lastInsertId();
 			break;
 		}
@@ -392,7 +406,7 @@ if (isset($_POST['QUERY']))
 				':title' => $_POST['object']['title'      ],
 				':url'   => $_POST['object']['url'        ]
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// Drop --------------------------------------------------------------------
@@ -402,7 +416,7 @@ if (isset($_POST['QUERY']))
 			$stmt->execute(array(
 				':id' => $_POST['object']['id']
 			));
-			$result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;
 		}
 		// Reorder -----------------------------------------------------------------
@@ -412,13 +426,14 @@ if (isset($_POST['QUERY']))
 			foreach($_POST['object'] as $order => $id)
 			{
 				$stmt->execute(array(':id' => $id, ':order' => $order));
-				$result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				// $result['sql'][] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			}
 			break;
 		}
 	}
+	echo json_encode($result);
+}
 
 
-echo json_encode($result);
 
 ?>

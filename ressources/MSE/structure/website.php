@@ -74,14 +74,14 @@ class WebSite
 
 		# ==========================================================================
 		$query_results = $socket->query(
-			"SELECT * FROM `{$GLOBALS['prefix']}socials` ORDER BY `{$GLOBALS['prefix']}socials`.Social_Order ASC"
+			"SELECT * FROM `{$GLOBALS['prefix']}socials` ORDER BY `{$GLOBALS['prefix']}socials`.Social_Order ASC;"
 		);
 		while ($line = $query_results->fetch()) $this->socials->parse($line);
 		$query_results->closeCursor();
 
 		# ==========================================================================
 		$query_results = $socket->query(
-			"SELECT * FROM `{$GLOBALS['prefix']}links` ORDER BY `{$GLOBALS['prefix']}links`.Link_Order ASC"
+			"SELECT * FROM `{$GLOBALS['prefix']}links` ORDER BY `{$GLOBALS['prefix']}links`.Link_Order ASC;"
 		);
 		while ($line = $query_results->fetch()) $this->links->parse($line);
 		$query_results->closeCursor();

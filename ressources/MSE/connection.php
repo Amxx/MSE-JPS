@@ -15,8 +15,15 @@ class Connection
 	private $socket;
 	public function open($host, $user, $psswd)
 	{
-		try                  { $this->socket = new PDO($host, $user, $psswd);       }
-		catch (Exception $e) { die('Could not open SQL connection: '.$e->getMessage()); }
+		try
+		{
+			$this->socket = new PDO($host, $user, $psswd);
+			$this->socket->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		}
+		catch (Exception $e)
+		{
+			die('Could not open SQL connection: '.$e->getMessage());
+		}
 	}
 	public function close()
 	{

@@ -17,21 +17,13 @@ function POSTContainer(params)
 	Container.apply(this);
 	for (var prop in params)
 		this[prop] = params[prop];
-	/*
-	this.target       = params.target;
-	this.allocator    = params.allocator;
-	this.query_select = params.query_select;
-	this.query_insert = params.query_insert;
-	this.query_update = params.query_update;
-	this.query_delete = params.query_delete;
-	*/
 }
 POSTContainer.prototype = new Container();
 POSTContainer.prototype.select = function()
 {
 	var self = this;
 	var popup = openPopup().append($('<h4/>').text('synchronisation ...'));
-	return $.post(self.target, { QUERY: self.query_select }, function(data){
+	return $.post(self.target, { TOKEN: token, QUERY: self.query_select }, function(data){
 		if (data.values) // Sanity
 		for (entry of data.values)
 		{
@@ -40,42 +32,42 @@ POSTContainer.prototype.select = function()
 			self.set(obj);
 		}
 		closePopup(popup);
-	}, 'json');
+	}, 'json').fail(function(){ popup.find('h4').text('ERROR: request failed !'); });
 }
 POSTContainer.prototype.insert = function(obj)
 {
 	var self = this;
 	var popup = openPopup().append($('<h4/>').text('synchronisation ...'));
-	return $.post(self.target, { QUERY: self.query_insert, object: obj.post() }, function(data){
+	return $.post(self.target, { TOKEN: token, QUERY: self.query_insert, object: obj.post() }, function(data){
 		obj.id = data.id;
 		self.set(obj);
 		closePopup(popup);
-	}, 'json');
+	}, 'json').fail(function(){ popup.find('h4').text('ERROR: request failed !'); });
 }
 POSTContainer.prototype.update = function(obj)
 {
 	var self = this;
 	var popup = openPopup().append($('<h4/>').text('synchronisation ...'));
-	return $.post(self.target, { QUERY: self.query_update, object: obj.post() }, function(data){
+	return $.post(self.target, { TOKEN: token, QUERY: self.query_update, object: obj.post() }, function(data){
 		closePopup(popup);
-	}, 'json');
+	}, 'json').fail(function(){ popup.find('h4').text('ERROR: request failed !'); });
 }
 POSTContainer.prototype.delete = function(obj)
 {
 	var self = this;
 	var popup = openPopup().append($('<h4/>').text('synchronisation ...'));
-	return $.post(self.target, { QUERY: self.query_delete, object: obj.post() }, function(data){
+	return $.post(self.target, { TOKEN: token, QUERY: self.query_delete, object: obj.post() }, function(data){
 		self.rem(obj);
 		closePopup(popup);
-	}, 'json');
+	}, 'json').fail(function(){ popup.find('h4').text('ERROR: request failed !'); });
 }
 POSTContainer.prototype.reorder = function(idarray)
 {
 	var self = this;
 	var popup = openPopup().append($('<h4/>').text('synchronisation ...'));
-	return $.post(self.target, { QUERY: self.query_reorder, object: idarray }, function(data){
+	return $.post(self.target, { TOKEN: token, QUERY: self.query_reorder, object: idarray }, function(data){
 		for (var i in idarray)
 			self.get(idarray[i]).order = i;
 		closePopup(popup);
-	}, 'json');
+	}, 'json').fail(function(){ popup.find('h4').text('ERROR: request failed !'); });
 }

@@ -77,7 +77,7 @@ $(function(){
 	//-----------------------------------
 	console.info("setting environment");
 	ENV.db_articles = new POSTContainer({
-		target        : 'updater.php',
+		target        : '../ressources/MSE/updater.php',
 		allocator     : Article,
 		query_select  : 'select_articles',
 		query_insert  : 'insert_article',
@@ -86,7 +86,7 @@ $(function(){
 		query_reorder : 'reorder_article'
 	});
 	ENV.db_citations = new POSTContainer({
-		target        : 'updater.php',
+		target        : '../ressources/MSE/updater.php',
 		allocator     : Citation,
 		query_select  : 'select_citations',
 		query_insert  : 'insert_citation',
@@ -94,7 +94,7 @@ $(function(){
 		query_reorder : 'reorder_citation'
 	});
 	ENV.db_links = new POSTContainer({
-		target        : 'updater.php',
+		target        : '../ressources/MSE/updater.php',
 		allocator     : Link,
 		query_select  : 'select_links',
 		query_insert  : 'insert_link',
@@ -103,7 +103,7 @@ $(function(){
 		query_reorder : 'reorder_link'
 	});
 	ENV.db_pages = new POSTContainer({
-		target        : 'updater.php',
+		target        : '../ressources/MSE/updater.php',
 		allocator     : Page,
 		query_select  : 'select_pages',
 		query_insert  : 'insert_page',
@@ -112,7 +112,7 @@ $(function(){
 		query_reorder : 'reorder_page'
 	});
 	ENV.db_references = new POSTContainer({
-		target        : 'updater.php',
+		target        : '../ressources/MSE/updater.php',
 		allocator     : Reference,
 		query_select  : 'select_references',
 		query_insert  : 'insert_reference',
@@ -120,7 +120,7 @@ $(function(){
 		query_delete  : 'delete_reference'
 	});
 	ENV.db_socials = new POSTContainer({
-		target        : 'updater.php',
+		target        : '../ressources/MSE/updater.php',
 		allocator     : Social,
 		query_select  : 'select_socials',
 		query_insert  : 'insert_social',
@@ -129,7 +129,7 @@ $(function(){
 		query_reorder : 'reorder_social'
 	});
 	ENV.db_sources = new POSTContainer({
-		target        : 'updater.php',
+		target        : '../ressources/MSE/updater.php',
 		allocator     : Source,
 		query_select  : 'select_sources',
 		query_insert  : 'insert_source',
