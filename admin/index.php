@@ -1,22 +1,23 @@
-<?php
-	session_start();
-	$token = md5(uniqid(mt_rand(), true));
-	$_SESSION['token'] = $token;
-?>
-
-<!DOCTYPE html>
 <!--
 ################################################################################
 #                                   MSE-JPS                                    #
 #                  Mini Site Engine - Javascript / PHP / SQL                   #
 #                                                                              #
-#                         Version 2.0.0-3 : 10/04/2015                         #
+#                         Version 2.1.0-0 : 27/04/2015                         #
 #                                                                              #
 #                       Developped by Hadrien Croubois :                       #
 #                          hadrien.croubois@gmail.com                          #
 #                                                                              #
 ################################################################################
 -->
+
+<?php
+	include_once('../ressources/MSE/auth.php');
+	session_start();
+	auth::init_token();
+?>
+
+<!DOCTYPE html>
 <html lang="fr">
 
 	<head>
@@ -69,19 +70,19 @@
 			<div class='content flex row'>
 
 				<section class='pages flex column'>
-						<a class='button' onClick='pressNewPage();'>Add Page</a>
+						<a class='button' onClick='MSE_JPS.listeners.page.new();'>Add Page</a>
 						<ul class='sortable list'></ul>
 				</section>
 
 				<section class='articles'> <!-- flex column -->
 					<div class='slider flex column'> <!-- isflex -->
-						<a class='button' onClick='pressNewArticle();'>Add Article</a>
+						<a class='button' onClick='MSE_JPS.listeners.article.new();'>Add Article</a>
 						<ul class='sortable list'></ul>
 					</div>
 				</section>
 
 				<section class='references flex column'>
-						<a class='button' onClick='pressNewReference();'>Add Reference</a>
+						<a class='button' onClick='MSE_JPS.listeners.reference.new();'>Add Reference</a>
 						<ul class='sortable list'></ul>
 				</section>
 
@@ -89,12 +90,12 @@
 			<!-- <div class='tab flex row'> -->
 
 			<section class='links flex column'>
-					<a class='button' onClick='pressNewLink();'>Add Link</a>
+					<a class='button' onClick='MSE_JPS.listeners.link.new();'>Add Link</a>
 					<ul class='sortable list'></ul>
 			</section>
 
 			<section class='socials flex column'>
-					<a class='button' onClick='pressNewSocial();'>Add Social link</a>
+					<a class='button' onClick='MSE_JPS.listeners.social.new();'>Add Social link</a>
 					<ul class='sortable list'></ul>
 			</section>
 
@@ -111,9 +112,9 @@
 			<a class='close'>Close</a>
 			<div class='menu'>
 				<ul>
-					<li><a onclick='viewTrayTab(this, 0);'>Settings</a></li>
-					<li class='warning'><a onclick='pressDeletePage();'>Delete</a></li>
-					<li class='confirm'><a onclick='pressCommitPage();'>Commit</a></li>
+					<li><a onclick='MSE_JPS.tray.viewTab(this, 0);'>Settings</a></li>
+					<li class='warning'><a onclick='MSE_JPS.listeners.page.delete();'>Delete</a></li>
+					<li class='confirm'><a onclick='MSE_JPS.listeners.page.commit();'>Commit</a></li>
 				</ul>
 			</div>
 			<div class='content'>
@@ -148,11 +149,11 @@
 			<a class='close'>Close</a>
 			<div class='menu'>
 				<ul>
-					<li><a onclick='viewTrayTab(this, 0);'>Content</a></li>
-					<li><a onclick='viewTrayTab(this, 1);'>Javascript</a></li>
-					<li><a onclick='viewTrayTab(this, 2);'>Bibliography</a></li>
-					<li class='warning'><a onclick='pressDeleteArticle();'>Delete</a></li>
-					<li class='confirm'><a onclick='pressCommitArticle();'>Commit</a></li>
+					<li><a onclick='MSE_JPS.tray.viewTab(this, 0);'>Content</a></li>
+					<li><a onclick='MSE_JPS.tray.viewTab(this, 1);'>Javascript</a></li>
+					<li><a onclick='MSE_JPS.tray.viewTab(this, 2);'>Bibliography</a></li>
+					<li class='warning'><a onclick='MSE_JPS.listeners.article.delete();'>Delete</a></li>
+					<li class='confirm'><a onclick='MSE_JPS.listeners.article.commit();'>Commit</a></li>
 				</ul>
 			</div>
 			<div class='content'>
@@ -175,8 +176,6 @@
 						<h3>Bibliography</h3>
 						<div class='search flex row'>
 							<input type='text' class='isflex ui-autocomplete-input' id='input_article_refsearch' placeholder='Search...'/>
-							<!-- <input type='hidden' id='input_article_refID'/> -->
-							<!-- <a class='button' onclick='pressAddCitation();'>Cite</a> -->
 						</div>
 						<ul class='sortable list isflex'>
 						</ul>
@@ -193,12 +192,12 @@
 			<a class='close'>Close</a>
 			<div class='menu'>
 				<ul>
-					<li><a onclick='viewTrayTab(this, 0);'>Content</a></li>
-					<li><a onclick='viewTrayTab(this, 1);'>Abstract</a></li>
-					<li><a onclick='viewTrayTab(this, 2);'>Bibtex</a></li>
-					<li><a onclick='viewTrayTab(this, 3);'>Links</a></li>
-					<li class='warning'><a onclick='pressDeleteReference();'>Delete</a></li>
-					<li class='confirm'><a onclick='pressCommitReference();'>Commit</a></li>
+					<li><a onclick='MSE_JPS.tray.viewTab(this, 0);'>Content</a></li>
+					<li><a onclick='MSE_JPS.tray.viewTab(this, 1);'>Abstract</a></li>
+					<li><a onclick='MSE_JPS.tray.viewTab(this, 2);'>Bibtex</a></li>
+					<li><a onclick='MSE_JPS.tray.viewTab(this, 3);'>Links</a></li>
+					<li class='warning'><a onclick='MSE_JPS.listeners.reference.delete();'>Delete</a></li>
+					<li class='confirm'><a onclick='MSE_JPS.listeners.reference.commit();'>Commit</a></li>
 				</ul>
 			</div>
 			<div class='content'>
@@ -220,7 +219,7 @@
 				</div>
 				<div class='tab'>
 					<h3>Links</h3>
-					<a class='button' onclick='pressAddSource();'>Add Link</a>
+					<a class='button' onclick='MSE_JPS.listeners.source.add();'>Add Link</a>
 					<ul class='sortable list isflex'>
 					</ul>
 				</div>
@@ -235,9 +234,9 @@
 			<a class='close'>Close</a>
 			<div class='menu'>
 				<ul>
-					<li><a onclick='viewTrayTab(this, 0);'>Settings</a></li>
-					<li class='warning'><a onclick='pressDeleteLink();'>Delete</a></li>
-					<li class='confirm'><a onclick='pressCommitLink();'>Commit</a></li>
+					<li><a onclick='MSE_JPS.tray.viewTab(this, 0);'>Settings</a></li>
+					<li class='warning'><a onclick='MSE_JPS.listeners.link.delete();'>Delete</a></li>
+					<li class='confirm'><a onclick='MSE_JPS.listeners.link.commit();'>Commit</a></li>
 				</ul>
 			</div>
 			<div class='content'>
@@ -258,9 +257,9 @@
 			<a class='close'>Close</a>
 			<div class='menu'>
 				<ul>
-					<li><a onclick='viewTrayTab(this, 0);'>Settings</a></li>
-					<li class='warning'><a onclick='pressDeleteSocial();'>Delete</a></li>
-					<li class='confirm'><a onclick='pressCommitSocial();'>Commit</a></li>
+					<li><a onclick='MSE_JPS.tray.viewTab(this, 0);'>Settings</a></li>
+					<li class='warning'><a onclick='MSE_JPS.listeners.social.delete();'>Delete</a></li>
+					<li class='confirm'><a onclick='MSE_JPS.listeners.social.commit();'>Commit</a></li>
 				</ul>
 			</div>
 			<div class='content'>
@@ -285,7 +284,8 @@
 		****************************************************************************
 		-->
 		<script type="text/javascript">
-			const token = '<?php echo $token; ?>';
+			var MSE_JPS = MSE_JPS || {};
+			MSE_JPS.token = '<?php echo auth::get_token(); ?>';
 		</script>
 
 

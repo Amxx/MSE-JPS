@@ -2,45 +2,50 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-2 : 10/04/2015                        *
+ *                        Version 2.1.0-0 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
 
+var MSE_JPS = MSE_JPS || {};
+MSE_JPS.container = MSE_JPS.container || {};
+
 /******************************************************************************
  *                                 Container                                  *
  ******************************************************************************/
-function Container()
+
+MSE_JPS.container.Container = function()
 {
 	this.data = new Object();
 }
+
 // ---------------------------------- Methods ----------------------------------
-Container.prototype.get = function(objID)
+MSE_JPS.container.Container.prototype.get = function(objID)
 {
 	return this.data[objID];
 }
-Container.prototype.set = function(obj)
+MSE_JPS.container.Container.prototype.set = function(obj)
 {
 	return this.data[obj.id] = obj;
 }
-Container.prototype.rem = function(obj)
+MSE_JPS.container.Container.prototype.rem = function(obj)
 {
 	delete this.data[obj.id];
 }
-Container.prototype.size = function()
+MSE_JPS.container.Container.prototype.size = function()
 {
 	return Object.keys(this.data).length;
 }
-Container.prototype.values = function()
+MSE_JPS.container.Container.prototype.values = function()
 {
 	var self = this;
 	return Object
 		.keys(this.data)
 		.map(function(key){ return self.get(key); });
 }
-Container.prototype.orderedValues = function()
+MSE_JPS.container.Container.prototype.orderedValues = function()
 {
 	return this.values().sort(function(a,b){ return a.order > b.order; });
 }

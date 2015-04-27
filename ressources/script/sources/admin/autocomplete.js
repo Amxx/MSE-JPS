@@ -2,19 +2,22 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-2 : 10/04/2015                        *
+ *                        Version 2.1.0-0 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
 
-function buildAutocomplete()
-{
-	var searchField   = $('.tray.article #input_article_refsearch');
-	var searchFieldID = $('.tray.article #input_article_refID'    );
+var MSE_JPS = MSE_JPS || {};
 
-	searchField.autocomplete({
+MSE_JPS.autocomplete = {
+	build: function()
+	{
+		var searchField   = $('.tray.article #input_article_refsearch');
+		var searchFieldID = $('.tray.article #input_article_refID'    );
+
+		searchField.autocomplete({
 			minLength: 0,
 			focus: function(event, ui){
 				// searchField.val(ui.item.title);
@@ -23,7 +26,7 @@ function buildAutocomplete()
 			select: function(event, ui){
 				// searchField.val(ui.item.title);
 				searchField.val('');
-				pressAddCitation(ui.item.value);
+				MSE_JPS.listeners.citation.add(ui.item.value);
 				return false;
 			}
 		})
@@ -35,12 +38,14 @@ function buildAutocomplete()
 				)
 				.appendTo( ul );
 		};
-}
+	},
 
-function fillAutocomplete()
-{
-	var array = ENV.db_references.values().map(function(e){
-		return ({ label: e.title+" "+e.authors, title: e.title, authors: e.authors, value: e.id });
-	});
-	$('.tray.article #input_article_refsearch').autocomplete('option', 'source', array);
+	fill: function()
+	{
+		var array = MSE_JPS.ENV.db_references.values().map(function(e){
+			return ({ label: e.title+" "+e.authors, title: e.title, authors: e.authors, value: e.id });
+		});
+		$('.tray.article #input_article_refsearch').autocomplete('option', 'source', array);
+	}
+
 }

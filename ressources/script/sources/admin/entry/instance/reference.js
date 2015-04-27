@@ -2,17 +2,20 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.1.0-0 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
 
+var MSE_JPS = MSE_JPS || {};
+MSE_JPS.entry = MSE_JPS.entry || {};
+
 // ============================= Object Definition =============================
-function Reference()
+MSE_JPS.entry.Reference = function()
 {
-	Entry.apply(this);
+	MSE_JPS.entry.Entry.apply(this);
 	this.id        = null;
 	this.title     = '';
 	this.authors   = '';
@@ -20,11 +23,11 @@ function Reference()
 	this.abstract  = '';
 	this.bibtex    = '';
 }
-Reference.prototype = new Entry();
-Reference.prototype = new Reference();
+MSE_JPS.entry.Reference.prototype = new MSE_JPS.entry.Entry();
+MSE_JPS.entry.Reference.prototype = new MSE_JPS.entry.Reference();
 
 // ================================== Parsing ==================================
-Reference.prototype.parse = function(sql)
+MSE_JPS.entry.Reference.prototype.parse = function(sql)
 {
 	this.id        = sql.Reference_ID;
 	this.title     = sql.Reference_Title;
@@ -35,7 +38,7 @@ Reference.prototype.parse = function(sql)
 }
 
 // =================================== Tray ====================================
-Reference.prototype.setTray = function()
+MSE_JPS.entry.Reference.prototype.setTray = function()
 {
 	var self = this;
 	$('#input_reference_title'    ).val(self.title);
@@ -51,10 +54,10 @@ Reference.prototype.setTray = function()
 	else
 	{
 		$('.tray.reference .menu li').eq(3).show();
-		viewSources(self.id);
+		MSE_JPS.tools.viewSources(self.id);
 	}
 }
-Reference.prototype.getTray = function()
+MSE_JPS.entry.Reference.prototype.getTray = function()
 {
 	var self = this;
 	self.title     = $('#input_reference_title'    ).val();
@@ -65,7 +68,7 @@ Reference.prototype.getTray = function()
 }
 
 // ==================================== DOM ====================================
-Reference.prototype.insertDOM = function(front)
+MSE_JPS.entry.Reference.prototype.insertDOM = function(front)
 {
 	var self = this;
 	var block = $('<li/>')
@@ -76,7 +79,7 @@ Reference.prototype.insertDOM = function(front)
 			)
 			.append($('<a/>')
 				.addClass('title')
-				.click(function(){ pressEditReference(self.id); })
+				.click(function(){ MSE_JPS.listeners.reference.edit(self.id); })
 				.text(self.title)
 			);
 	if (front)
@@ -84,7 +87,7 @@ Reference.prototype.insertDOM = function(front)
 	else
 		$('section.references .sortable').append(block);
 }
-Reference.prototype.updateDOM = function()
+MSE_JPS.entry.Reference.prototype.updateDOM = function()
 {
 	var self = this;
 	$('section.references .sortable li')
@@ -92,7 +95,7 @@ Reference.prototype.updateDOM = function()
 		.find('a.title')
 		.text(self.title);
 }
-Reference.prototype.deleteDOM = function()
+MSE_JPS.entry.Reference.prototype.deleteDOM = function()
 {
 	var self = this;
 	$('section.references .sortable li')

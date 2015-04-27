@@ -2,17 +2,20 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.1.0-0 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
 
+var MSE_JPS = MSE_JPS || {};
+MSE_JPS.entry = MSE_JPS.entry || {};
+
 // ============================= Object Definition =============================
-function Social()
+MSE_JPS.entry.Social = function()
 {
-	Entry.apply(this);
+	MSE_JPS.entry.Entry.apply(this);
 	this.id       = null;
 	this.title    = '';
 	this.img      = '';
@@ -20,11 +23,11 @@ function Social()
 	this.showtext = true;
 	this.order    = 0;
 }
-Social.prototype = new Entry();
-Social.prototype = new Social();
+MSE_JPS.entry.Social.prototype = new MSE_JPS.entry.Entry();
+MSE_JPS.entry.Social.prototype = new MSE_JPS.entry.Social();
 
 // ================================== Parsing ==================================
-Social.prototype.parse = function(sql)
+MSE_JPS.entry.Social.prototype.parse = function(sql)
 {
 	this.id       = sql.Social_ID;
 	this.title    = sql.Social_Title;
@@ -35,7 +38,7 @@ Social.prototype.parse = function(sql)
 }
 
 // =================================== Tray ====================================
-Social.prototype.setTray = function()
+MSE_JPS.entry.Social.prototype.setTray = function()
 {
 	var self = this;
 	$('#input_social_title'   ).val(self.title);
@@ -43,7 +46,7 @@ Social.prototype.setTray = function()
 	$('#input_social_url'     ).val(self.url);
 	$('#input_social_showtext').prop('checked', self.showtext);
 }
-Social.prototype.getTray = function()
+MSE_JPS.entry.Social.prototype.getTray = function()
 {
 	var self = this;
 	self.title    = $('#input_social_title'   ).val();
@@ -53,7 +56,7 @@ Social.prototype.getTray = function()
 }
 
 // ==================================== DOM ====================================
-Social.prototype.insertDOM = function(front)
+MSE_JPS.entry.Social.prototype.insertDOM = function(front)
 {
 	var self = this;
 	var block = $('<li/>')
@@ -64,7 +67,7 @@ Social.prototype.insertDOM = function(front)
 			)
 			.append($('<a/>')
 				.addClass('title')
-				.click(function(){ pressEditSocial(self.id); })
+				.click(function(){ MSE_JPS.listeners.social.edit(self.id); })
 				.text(self.title)
 			);
 	if (front)
@@ -72,7 +75,7 @@ Social.prototype.insertDOM = function(front)
 	else
 		$('section.socials .sortable').append(block);
 }
-Social.prototype.updateDOM = function()
+MSE_JPS.entry.Social.prototype.updateDOM = function()
 {
 	var self = this;
 	$('section.socials .sortable li')
@@ -80,7 +83,7 @@ Social.prototype.updateDOM = function()
 		.find('a.title')
 		.text(self.title);
 }
-Social.prototype.deleteDOM = function()
+MSE_JPS.entry.Social.prototype.deleteDOM = function()
 {
 	var self = this;
 	$('section.socials .sortable li')

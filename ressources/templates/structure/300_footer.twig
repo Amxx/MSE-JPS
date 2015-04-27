@@ -2,7 +2,7 @@
  #                                  MSE-JPS                                   #
  #                 Mini Site Engine - Javascript / PHP / SQL                  #
  #                                                                            #
- #                        Version 2.0.0-0 : 10/04/2015                        #
+ #                        Version 2.1.0-0 : 27/04/2015                        #
  #                                                                            #
  #                      Developped by Hadrien Croubois :                      #
  #                         hadrien.croubois@gmail.com                         #
@@ -15,7 +15,7 @@
 			<li>
 				<a href='{{social.url}}' target='_blank'>
 					{% if social.img %}<img src='{{social.img}}' alt='{{social.title}}'>{% endif %}
-					{% if social.show_text %}{{social.title}}{% endif %}
+					{% if social.showtext %}{{social.title}}{% endif %}
 				</a>
 			</li>
 		{% endfor %}
@@ -27,7 +27,7 @@
 			</li>
 		{% endfor %}
 		<li class='top'>
-			<a class='quietest' href='#' onclick='slideTop(); return false;'>
+			<a class='quietest' href='#' onclick='MSE_JPS.client.slideTop(); return false;'>
 				Page Top &#8593;
 			</a>
 		</li>

@@ -3,7 +3,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.1.0-0 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -11,10 +11,9 @@
  ******************************************************************************/
 
 include_once '../../config/config.php';
-// include_once '../config/sample_sqlite.php';
 
+include_once 'auth.php';
 include_once 'connection.php';
-
 
 /******************************************************************************
  *                          S Q L   R e q u e s t s                            *
@@ -75,7 +74,7 @@ session_start();
 if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
  && isset($_POST['QUERY'])
  && isset($_POST['TOKEN'])
- && $_POST['TOKEN'] == $_SESSION['token'])
+ && auth::check_token($_POST['TOKEN']))
 {
 
 	/****************************************************************************
@@ -308,7 +307,7 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
 				':title'    => $_POST['object']['title'   ],
 				':img'      => $_POST['object']['img'     ],
 				':url'      => $_POST['object']['url'     ],
-				':showtext' => $_POST['object']['showtext']
+				':showtext' => $_POST['object']['showtext'] === 'true'
 			));
 			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			$result['id']  = $sqlsocket->lastInsertId();
@@ -323,7 +322,7 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
 				':title'    => $_POST['object']['title'   ],
 				':img'      => $_POST['object']['img'     ],
 				':url'      => $_POST['object']['url'     ],
-				':showtext' => $_POST['object']['showtext']
+				':showtext' => $_POST['object']['showtext'] === 'true'
 			));
 			// $result['sql'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			break;

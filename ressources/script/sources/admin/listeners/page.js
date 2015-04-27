@@ -2,83 +2,93 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-2 : 10/04/2015                        *
+ *                        Version 2.1.0-0 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
 
-function pressNewPage()
-{
-	launchTray($('.tray.page'), undefined, function(){ Page.prototype.setTray(); });
-}
-function pressEditPage(pageID)
-{
-	var page = ENV.db_pages.get(pageID);
-	launchTray($('.tray.page'), page, function(){ page.setTray(); });
-}
-function pressCommitPage()
-{
-	if (ENV.flags)
+var MSE_JPS = MSE_JPS || {};
+MSE_JPS.listeners = MSE_JPS.listeners || {};
+
+MSE_JPS.listeners.page = {
+
+	new: function()
 	{
-		if (!$('#input_page_title').val().trim())
+		MSE_JPS.tray.launch($('.tray.page'), undefined, function(){ MSE_JPS.entry.Page.prototype.setTray(); });
+	},
+
+	edit: function(pageID)
+	{
+		var page = MSE_JPS.ENV.db_pages.get(pageID);
+		MSE_JPS.tray.launch($('.tray.page'), page, function(){ page.setTray(); });
+	},
+
+	commit: function()
+	{
+		if (MSE_JPS.ENV.flags)
 		{
-			popup_information("Title should not be empty");
+			if (!$('#input_page_title').val().trim())
+			{
+				MSE_JPS.popup.info("Title should not be empty");
+			}
+			else if (MSE_JPS.ENV.editionObject)
+			{
+				var page = MSE_JPS.ENV.editionObject;
+				page.getTray();
+				MSE_JPS.ENV.db_pages.update(page)
+					.done(function(){
+						page.updateDOM();
+						MSE_JPS.ENV.resetFlags();
+						MSE_JPS.tray.close($('.tray.page'));
+					});
+			}
+			else
+			{
+				var page = new MSE_JPS.entry.Page();
+				page.getTray();
+				MSE_JPS.ENV.db_pages.insert(page)
+					.done(function(){
+						page.insertDOM();
+						MSE_JPS.ENV.db_pages.reorder(MSE_JPS.tools.ordered_idarray($('section.pages .sortable li')));
+						MSE_JPS.ENV.resetFlags();
+						MSE_JPS.tray.close($('.tray.page'));
+						MSE_JPS.tools.viewPage(page.id);
+					})
+			}
 		}
-		else if (ENV.editionObject)
+		else
+			MSE_JPS.tray.close($('.tray.page'));
+	},
+
+	delete: function()
+	{
+		if (MSE_JPS.ENV.flags == MSE_JPS.ENV.FLAG_NEW)
 		{
-			var page = ENV.editionObject;
-			page.getTray();
-			ENV.db_pages.update(page)
-				.done(function(){
-					page.updateDOM();
-					resetFlags();
-					closeTray($('.tray.page'));
-				});
+			MSE_JPS.ENV.resetFlags();
+			MSE_JPS.tray.close($('.tray.page'));
 		}
 		else
 		{
-			var page = new Page();
-			page.getTray();
-			ENV.db_pages.insert(page)
-				.done(function(){
-					page.insertDOM();
-					ENV.db_pages.reorder(ordered_idarray($('section.pages .sortable li')));
-					resetFlags();
-					closeTray($('.tray.page'));
-					viewPage(page.id);
-				})
+			MSE_JPS.popup.confirm("Are you sure you want to delete this page ?", function(confirm){
+				if (confirm)
+				{
+					var page = MSE_JPS.ENV.editionObject;
+					MSE_JPS.ENV.db_pages.delete(page)
+						.done(function(){
+							if (MSE_JPS.ENV.currentPage == page.id)
+								MSE_JPS.tools.viewPage();
+							var articles = MSE_JPS.ENV.db_articles.values().filter(function(a){ return a.pageID == page.id; });
+							for (article of articles)
+								MSE_JPS.ENV.db_articles.rem(article);
+							page.deleteDOM();
+							MSE_JPS.ENV.resetFlags();
+							MSE_JPS.tray.close($('.tray.page'));
+						});
+				}
+			});
 		}
 	}
-	else
-		closeTray($('.tray.page'));
-}
-function pressDeletePage()
-{
-	if (ENV.flags == FLAG_NEW)
-	{
-		resetFlags();
-		closeTray($('.tray.page'));
-	}
-	else
-	{
-		popup_confirm("Are you sure you want to delete this page ?", function(confirm){
-			if (confirm)
-			{
-				var page = ENV.editionObject;
-				ENV.db_pages.delete(page)
-					.done(function(){
-						if (ENV.currentPage == page.id)
-							viewPage();
-						var articles = ENV.db_articles.values().filter(function(a){ return a.pageID == page.id; });
-						for (article of articles)
-							ENV.db_articles.rem(article);
-						page.deleteDOM();
-						resetFlags();
-						closeTray($('.tray.page'));
-					});
-			}
-		});
-	}
+
 }

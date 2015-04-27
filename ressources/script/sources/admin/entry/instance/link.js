@@ -2,27 +2,30 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.1.0-0 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
 
+var MSE_JPS = MSE_JPS || {};
+MSE_JPS.entry = MSE_JPS.entry || {};
+
 // ============================= Object Definition =============================
-function Link()
+MSE_JPS.entry.Link = function()
 {
-	Entry.apply(this);
+	MSE_JPS.entry.Entry.apply(this);
 	this.id      = null;
 	this.title   = '';
 	this.content = '';
 	this.order   = 0;
 }
-Link.prototype = new Entry();
-Link.prototype = new Link();
+MSE_JPS.entry.Link.prototype = new MSE_JPS.entry.Entry();
+MSE_JPS.entry.Link.prototype = new MSE_JPS.entry.Link();
 
 // ================================== Parsing ==================================
-Link.prototype.parse = function(sql)
+MSE_JPS.entry.Link.prototype.parse = function(sql)
 {
 	this.id      = sql.Link_ID;
 	this.title   = sql.Link_Title;
@@ -31,13 +34,13 @@ Link.prototype.parse = function(sql)
 }
 
 // =================================== Tray ====================================
-Link.prototype.setTray = function()
+MSE_JPS.entry.Link.prototype.setTray = function()
 {
 	var self = this;
 	$('#input_link_title'  ).val(self.title);
 	$('#input_link_content').val(self.content);
 }
-Link.prototype.getTray = function()
+MSE_JPS.entry.Link.prototype.getTray = function()
 {
 	var self = this;
 	self.title   = $('#input_link_title'  ).val();
@@ -45,7 +48,7 @@ Link.prototype.getTray = function()
 }
 
 // ==================================== DOM ====================================
-Link.prototype.insertDOM = function(front)
+MSE_JPS.entry.Link.prototype.insertDOM = function(front)
 {
 	var self = this;
 	var block = $('<li/>')
@@ -56,7 +59,7 @@ Link.prototype.insertDOM = function(front)
 			)
 			.append($('<a/>')
 				.addClass('title')
-				.click(function(){ pressEditLink(self.id); })
+				.click(function(){ MSE_JPS.listeners.link.edit(self.id); })
 				.text(self.title)
 			);
 	if (front)
@@ -64,7 +67,7 @@ Link.prototype.insertDOM = function(front)
 	else
 		$('section.links .sortable').append(block);
 }
-Link.prototype.updateDOM = function()
+MSE_JPS.entry.Link.prototype.updateDOM = function()
 {
 	var self = this;
 	$('section.links .sortable li')
@@ -72,7 +75,7 @@ Link.prototype.updateDOM = function()
 		.find('a.title')
 		.text(self.title);
 }
-Link.prototype.deleteDOM = function()
+MSE_JPS.entry.Link.prototype.deleteDOM = function()
 {
 	var self = this;
 	$('section.links .sortable li')

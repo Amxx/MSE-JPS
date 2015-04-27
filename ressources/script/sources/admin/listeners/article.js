@@ -2,81 +2,92 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-2 : 10/04/2015                        *
+ *                        Version 2.1.0-0 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
 
-function pressNewArticle()
-{
-	launchTray($('.tray.article'), undefined, function(){ Article.prototype.setTray(); });
-}
-function pressEditArticle(articleID)
-{
-	var article = ENV.db_articles.get(articleID);
-	launchTray($('.tray.article'), article, function(){ article.setTray(); });
-}
-function pressCommitArticle()
-{
-	if (ENV.flags)
+var MSE_JPS = MSE_JPS || {};
+MSE_JPS.listeners = MSE_JPS.listeners || {};
+
+MSE_JPS.listeners.article = {
+
+	new: function()
 	{
-		if (!$('#input_article_title').val().trim())
+		MSE_JPS.tray.launch($('.tray.article'), undefined, function(){ MSE_JPS.entry.Article.prototype.setTray(); });
+	},
+
+	edit: function(articleID)
+	{
+		var article = MSE_JPS.ENV.db_articles.get(articleID);
+		MSE_JPS.tray.launch($('.tray.article'), article, function(){ article.setTray(); });
+	},
+
+	commit: function()
+	{
+		if (MSE_JPS.ENV.flags)
 		{
-			popup_information("Title should not be empty");
+			if (!$('#input_article_title').val().trim())
+			{
+				MSE_JPS.popup.info("Title should not be empty");
+			}
+			else if (MSE_JPS.ENV.editionObject)
+			{
+				var article = MSE_JPS.ENV.editionObject;
+				article.getTray();
+				MSE_JPS.ENV.db_articles.update(article)
+					.done(function(){
+						article.updateDOM();
+						MSE_JPS.ENV.resetFlags();
+						MSE_JPS.tray.close($('.tray.article'));
+					});
+			}
+			else
+			{
+				var article = new MSE_JPS.entry.Article();
+				article.getTray();
+				article.pageID = MSE_JPS.ENV.currentPage;
+				MSE_JPS.ENV.db_articles.insert(article)
+					.done(function(){
+						article.insertDOM();
+						MSE_JPS.ENV.db_articles.reorder(MSE_JPS.tools.ordered_idarray($('section.articles .sortable li')));
+						MSE_JPS.ENV.resetFlags();
+						MSE_JPS.tray.close($('.tray.article'));
+					})
+			}
 		}
-		else if (ENV.editionObject)
+		else
+			MSE_JPS.tray.close($('.tray.article'));
+	},
+
+	delete: function()
+	{
+		if (MSE_JPS.ENV.flags == MSE_JPS.ENV.FLAG_NEW)
 		{
-			var article = ENV.editionObject;
-			article.getTray();
-			ENV.db_articles.update(article)
-				.done(function(){
-					article.updateDOM();
-					resetFlags();
-					closeTray($('.tray.article'));
-				});
+			MSE_JPS.ENV.resetFlags();
+			MSE_JPS.tray.close($('.tray.article'));
 		}
 		else
 		{
-			var article = new Article();
-			article.getTray();
-			article.pageID = ENV.currentPage;
-			ENV.db_articles.insert(article)
-				.done(function(){
-					article.insertDOM();
-					ENV.db_articles.reorder(ordered_idarray($('section.articles .sortable li')));
-					resetFlags();
-					closeTray($('.tray.article'));
-				})
+			MSE_JPS.popup.confirm("Are you sure you want to delete this article ?", function(confirm){
+				if (confirm)
+				{
+					var article = MSE_JPS.ENV.editionObject;
+					MSE_JPS.ENV.db_articles.delete(article)
+						.done(function(){
+							var citations = MSE_JPS.ENV.db_citations.values().filter(function(a){ return a.articleID == article.id; });
+							for (citation of citations)
+								MSE_JPS.ENV.db_citations.rem(citation);
+							article.deleteDOM();
+							MSE_JPS.ENV.resetFlags();
+							MSE_JPS.tray.close($('.tray.article'));
+						});
+				}
+			});
 		}
 	}
-	else
-		closeTray($('.tray.article'));
-}
-function pressDeleteArticle()
-{
-	if (ENV.flags == FLAG_NEW)
-	{
-		resetFlags();
-		closeTray($('.tray.article'));
-	}
-	else
-	{
-		popup_confirm("Are you sure you want to delete this article ?", function(confirm){
-			if (confirm)
-			{
-				var article = ENV.editionObject;
-				ENV.db_articles.delete(article)
-					.done(function(){
-						var citations = ENV.db_citations.values().filter(function(a){ return a.articleID == article.id; });
-						for (citation of citations)
-							ENV.db_citations.rem(citation);
-						article.deleteDOM();
-						resetFlags();
-						closeTray($('.tray.article'));
-					});
-			}
-		});
-	}
+
+
 }

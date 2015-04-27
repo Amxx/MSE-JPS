@@ -2,27 +2,30 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.1.0-0 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
 
+var MSE_JPS = MSE_JPS || {};
+MSE_JPS.entry = MSE_JPS.entry || {};
+
 // ============================= Object Definition =============================
-function Citation()
+MSE_JPS.entry.Citation = function()
 {
-	Entry.apply(this);
+	MSE_JPS.entry.Entry.apply(this);
 	this.id
 	this.articleID   = null;
 	this.referenceID = null;
 	this.order       = 0;
 }
-Citation.prototype = new Entry();
-Citation.prototype = new Citation();
+MSE_JPS.entry.Citation.prototype = new MSE_JPS.entry.Entry();
+MSE_JPS.entry.Citation.prototype = new MSE_JPS.entry.Citation();
 
 // ================================== Parsing ==================================
-Citation.prototype.parse = function(sql)
+MSE_JPS.entry.Citation.prototype.parse = function(sql)
 {
 	this.id          = sql.Citation_ID;
 	this.articleID   = sql.Article_ID;
@@ -31,7 +34,7 @@ Citation.prototype.parse = function(sql)
 }
 
 // ==================================== DOM ====================================
-Citation.prototype.insertDOM = function(front)
+MSE_JPS.entry.Citation.prototype.insertDOM = function(front)
 {
 	var self = this;
 	var block = $('<li/>')
@@ -42,11 +45,11 @@ Citation.prototype.insertDOM = function(front)
 			)
 			.append($('<span/>')
 				.addClass('title')
-				.text(ENV.db_references.get(self.referenceID).title)
+				.text(MSE_JPS.ENV.db_references.get(self.referenceID).title)
 			)
 			.append($('<a/>')
 				.addClass('pointer')
-				.click(function(){ pressDeleteCitation(self.id); })
+				.click(function(){ MSE_JPS.listeners.citation.delete(self.id); })
 				.text('\u2716')
 			);
 	if (front)
@@ -54,7 +57,7 @@ Citation.prototype.insertDOM = function(front)
 	else
 		$('.tray.article .sortable').append(block);
 }
-Citation.prototype.deleteDOM = function()
+MSE_JPS.entry.Citation.prototype.deleteDOM = function()
 {
 	var self = this;
 	$('.tray.article .sortable li')

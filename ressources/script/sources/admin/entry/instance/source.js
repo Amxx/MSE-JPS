@@ -2,28 +2,31 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.1.0-0 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
 
+var MSE_JPS = MSE_JPS || {};
+MSE_JPS.entry = MSE_JPS.entry || {};
+
 // ============================= Object Definition =============================
-function Source()
+MSE_JPS.entry.Source = function()
 {
-	Entry.apply(this);
+	MSE_JPS.entry.Entry.apply(this);
 	this.id          = null;
 	this.referenceID = null;
 	this.title       = '';
 	this.url         = '';
 	this.order       = 0;
 }
-Source.prototype = new Entry();
-Source.prototype = new Source();
+MSE_JPS.entry.Source.prototype = new MSE_JPS.entry.Entry();
+MSE_JPS.entry.Source.prototype = new MSE_JPS.entry.Source();
 
 // ================================== Parsing ==================================
-Source.prototype.parse = function(sql)
+MSE_JPS.entry.Source.prototype.parse = function(sql)
 {
 	this.id          = sql.Source_ID;
 	this.referenceID = sql.Reference_ID;
@@ -33,7 +36,7 @@ Source.prototype.parse = function(sql)
 }
 
 // ================================== Methods ==================================
-Source.prototype.descrition = function()
+MSE_JPS.entry.Source.prototype.descrition = function()
 {
 	var self   = this;
 	var length = self.url.length;
@@ -46,7 +49,7 @@ Source.prototype.descrition = function()
 }
 
 // ==================================== DOM ====================================
-Source.prototype.insertDOM = function(front)
+MSE_JPS.entry.Source.prototype.insertDOM = function(front)
 {
 	var self = this;
 	var block = $('<li/>')
@@ -57,12 +60,12 @@ Source.prototype.insertDOM = function(front)
 			)
 			.append($('<a/>')
 				.addClass('title')
-				.click(function(){ pressEditSource(self.id); })
+				.click(function(){ MSE_JPS.listeners.source.edit(self.id); })
 				.text(self.descrition())
 			)
 			.append($('<a/>')
 				.addClass('pointer')
-				.click(function(){ pressDeleteSource(self.id); })
+				.click(function(){ MSE_JPS.listeners.source.delete(self.id); })
 				.text('\u2716')
 			);
 	if (front)
@@ -70,7 +73,7 @@ Source.prototype.insertDOM = function(front)
 	else
 		$('.tray.reference .sortable').append(block);
 }
-Source.prototype.updateDOM = function()
+MSE_JPS.entry.Source.prototype.updateDOM = function()
 {
 	var self = this;
 	$('.tray.reference .sortable li')
@@ -78,7 +81,7 @@ Source.prototype.updateDOM = function()
 		.find('a.title')
 		.text(self.descrition());
 }
-Source.prototype.deleteDOM = function()
+MSE_JPS.entry.Source.prototype.deleteDOM = function()
 {
 	var self = this;
 	$('.tray.reference .sortable li')

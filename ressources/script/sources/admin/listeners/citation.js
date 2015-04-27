@@ -2,32 +2,39 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.1.0-0 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
 
-function pressAddCitation(referenceID)
-{
-	var citation = new Citation();
-	citation.articleID   = ENV.editionObject.id;
-	citation.referenceID = referenceID;
-	ENV.db_citations.insert(citation)
-		.done(function(){
-			citation.insertDOM();
-			ENV.db_citations.reorder(ordered_idarray($('.tray.article    .sortable li')));
-		})
-}
+var MSE_JPS = MSE_JPS || {};
+MSE_JPS.listeners = MSE_JPS.listeners || {};
 
-function pressDeleteCitation(citationID)
-{
-	popup_confirm("Are you sure you want to delete this citation ?", function(confirm){
-		var citation = ENV.db_citations.get(citationID);
-		ENV.db_citations.delete(citation)
+MSE_JPS.listeners.citation = {
+
+	add: function(referenceID)
+	{
+		var citation = new MSE_JPS.entry.Citation();
+		citation.articleID   = MSE_JPS.ENV.editionObject.id;
+		citation.referenceID = referenceID;
+		MSE_JPS.ENV.db_citations.insert(citation)
 			.done(function(){
-				citation.deleteDOM();
-			});
-	});
+				citation.insertDOM();
+				MSE_JPS.ENV.db_citations.reorder(MSE_JPS.tools.ordered_idarray($('.tray.article .sortable li')));
+			})
+	},
+
+	delete: function(citationID)
+	{
+		MSE_JPS.popup.confirm("Are you sure you want to delete this citation ?", function(confirm){
+			var citation = MSE_JPS.ENV.db_citations.get(citationID);
+			MSE_JPS.ENV.db_citations.delete(citation)
+				.done(function(){
+					citation.deleteDOM();
+				});
+		});
+	}
+
 }

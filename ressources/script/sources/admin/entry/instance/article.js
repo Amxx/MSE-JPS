@@ -2,17 +2,20 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.1.0-0 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
  *                                                                            *
  ******************************************************************************/
 
+var MSE_JPS = MSE_JPS || {};
+MSE_JPS.entry = MSE_JPS.entry || {};
+
 // ============================= Object Definition =============================
-function Article()
+MSE_JPS.entry.Article = function()
 {
-	Entry.apply(this);
+	MSE_JPS.entry.Entry.apply(this);
 	this.id         = null;
 	this.pageID     = null;
 	this.title      = '';
@@ -21,11 +24,11 @@ function Article()
 	this.archived   = false;
 	this.order      = 0;
 }
-Article.prototype = new Entry();
-Article.prototype = new Article();
+MSE_JPS.entry.Article.prototype = new MSE_JPS.entry.Entry();
+MSE_JPS.entry.Article.prototype = new MSE_JPS.entry.Article();
 
 // ================================== Parsing ==================================
-Article.prototype.parse = function(sql)
+MSE_JPS.entry.Article.prototype.parse = function(sql)
 {
 	this.id         = sql.Article_ID;
 	this.pageID     = sql.Page_ID;
@@ -37,7 +40,7 @@ Article.prototype.parse = function(sql)
 }
 
 // =================================== Tray ====================================
-Article.prototype.setTray = function()
+MSE_JPS.entry.Article.prototype.setTray = function()
 {
 	var self = this;
 	$('#input_article_title'     ).val(self.title);
@@ -53,10 +56,10 @@ Article.prototype.setTray = function()
 	{
 		$('.tray.article .menu li').eq(2).show();
 		$('#input_article_refsearch' ).val('');
-		viewCitations(self.id);
+		MSE_JPS.tools.viewCitations(self.id);
 	}
 }
-Article.prototype.getTray = function()
+MSE_JPS.entry.Article.prototype.getTray = function()
 {
 	var self = this;
 	self.title      = $('#input_article_title'     ).val();
@@ -66,7 +69,7 @@ Article.prototype.getTray = function()
 }
 
 // ==================================== DOM ====================================
-Article.prototype.insertDOM = function(front)
+MSE_JPS.entry.Article.prototype.insertDOM = function(front)
 {
 	var self = this;
 	var block = $('<li/>')
@@ -77,7 +80,7 @@ Article.prototype.insertDOM = function(front)
 			)
 			.append($('<a/>')
 				.addClass('title')
-				.click(function(){ pressEditArticle(self.id); })
+				.click(function(){ MSE_JPS.listeners.article.edit(self.id); })
 				.text(self.title)
 			);
 	if (front)
@@ -85,7 +88,7 @@ Article.prototype.insertDOM = function(front)
 	else
 		$('section.articles .sortable').append(block);
 }
-Article.prototype.updateDOM = function()
+MSE_JPS.entry.Article.prototype.updateDOM = function()
 {
 	var self = this;
 	$('section.articles .sortable li')
@@ -93,7 +96,7 @@ Article.prototype.updateDOM = function()
 		.find('a.title')
 		.text(self.title);
 }
-Article.prototype.deleteDOM = function()
+MSE_JPS.entry.Article.prototype.deleteDOM = function()
 {
 	var self = this;
 	$('section.articles .sortable li')
