@@ -4,6 +4,10 @@ config/*
 !config/sample_mysql.php
 !config/sample_sqlite.php
 
-*/.htpasswd
+db-lite
+
+.htaccess
 */.htaccess
+.htpasswd
+*/.htpasswd
 minify.sh
