@@ -1,0 +1,27 @@
+/*****************************************************************************
+ *                                  MSE-JPS                                  *
+ *                 Mini Site Engine - Javascript / PHP / SQL                 *
+ *                                                                           *
+ *                        Version 2.2.0-0 : 11/07/2015                       *
+ *                                                                           *
+ *                      Developped by Hadrien Croubois :                     *
+ *                         hadrien.croubois@gmail.com                        *
+ *                                                                           *
+ *****************************************************************************/
+
+/* Mobile */
+@media only screen and (max-width: 1000px) {
+	header, footer, #page
+	{
+		padding-left:					20px;
+		padding-right:				20px;
+	}
+}
+/* Descktop */
+@media only screen and (min-width: 1000px) {
+	header, footer, #page
+	{
+		padding-left:						calc((100% - 960px) / 2);
+		padding-right:					calc((100% - 960px) / 2);
+	}
+}

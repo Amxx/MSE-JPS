@@ -22,7 +22,7 @@
 /* Label */
 .label {
 	border-left-width:			4px;
-	border-left-style:			solid;	
+	border-left-style:			solid;
 	padding-left:						10px;
 }
 .label-orange	{ border-left-color:	#FA8F6F; }
@@ -80,7 +80,7 @@ main article h1
 {
 	margin:									0px;
 	font-weight:						normal;
-	font-size:							22px;	
+	font-size:							22px;
 
 	white-space:						nowrap;
 	overflow:								hidden;
