@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                  *
  *                 Mini Site Engine - Javascript / PHP / SQL                 *
  *                                                                           *
- *                        Version 2.2.0-0 : 11/07/2015                       * *                                                                           *
+ *                        Version 2.2.1-0 : 22/07/2015                       * *                                                                           *
  *                      Developped by Hadrien Croubois :                     *
  *                         hadrien.croubois@gmail.com                        *
  *                                                                           *
@@ -17,9 +17,11 @@ header
 	top:										0px;
 	z-index:								100000;
 	width:									100%;
+	height:									140px;  /* 100+20x2 */
 	padding:								20px 0;
 	border-bottom:					1px solid #DDD;
 	background: 						#FFFFFF;
+	overflow:								hidden;
 }
 header.dark
 {
@@ -29,6 +31,9 @@ header.dark
 }
 header #name
 {
+	position:								relative;
+	z-index:								10;
+
 	display: 								block;
 	float:									left;
 	height:									70px;
@@ -37,6 +42,9 @@ header #name
 }
 header #picture
 {
+	position:								relative;
+	z-index:								4;
+
 	display:								block;
 	float:									right;
 	height:									100px;
@@ -48,6 +56,9 @@ header #picture
  *****************************************************************************/
 header #nav
 {
+	position:								relative;
+	z-index:								1;
+
 	overflow:								hidden;
 	display:								block;
 	margin:									0px;
@@ -81,3 +92,20 @@ header.dark #nav a
 {
 	color:									#BBB;
 }
+
+/*****************************************************************************
+ *                       H e a d e r   P a r a l l a x                       *
+ *****************************************************************************/
+#parallax
+{
+	position:								relative;
+	z-index:								1;
+
+	width:									100%;
+	height:									100%;
+	margin-bottom:					-100%;
+	pointer-events:					none;
+}
+#parallax .plan1 { padding: 0 0 0 200px; z-index: 1;}
+#parallax .plan2 { padding: 0 0 0 200px; z-index: 2;}
+#parallax .plan3 { padding: 0 0 0 200px; z-index: 5;}

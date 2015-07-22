@@ -2,7 +2,7 @@
  #                                  MSE-JPS                                   #
  #                 Mini Site Engine - Javascript / PHP / SQL                  #
  #                                                                            #
- #                        Version 2.0.0-0 : 10/04/2015                        #
+ #                        Version 2.2.1-0 : 22/07/2015                        #
  #                                                                            #
  #                      Developped by Hadrien Croubois :                      #
  #                         hadrien.croubois@gmail.com                         #
@@ -10,6 +10,22 @@
  ##############################################################################}
 
 <header class='dark'>
+
+	<div id="parallax">
+		<div id="scene">
+			<ul>
+				<li class="layer plan1" data-depth="+5.0"><img src="ressources/img/parallax/plan4.png" alt=""></li>
+				<li class="layer plan2" data-depth="-1.0"><img src="ressources/img/parallax/plan3.png" alt=""></li>
+				<li class="layer plan3" data-depth="-3.0"><img src="ressources/img/parallax/plan1.png" alt=""></li>
+			</ul>
+		</div>
+	</div>
+
+	<script src="ressources/libs/parallax.js"></script>
+	<script>
+		var parallax = new Parallax(document.getElementById('scene'));
+	</script>
+
 	<span id='name'>{{website.header.name}}</span>
 	<img id='picture' src='{{website.header.picture}}' alt='Profile picture'/>
 	<ul id='nav'>
@@ -19,4 +35,5 @@
 			</li>
 		{% endfor %}
 	</ul>
+
 </header>
