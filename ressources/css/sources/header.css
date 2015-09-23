@@ -98,13 +98,8 @@ header.dark #nav a
  *****************************************************************************/
 #parallax
 {
-	position:								relative;
-	z-index:								1;
-
-	width:									100%;
-	height:									100%;
-	margin-bottom:					-100%;
-	pointer-events:					none;
+	width:										100%;
+	height:										0;
 }
 #parallax .plan1 { padding: 0 0 0 200px; z-index: 1;}
 #parallax .plan2 { padding: 0 0 0 200px; z-index: 2;}
