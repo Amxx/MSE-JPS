@@ -25,6 +25,11 @@ body
 	font: 									normal 75% OpenSansRegular;
 	line-height:						1.5;
 	color:									#444;
+
+	background-image:				url('../img/background.png');
+	background-attachment:	fixed;
+	background-size:				cover;
+	background-position:		center;
 }
 
 /*****************************************************************************
@@ -141,6 +146,10 @@ p.noindent
 /*****************************************************************************
  *                               C o n t e n t                               *
  *****************************************************************************/
+main, aside
+{
+	background: 						rgba(255, 255, 255, 0.8);
+}
 main
 {
 	flex:										75%;
@@ -152,11 +161,11 @@ aside
 
 main:not(:last-child)
 {
-	padding:								5px 10px 5px 0px;
+	padding:								5px;
 }
 aside:not(:first-child)
 {
-	padding:								15px 0 15px 15px;
+	padding:								15px;
 	border-left:						1px solid #DDD;
 }
 
