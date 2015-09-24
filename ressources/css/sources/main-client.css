@@ -67,6 +67,7 @@ main article
 {
 	margin:									5px;
 	padding:								6px;
+	border-radius:					3px;
 }
 main .block.bordered article
 {
