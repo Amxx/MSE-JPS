@@ -28,6 +28,9 @@ header.dark
 	border-bottom:					0px;
 	color:									#FFFFFF;
 	background:							#4D4D4D;
+	/*background-image:				url(../img/header-dark.png);*/
+	/*background-size:				100%;*/
+	/*background-position:		50% 25%;*/
 }
 header #name
 {
