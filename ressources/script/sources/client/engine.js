@@ -152,7 +152,8 @@ $(function(){
 
 	$("body").on("swipe", function(ev){
 		$("aside").animate({width: 'toggle'}, function(){
-			$('section').packery();
+			// $('section').packery();
+			MSE_JPS.client.retile();
 		});
 	});
 
