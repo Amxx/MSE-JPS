@@ -2,7 +2,7 @@
  #                                  MSE-JPS                                   #
  #                 Mini Site Engine - Javascript / PHP / SQL                  #
  #                                                                            #
- #                        Version 2.0.0-0 : 10/04/2015                        #
+ #                        Version 2.3.0-1 : 10/02/2016                        #
  #                                                                            #
  #                      Developped by Hadrien Croubois :                      #
  #                         hadrien.croubois@gmail.com                         #
@@ -11,6 +11,9 @@
 
 {# Main javascript #}
 <script type="text/javascript">
+
+	$.mobile.loading().hide();
+
 	$(function(){
 		// Record visibility
 		var id = $('section').filter(function(){ return $(this).css('display') != 'none'; }).attr('id');
