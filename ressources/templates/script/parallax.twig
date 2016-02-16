@@ -9,29 +9,6 @@
  #                                                                            #
  ##############################################################################}
 
-{# Main javascript #}
-<script defer type="text/javascript">
-
-	$(function(){
-		$.mobile.loading().hide();
-		// Record visibility
-		var id = $('section').filter(function(){ return $(this).css('display') != 'none'; }).attr('id');
-		// Set visibility for javascript
-		$('section').show();
-
-		// make tiles
-		$('section').packery({ 'itemSelector': '.block' });
-
-		// Run javascript
-		{% for page in website.pages.list %}
-		{% for article in page.articles.list %}
-		{% if article.javascript %}
-			{{ article.javascript | raw }}
-		{% endif %}
-		{% endfor %}
-		{% endfor %}
-
-		// Reset visibility
-		$('section').filter(function(){ return $(this).attr('id') != id; }).hide()
-	});
-</script>
+<!-- <script src="ressources/libs/parallax.js"></script> -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/parallax/2.1.3/parallax.min.js"></script>
+<script defer> var parallax = new Parallax(document.getElementById('scene')); </script>
