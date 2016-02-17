@@ -1,14 +1,14 @@
 <!--
-################################################################################
-#                                   MSE-JPS                                    #
-#                  Mini Site Engine - Javascript / PHP / SQL                   #
-#                                                                              #
-#                         Version 2.1.0-0 : 27/04/2015                         #
-#                                                                              #
-#                       Developped by Hadrien Croubois :                       #
-#                          hadrien.croubois@gmail.com                          #
-#                                                                              #
-################################################################################
+###############################################################################
+#                                   MSE-JPS                                   #
+#                  Mini Site Engine - Javascript / PHP / SQL                  #
+#                                                                             #
+#                        Version 2.3.0-3 : 17/02/2016                         #
+#                                                                             #
+#                      Developped by Hadrien Croubois :                       #
+#                         hadrien.croubois@gmail.com                          #
+#                                                                             #
+###############################################################################
 -->
 
 <?php
@@ -25,19 +25,24 @@
 		<title>Administration interface</title>
 
 		<!-- L i b   -   J q u e r y -->
-		<script type="text/javascript" src="../ressources/libs/jquery-2.1.3.js"></script>
-		<script type="text/javascript" src="../ressources/libs/jquery-ui.min.js"></script>
+		<!-- <script type="text/javascript" src="../ressources/libs/jquery-2.1.3.js"></script> -->
+		<!-- <script type="text/javascript" src="../ressources/libs/jquery-ui.min.js"></script> -->
+		<script async type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<script async type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
 
 		<!-- L i b   -   D i a l o g   p o l y f i l l -->
-		<script src="../ressources/libs/dialog-polyfill-master/dialog-polyfill.js"></script>
-		<link rel="stylesheet" type="text/css" href="../ressources/libs/dialog-polyfill-master/dialog-polyfill.css"/>
+		<!-- <script src="../ressources/libs/dialog-polyfill-master/dialog-polyfill.js"></script> -->
+		<!-- <link rel="stylesheet" type="text/css" href="../ressources/libs/dialog-polyfill-master/dialog-polyfill.css"/> -->
+		<script async type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.js"></script>
+		<link async rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.css"/>
 
 		<!-- S t y l e - O p e n S a n s -->
-		<link rel="stylesheet" href="../ressources/font/OpenSans.css" type="text/css"/>
+		<link async rel="stylesheet" href="../ressources/font/OpenSans.css" type="text/css"/>
 
 		<!-- M S E J P S   -   A d m i n i s t r a t i o n -->
-		<script type="text/javascript" src="../ressources/script/admin-min.js"></script>
-		<link rel="stylesheet" href="../ressources/css/admin-min.css" type="text/css"/>
+		<script defer type="text/javascript" src="../ressources/script/admin-min.js"></script>
+		<link async rel="stylesheet" href="../ressources/css/admin-min.css" type="text/css"/>
 
 	</head>
 
@@ -283,7 +288,7 @@
 		*                       S e c u r i t y   T o k e n                        *
 		****************************************************************************
 		-->
-		<script type="text/javascript">
+		<script defer type="text/javascript">
 			var MSE_JPS = MSE_JPS || {};
 			MSE_JPS.token = '<?php echo auth::get_token(); ?>';
 		</script>
