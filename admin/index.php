@@ -28,21 +28,21 @@
 		<!-- <script type="text/javascript" src="../ressources/libs/jquery-2.1.3.js"></script> -->
 		<!-- <script type="text/javascript" src="../ressources/libs/jquery-ui.min.js"></script> -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<script async type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
 
 		<!-- L i b   -   D i a l o g   p o l y f i l l -->
 		<!-- <script src="../ressources/libs/dialog-polyfill-master/dialog-polyfill.js"></script> -->
 		<!-- <link rel="stylesheet" type="text/css" href="../ressources/libs/dialog-polyfill-master/dialog-polyfill.css"/> -->
-		<script async type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.js"></script>
-		<link async rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.css"/>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.css"/>
 
 		<!-- S t y l e - O p e n S a n s -->
-		<link async rel="stylesheet" href="../ressources/font/OpenSans.css" type="text/css"/>
+		<link rel="stylesheet" href="../ressources/font/OpenSans.css" type="text/css"/>
 
 		<!-- M S E J P S   -   A d m i n i s t r a t i o n -->
-		<script defer type="text/javascript" src="../ressources/script/admin-min.js"></script>
-		<link async rel="stylesheet" href="../ressources/css/admin-min.css" type="text/css"/>
+		<script type="text/javascript" src="../ressources/script/admin-min.js"></script>
+		<link rel="stylesheet" href="../ressources/css/admin-min.css" type="text/css"/>
 
 	</head>
 
