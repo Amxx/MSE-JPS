@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-0 : 10/04/2015                        *
+ *                        Version 2.3.0-5 : 27/04/2016                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -139,7 +139,7 @@
 	border-radius:					3px;
 	color:									#626262;
 	background:							#F0F0F0;
-	font:										18px OpenSansRegular;
+	font:										18px 'Open Sans', sans-serif;
 }
 .tray .content textarea
 {

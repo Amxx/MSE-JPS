@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.0.0-3 : 10/04/2015                        *
+ *                        Version 2.3.0-5 : 27/04/2015                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -63,7 +63,7 @@ section div.slider.flex.column a
 	margin:									0;
 	padding:								0;
 	font-size:							14px;
-	font-weight:						700;
+	font-weight:						600;
 	overflow:								auto;
 }
 .sortable li

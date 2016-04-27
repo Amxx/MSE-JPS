@@ -22,7 +22,7 @@ body
 {
 	width:									100%;
 	margin:									0 auto;
-	font: 									normal 75% 'Open Sans';
+	font: 									normal 75% 'Open Sans', sans-serif;
 	line-height:						1.5;
 	color:									#444;
 

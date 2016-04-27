@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                   *
  *                 Mini Site Engine - Javascript / PHP / SQL                  *
  *                                                                            *
- *                        Version 2.3.0-0 : 09/02/2016                        *
+ *                        Version 2.3.1-0 : 27/04/2016                        *
  *                                                                            *
  *                      Developped by Hadrien Croubois :                      *
  *                         hadrien.croubois@gmail.com                         *
@@ -18,7 +18,7 @@ MSE_JPS.client = MSE_JPS.client || {};
 	// ========================== Hash change listener ===========================
 	this.hashHandler = function(smooth)
 	{
-		var hash	= window.location.hash.substring(1);
+		var hash = decodeURI(window.location.hash.substring(1));
 		// Set hash if empty
 		if (hash == '') hash = MSE_JPS.client.id2hash(MSE_JPS.client.getCurrentId());
 		// Try get page id from hash
