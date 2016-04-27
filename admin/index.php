@@ -3,7 +3,7 @@
 #                                   MSE-JPS                                   #
 #                  Mini Site Engine - Javascript / PHP / SQL                  #
 #                                                                             #
-#                        Version 2.3.0-3 : 17/02/2016                         #
+#                        Version 2.3.0-4 : 27/04/2016                         #
 #                                                                             #
 #                      Developped by Hadrien Croubois :                       #
 #                         hadrien.croubois@gmail.com                          #
@@ -38,7 +38,10 @@
 		<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.css"/>
 
 		<!-- S t y l e - O p e n S a n s -->
-		<link rel="stylesheet" href="../ressources/font/OpenSans.css" type="text/css"/>
+		<!--
+		<link rel="stylesheet" href="ressources/font/OpenSans.css" type="text/css"/>
+		-->
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
 		<!-- M S E J P S   -   A d m i n i s t r a t i o n -->
 		<script type="text/javascript" src="../ressources/script/admin-min.js"></script>
