@@ -52,7 +52,7 @@ include_once 'ressources/libs/phpfastcache/phpfastcache.php';
 $cache = phpFastCache();
 $hash  = md5($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
 $html  = __c('files')->get($hash);
-$html  = null;
+// $html  = null;
 
 if ($html == null)
 {
