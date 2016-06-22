@@ -34,10 +34,8 @@ header.dark
 	/*background-size:				100%;*/
 	/*background-position:		50% 25%;*/
 }
-header.particles
+header.transparent
 {
-	border-bottom:					0px;
-	color:									#FFFFFF;
 	background:							none;
 }
 header > *
@@ -88,8 +86,7 @@ header #nav li.current a
 	color:									#333;
 	border-bottom:					2px solid #94CC5F;
 }
-header.dark      #nav li.current a,
-header.particles #nav li.current a
+header.dark #nav li.current a
 {
 	color:									#EEE;
 }
@@ -99,8 +96,7 @@ header #nav a
 	color:									#888;
 	text-decoration:				none;
 }
-header.dark      #nav a,
-header.particles #nav a
+header.dark #nav a
 {
 	color:									#BBB;
 }
