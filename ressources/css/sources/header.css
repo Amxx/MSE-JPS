@@ -2,7 +2,7 @@
  *                                  MSE-JPS                                  *
  *                 Mini Site Engine - Javascript / PHP / SQL                 *
  *                                                                           *
- *                        Version 2.4.0-0 : 22/06/2016                       *
+ *                        Version 2.4.0-1 : 22/06/2016                       *
  *                                                                           *
  *                      Developped by Hadrien Croubois :                     *
  *                         hadrien.croubois@gmail.com                        *
@@ -122,7 +122,7 @@ header.particles #nav a
  *****************************************************************************/
 #particles-header-wrapper
 {
-	position:								absolute;
+	position:								fixed;
 	top:										0px;
 	z-index:                10000;
 	width:									100%;
